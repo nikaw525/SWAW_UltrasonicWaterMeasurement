@@ -1,21 +1,21 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ * @attention
+ *
+ * <h2><center>&copy; Copyright (c) 2021 STMicroelectronics.
+ * All rights reserved.</center></h2>
+ *
+ * This software component is licensed by ST under BSD 3-Clause license,
+ * the "License"; You may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at:
+ *                        opensource.org/licenses/BSD-3-Clause
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -52,6 +52,15 @@
 
 volatile uint16_t distance;
 uint8_t data[30];
+volatile uint8_t PowerMode_flag;
+uint32_t time;
+/*
+ float F = 1.0f;
+ float B = 0;
+ float H = 1.0f;
+ float Q = 1e-5f;
+ float R = 3e-3;
+ */
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -98,31 +107,39 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
-  HAL_TIM_Base_Start(&htim3);
-  HAL_TIM_PWM_Start(&htim3, HCSR04_PWM_CHANNEL);
-  HAL_TIM_IC_Start(&htim3, HCSR04_START_CHANNEL);
-  HAL_TIM_IC_Start_IT(&htim3, HCSR04_STOP_CHANNEL);
-
+	HAL_TIM_Base_Start(&htim3);
+	HAL_TIM_PWM_Start(&htim3, HCSR04_PWM_CHANNEL);
+	HAL_TIM_IC_Start(&htim3, HCSR04_START_CHANNEL);
+	HAL_TIM_IC_Start_IT(&htim3, HCSR04_STOP_CHANNEL);
+	time = HAL_GetTick();
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+	while (1) {
 
 #ifdef TESTING
-	  //A test section that allow to display the data using the serial port
-	  size_t size = sprintf(data, "Distance = %u\n\r", distance);
+		//A test section that allow to display the data using the serial port
+		if ((HAL_GetTick() - time) > 1000) {
+			size_t size = sprintf(data, "Distance = %u\n\r", distance);
 
-	  HAL_UART_Transmit_DMA(&huart2, data, size+2);
+			HAL_UART_Transmit_DMA(&huart2, data, size + 2);
+			time = HAL_GetTick();
+		}
 
-	  HAL_Delay(1000);
+		if ((uint8_t)0x01 == PowerMode_flag) {
+			HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+			PowerMode_flag = 0x00;
+			HAL_SuspendTick();
+			HAL_PWR_EnableSleepOnExit();
+			HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+		}
 #endif
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
+	}
   /* USER CODE END 3 */
 }
 
@@ -173,14 +190,22 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
-{
-	if(htim->Instance == TIM3)
-	{
-		uint16_t time = (uint16_t)((uint16_t)__HAL_TIM_GetCompare(&htim3, HCSR04_STOP_CHANNEL)-(uint16_t)__HAL_TIM_GetCompare(&htim3, HCSR04_START_CHANNEL));
-		distance = (uint16_t)time/58u;
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
+	if (htim->Instance == TIM3) {
+		uint16_t time =
+				(uint16_t) ((uint16_t) __HAL_TIM_GetCompare(&htim3, HCSR04_STOP_CHANNEL)
+						- (uint16_t) __HAL_TIM_GetCompare(&htim3, HCSR04_START_CHANNEL));
+		distance = (uint16_t) time / 58u;
 
 		HAL_TIM_IC_Start_IT(&htim3, HCSR04_STOP_CHANNEL);
+	}
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+	if (GPIO_Pin == SWITCH_Pin) {
+		HAL_ResumeTick();
+		HAL_PWR_DisableSleepOnExit();
+		HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
 	}
 }
 
@@ -193,11 +218,10 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
-  while (1)
-  {
-  }
+	/* User can add his own implementation to report the HAL error return state */
+	__disable_irq();
+	while (1) {
+	}
   /* USER CODE END Error_Handler_Debug */
 }
 
