@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -69,33 +69,8 @@ public:
      * Gets the current hour.
      *
      * @return The current hour in range 0-23.
-     *
-     * @see getCurrentHour24, getCurrentHour12
      */
     uint8_t getCurrentHour() const;
-
-    /**
-     * Gets current hour 24, i.e. between 0 and 23.
-     *
-     * @return The current hour in range 0-23.
-     */
-    uint8_t getCurrentHour24() const;
-
-    /**
-     * Gets current hour 12, i.e. between 1 and 12.
-     *
-     * @return The current hour in range 1-12.
-     *
-     * @see getCurrentHour24, getCurrentAM
-     */
-    uint8_t getCurrentHour12() const;
-
-    /**
-     * Is the current time a.m. or p.m.? True for a.m. and false for p.m.
-     *
-     * @return True if a.m., false if p.m.
-     */
-    bool getCurrentAM() const;
 
     /**
      * Gets the current minute.

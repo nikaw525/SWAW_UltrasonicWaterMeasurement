@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -22,7 +22,7 @@
 #define TRANSITION_HPP
 
 #include <touchgfx/hal/Types.hpp>
-#include <touchgfx/Application.hpp>
+#include <touchgfx/lcd/LCD.hpp>
 
 namespace touchgfx
 {
@@ -82,16 +82,6 @@ public:
      */
     virtual void init()
     {
-    }
-
-    /**
-     * Invalidates the screen when starting the Transition. Default is
-     * to invalidate the whole screen. Subclasses can do partial
-     * invalidation.
-     */
-    virtual void invalidate()
-    {
-        Application::getInstance()->draw();
     }
 
     /**

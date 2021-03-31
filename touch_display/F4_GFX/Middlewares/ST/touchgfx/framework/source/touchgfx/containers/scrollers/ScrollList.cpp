@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -95,7 +95,8 @@ int32_t ScrollList::getPositionForItem(int16_t itemIndex)
                 return currentOffset;
             }
             offset -= itemSize;
-        } while (offset >= currentOffset - (activeWidgetSize - itemSize));
+        }
+        while (offset >= currentOffset - (activeWidgetSize - itemSize));
         int32_t allItemsSize = list.getNumberOfItems() * itemSize;
         // Either scroll left from the first item or right from the last item. Find out which is closest
         int32_t leftScrollDistance = itemOffset - currentOffset;
@@ -119,7 +120,7 @@ int32_t ScrollList::getPositionForItem(int16_t itemIndex)
     }
     else
     {
-        if (itemOffset > currentOffset) // First item on screen is higher than the itemIndex. Scroll itemIndex to top position
+        if (itemOffset > currentOffset)                      // First item on screen is higher than the itemIndex. Scroll itemIndex to top position
         {
             return itemOffset;
         }

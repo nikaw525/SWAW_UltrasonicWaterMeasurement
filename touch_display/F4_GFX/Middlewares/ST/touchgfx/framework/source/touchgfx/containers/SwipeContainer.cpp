@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -13,26 +13,26 @@
   ******************************************************************************
   */
 
-#include <touchgfx/EasingEquations.hpp>
 #include <touchgfx/containers/SwipeContainer.hpp>
+#include <touchgfx/EasingEquations.hpp>
 
 namespace touchgfx
 {
-SwipeContainer::SwipeContainer()
-    : Container(),
-      currentState(NO_ANIMATION),
-      numberOfPages(0),
-      animationCounter(0),
-      swipeCutoff(80),
-      dragX(0),
-      animateDistance(0),
-      startX(0),
-      currentPage(0),
-      endElasticWidth(30),
-      pages(EAST),
-      pageIndicator()
+SwipeContainer::SwipeContainer() :
+    Container(),
+    currentState(NO_ANIMATION),
+    numberOfPages(0),
+    animationCounter(0),
+    swipeCutoff(80),
+    dragX(0),
+    animateDistance(0),
+    startX(0),
+    currentPage(0),
+    endElasticWidth(30),
+    pages(EAST),
+    pageIndicator()
 {
-    Application::getInstance()->registerTimerWidget(this);
+    touchgfx::Application::getInstance()->registerTimerWidget(this);
 
     setTouchable(true);
 
@@ -42,7 +42,7 @@ SwipeContainer::SwipeContainer()
 
 SwipeContainer::~SwipeContainer()
 {
-    Application::getInstance()->unregisterTimerWidget(this);
+    touchgfx::Application::getInstance()->unregisterTimerWidget(this);
 }
 
 void SwipeContainer::add(Drawable& page)
@@ -52,7 +52,8 @@ void SwipeContainer::add(Drawable& page)
 
     pageIndicator.setNumberOfPages(numberOfPages);
 
-    setWidthHeight(page);
+    setWidth(page.getWidth());
+    setHeight(page.getHeight());
 }
 
 void SwipeContainer::remove(Drawable& page)
@@ -75,7 +76,8 @@ void SwipeContainer::remove(Drawable& page)
 
             if (!numberOfPages)
             {
-                setWidthHeight(0, 0);
+                setWidth(0);
+                setHeight(0);
             }
             else
             {
@@ -100,7 +102,7 @@ void SwipeContainer::setSwipeCutoff(uint16_t cutoff)
     swipeCutoff = cutoff;
 }
 
-void SwipeContainer::setPageIndicatorBitmaps(const Bitmap& normalPage, const Bitmap& highlightedPage)
+void SwipeContainer::setPageIndicatorBitmaps(const touchgfx::Bitmap& normalPage, const touchgfx::Bitmap& highlightedPage)
 {
     pageIndicator.setBitmaps(normalPage, highlightedPage);
 }
@@ -120,11 +122,6 @@ void SwipeContainer::setSelectedPage(uint8_t pageIndex)
     currentPage = pageIndex;
     pageIndicator.setHighlightPosition(currentPage);
     adjustPages();
-}
-
-uint8_t SwipeContainer::getSelectedPage() const
-{
-    return currentPage;
 }
 
 void SwipeContainer::handleTickEvent()
@@ -333,10 +330,10 @@ void SwipeContainer::animateRight()
     animationCounter++;
 }
 
-SwipeContainer::PageIndicator::PageIndicator()
-    : Container(),
-      numberOfPages(0),
-      currentPage(0)
+SwipeContainer::PageIndicator::PageIndicator() :
+    Container(),
+    numberOfPages(0),
+    currentPage(0)
 {
     unselectedPages.setXY(0, 0);
     selectedPage.setXY(0, 0);
@@ -353,20 +350,21 @@ void SwipeContainer::PageIndicator::setNumberOfPages(uint8_t size)
 
     numberOfPages = size;
 
-    if (unselectedPages.getBitmapId() != BITMAP_INVALID)
+    if (unselectedPages.getBitmap() != BITMAP_INVALID)
     {
         int dotWidth = Bitmap(unselectedPages.getBitmap()).getWidth();
         unselectedPages.setWidth(dotWidth * size);
 
         // adjust size of container according to the actual bitmaps
-        setWidthHeight(unselectedPages);
+        setWidth(unselectedPages.getWidth());
+        setHeight(unselectedPages.getHeight());
         setHighlightPosition(currentPage = 0);
 
         invalidate();
     }
 }
 
-void SwipeContainer::PageIndicator::setBitmaps(const Bitmap& normalPage, const Bitmap& highlightedPage)
+void SwipeContainer::PageIndicator::setBitmaps(const touchgfx::Bitmap& normalPage, const touchgfx::Bitmap& highlightedPage)
 {
     selectedPage.setBitmap(highlightedPage);
     unselectedPages.setBitmap(normalPage);

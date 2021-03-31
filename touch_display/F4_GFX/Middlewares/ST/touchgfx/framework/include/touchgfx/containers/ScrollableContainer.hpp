@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -116,11 +116,9 @@ public:
      * shown when dragging the contents of the ScrollableContainer (unless prohibited using
      * setScrollbarsVisible()).
      *
-     * @param  permanentlyVisible (Optional) True to show the scrollbars permanently, false for default behavior.
-     *
      * @see setScrollbarsVisible
      */
-    void setScrollbarsPermanentlyVisible(bool permanentlyVisible = true);
+    void setScrollbarsPermanentlyVisible();
 
     virtual void add(Drawable& d);
 
@@ -382,7 +380,7 @@ protected:
 
     bool hasIssuedCancelEvent; ///< true if the pressed drawable has received cancel event
 
-    uint16_t scrollDurationSpeedup;  ///< The scroll durations is multipled by this number
+    uint16_t scrollDurationSpeedup; ///< The scroll durations is multipled by this number
     uint16_t scrollDurationSlowdown; ///< The scroll durations is divided by this number
 };
 

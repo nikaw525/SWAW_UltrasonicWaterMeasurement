@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -46,7 +46,7 @@ namespace touchgfx
  *       inflicts the computation and should be considered.
  * @note This widget does not support 1 bit per pixel color depth.
  */
-class TextureMapper : public Image
+class TextureMapper : public Widget
 {
 public:
     /**
@@ -61,26 +61,26 @@ public:
         BILINEAR_INTERPOLATION ///< Slower but better image quality. Good for static representation of a scaled image.
     };
 
-    /**
-     * Constructs a new TextureMapper with a default alpha value of 255 (solid) and a
-     * default Bitmap (undefined) if none is specified. If a Bitmap is passed to the
-     * constructor, the width and height of this widget is set to those of the bitmap.
-     *
-     * @param  bitmap (Optional) The bitmap to display.
-     *
-     * @see setBitmap
-     */
-    TextureMapper(const Bitmap& bitmap = Bitmap());
+    TextureMapper();
 
     /**
-     * Sets the bitmap for this TextureMapper and updates the width and height of this
-     * widget to match those of the Bitmap.
+     * Sets the bitmap for this TextureMapper and updates the width and height of this widget to
+     * match those of the Bitmap.
      *
-     * @param  bitmap The bitmap instance.
-     *
+     * @param  bmp The bitmap instance.
      * @note The user code must call invalidate() in order to update the image on the display.
      */
-    virtual void setBitmap(const Bitmap& bitmap);
+    virtual void setBitmap(const Bitmap& bmp);
+
+    /**
+     * Gets the Bitmap currently assigned to the TextureMapper widget.
+     *
+     * @return The current Bitmap of the widget.
+     */
+    Bitmap getBitmap() const
+    {
+        return bitmap;
+    }
 
     virtual void draw(const Rect& invalidatedArea) const;
 
@@ -107,51 +107,67 @@ public:
     }
 
     /**
+     * @copydoc Image::setAlpha
+     */
+    void setAlpha(uint8_t newAlpha)
+    {
+        alpha = newAlpha;
+    }
+
+    /**
+     * @copydoc Image::getAlpha
+     */
+    uint8_t getAlpha() const
+    {
+        return alpha;
+    }
+
+    /**
      * Updates the angles of the image. The area covered by the image before and after
      * changing the angles is invalidated, which is the smallest required rectangle.
      *
-     * @param  newXAngle The new x Angle.
-     * @param  newYAngle The new y Angle.
-     * @param  newZAngle The new x Angle.
+     * @param  xAngle The new x Angle.
+     * @param  yAngle The new y Angle.
+     * @param  zAngle The new x Angle.
      *
      * @see updateXAngle, updateYAngle, updateZAngle, getXAngle, getYAngle, getZAngle
      */
-    virtual void updateAngles(float newXAngle, float newYAngle, float newZAngle);
+    virtual void updateAngles(float xAngle, float yAngle, float zAngle);
 
     /**
-     * Updates the x angle.
+     * Updates the x angle given by xAngle.
      *
-     * @param  newXAngle The new x angle.
+     * @param  xAngle The new x angle.
      *
      * @see updateAngles, getXAngle
      */
-    virtual void updateXAngle(float newXAngle)
+    virtual void updateXAngle(float xAngle)
     {
-        updateAngles(newXAngle, yAngle, zAngle);
+        updateAngles(xAngle, yAngle, zAngle);
     }
 
     /**
-     * Updates the y angle.
+     * Updates the y angle given by yAngle.
      *
-     * @param  newYAngle The new y angle.
+     * @param  yAngle The new y angle.
      *
      * @see updateAngles, getYAngle
      */
-    virtual void updateYAngle(float newYAngle)
+    virtual void updateYAngle(float yAngle)
     {
-        updateAngles(xAngle, newYAngle, zAngle);
+        updateAngles(xAngle, yAngle, zAngle);
     }
 
     /**
-     * Updates the z angle.
+     * Updates the z angle given by zAngle.
      *
-     * @param  newZAngle The new z angle.
+     * @param  zAngle The new z angle.
      *
      * @see updateAngles, getZAngle
      */
-    virtual void updateZAngle(float newZAngle)
+    virtual void updateZAngle(float zAngle)
     {
-        updateAngles(xAngle, yAngle, newZAngle);
+        updateAngles(xAngle, yAngle, zAngle);
     }
 
     /**
@@ -520,17 +536,6 @@ public:
         return imageZ3;
     }
 
-    /**
-     * Invalidate the bounding rectangle of the transformed bitmap.
-     *
-     * @see getBoundingRect
-     */
-    void invalidateBoundingRect() const
-    {
-        Rect r = getBoundingRect();
-        invalidateRect(r);
-    }
-
 protected:
     /**
      * Transform the bitmap using the supplied origo, scale, rotation and camera. This
@@ -571,6 +576,8 @@ protected:
     RenderingVariant lookupRenderVariant() const;
 
     RenderingAlgorithm currentRenderingAlgorithm; ///< The current rendering algorithm.
+    Bitmap bitmap;                                ///< The bitmap to render.
+    uint8_t alpha;                                ///< An alpha value that is applied to the entire image.
 
     static const int MINIMAL_CAMERA_DISTANCE = 1; ///< The minimal camera distance
 

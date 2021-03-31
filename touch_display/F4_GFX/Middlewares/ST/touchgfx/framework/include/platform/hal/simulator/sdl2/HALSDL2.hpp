@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -60,13 +60,14 @@ public:
      */
     HALSDL2(DMA_Interface& dma, LCD& lcd, TouchController& touchCtrl, uint16_t width, uint16_t height)
         : HAL(dma, lcd, touchCtrl, width, height),
+          debugInfoEnabled(false),
+          customTitle(0),
           portraitSkin(),
           landscapeSkin(),
           currentSkin(0),
           isSkinActive(true),
           isWindowBorderless(false),
           isWindowVisible(true),
-          isConsoleVisible(true),
           windowDrag(false)
     {
         setVsyncInterval(30.f); // Simulate 20Hz per default for backward compatibility
@@ -118,6 +119,19 @@ public:
      */
     virtual bool blockCopy(void* RESTRICT dest, const void* RESTRICT src, uint32_t numBytes);
 
+    ///@cond
+    /**
+     * If Blit-operations are supported, transparency-keying support is implicitly assumed.
+     *
+     * @param  key The "transparent" color value.
+     *
+     * @deprecated Transparancy key is no longer supported.
+     */
+    TOUCHGFX_DEPRECATED(
+        "Transparancy key is no longer supported.",
+        virtual void blitSetTransparencyKey(uint16_t key));
+    ///@endcond
+
     /**
      * Sets vsync interval for simulating same tick speed as the real hardware. Due to
      * limitations in the granularity of SDL, the generated ticks in the simulator might not
@@ -168,7 +182,7 @@ public:
      *
      * @see getWindowTitle
      */
-    static void setWindowTitle(const char* title);
+    void setWindowTitle(const char* title);
 
     /**
      * Gets window title.
@@ -177,7 +191,7 @@ public:
      *
      * @see setWindowTitle
      */
-    static const char* getWindowTitle();
+    const char* getWindowTitle() const;
 
     /**
      * Loads a skin for a given display orientation that will be rendered in the simulator
@@ -197,7 +211,7 @@ public:
      * @note When as skin is set, the entire framebuffer is rendered through SDL whenever there is
      *       a change. Without a skin, only the areas with changes is rendered through SDL.
      */
-    void loadSkin(DisplayOrientation orientation, int x, int y);
+    void loadSkin(touchgfx::DisplayOrientation orientation, int x, int y);
 
     /** Saves a screenshot to the default folder and default filename. */
     void saveScreenshot();
@@ -221,34 +235,6 @@ public:
 
     /** Copies the screenshot to clipboard. */
     virtual void copyScreenshotToClipboard();
-
-    /**
-     * Single stepping enable/disable. When single stepping is enabled, F10 will execute one
-     * tick and F9 will disable single stepping.
-     *
-     * @param  singleStepping (Optional) True to pause the simulation and start single stepping.
-     *
-     * @see isSingleStepping
-     */
-    static void setSingleStepping(bool singleStepping = true);
-
-    /**
-     * Is single stepping.
-     *
-     * @return True if single stepping, false if not.
-     *
-     * @see setSingleStepping
-     */
-    static bool isSingleStepping();
-
-    /**
-     * Single step a number of steps. Only works if single stepping is already enabled.
-     *
-     * @param  steps (Optional) The steps Default is 1 step.
-     *
-     * @see setSingleStepping, isSingleStepping
-     */
-    static void singleStep(uint16_t steps = 1);
 
 #ifndef __linux__
     /**
@@ -288,48 +274,14 @@ public:
     static uint8_t* doRotate(uint8_t* dst, uint8_t* src);
 
     /**
-     * Change visibility of window (hidden vs. shown) as well as (due to
-     * backward compatibility) the visibility of the console window.
+     * Change visibility of window (hidden vs. shown).
      *
      * @param  visible      Should the window be visible?
      * @param  redrawWindow (Optional) Should the window be redrawn? Default is true.
-     *
-     * @see getWindowVisible, setConsoleVisible
      */
     void setWindowVisible(bool visible, bool redrawWindow = true)
     {
         isWindowVisible = visible;
-        isConsoleVisible = visible;
-        if (redrawWindow)
-        {
-            recreateWindow();
-            simulator_enable_stdio();
-        }
-    }
-
-    /**
-     * Is the window visible?
-     *
-     * @return True if it is visible, false if it is hidden.
-     *
-     * @see setWindowVisible, getConsoleVisible
-     */
-    bool getWindowVisible() const
-    {
-        return isWindowVisible;
-    }
-
-    /**
-     * Change visibility of console window (hidden vs. shown).
-     *
-     * @param  visible      Should the window be visible?
-     * @param  redrawWindow (Optional) Should the window be redrawn? Default is true.
-     *
-     * @see setWindowVisible, getConsoleVisible
-     */
-    void setConsoleVisible(bool visible, bool redrawWindow = true)
-    {
-        isConsoleVisible = visible;
         if (redrawWindow)
         {
             recreateWindow();
@@ -338,15 +290,13 @@ public:
     }
 
     /**
-     * Is console window visible?
+     * Are windows visible?
      *
      * @return True if it is visible, false if it is hidden.
-     *
-     * @see setConsoleVisible, getWindowVisible
      */
-    bool getConsoleVisible() const
+    bool getWindowVisible() const
     {
-        return isConsoleVisible;
+        return isWindowVisible;
     }
 
 protected:
@@ -407,19 +357,19 @@ private:
     void recreateWindow(bool updateContent = true);
     void pushTouch(bool down) const;
     bool popTouch() const;
-    static void updateTitle(int32_t x, int32_t y);
+    void updateTitle(int32_t x, int32_t y) const;
     void alphaChannelCheck(SDL_Surface* surface, bool& isOpaque, bool& hasSemiTransparency);
     void updateCurrentSkin();
     int getCurrentSkinX() const;
     int getCurrentSkinY() const;
 
-    static bool debugInfoEnabled;
+    bool debugInfoEnabled;
 
     float msBetweenTicks;
     float msPassed;
 
     static uint16_t icon[];
-    static const char* customTitle;
+    const char* customTitle;
 
     class SkinInfo
     {
@@ -445,8 +395,7 @@ private:
     bool isSkinActive;
     bool isWindowBorderless;
     bool isWindowVisible;
-    bool isConsoleVisible;
-    static bool flashInvalidatedRect;
+    bool flashInvalidatedRect;
 
     bool windowDrag;
     int windowDragX;
@@ -466,9 +415,6 @@ private:
     static int _numTouches;
 
     static uint8_t keyPressed;
-
-    static bool singleSteppingEnabled;
-    static uint16_t singleSteppingSteps;
 };
 
 } // namespace touchgfx

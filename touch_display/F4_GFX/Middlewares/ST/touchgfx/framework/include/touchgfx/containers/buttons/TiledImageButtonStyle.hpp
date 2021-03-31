@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -83,7 +83,8 @@ public:
     {
         upTile = bmpReleased;
         downTile = bmpPressed;
-        AbstractButtonContainer::setWidthHeight(downTile);
+        AbstractButtonContainer::setWidth(downTile.getWidth());
+        AbstractButtonContainer::setHeight(downTile.getHeight());
 
         handlePressedUpdated();
     }
@@ -112,7 +113,8 @@ protected:
         int16_t buttonHeight = AbstractButtonContainer::getHeight();
 
         tiledImage.setBitmap(T::getPressed() ? downTile : upTile);
-        tiledImage.setWidthHeight(buttonWidth, buttonHeight);
+        tiledImage.setWidth(buttonWidth);
+        tiledImage.setHeight(buttonHeight);
         T::handlePressedUpdated();
     }
 

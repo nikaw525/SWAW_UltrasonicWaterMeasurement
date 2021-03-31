@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -17,8 +17,7 @@
 
 namespace touchgfx
 {
-RepeatButton::RepeatButton()
-    : Button(), ticksDelay(30), ticksInterval(15), ticks(0), ticksBeforeContinuous(0)
+RepeatButton::RepeatButton() : Button(), ticksDelay(30), ticksInterval(15), ticks(0), ticksBeforeContinuous(0)
 {
 }
 
@@ -42,22 +41,24 @@ int RepeatButton::getInterval()
     return ticksInterval;
 }
 
-void RepeatButton::handleClickEvent(const ClickEvent& event)
+void RepeatButton::handleClickEvent(const touchgfx::ClickEvent& event)
 {
     pressed = false; // To prevent AbstractButton from calling action->execute().
-    invalidate();    // Force redraw after forced state change
+    invalidate(); // Force redraw after forced state change
     Button::handleClickEvent(event);
-    if (event.getType() == ClickEvent::PRESSED)
+    if (event.getType() == touchgfx::ClickEvent::PRESSED)
     {
-        executeAction();
-
+        if (action && action->isValid())
+        {
+            action->execute(*this);
+        }
         ticks = 0;
         ticksBeforeContinuous = ticksDelay;
-        Application::getInstance()->registerTimerWidget(this);
+        touchgfx::Application::getInstance()->registerTimerWidget(this);
     }
     else
     {
-        Application::getInstance()->unregisterTimerWidget(this);
+        touchgfx::Application::getInstance()->unregisterTimerWidget(this);
     }
 }
 
@@ -69,7 +70,10 @@ void RepeatButton::handleTickEvent()
     {
         if (ticks == ticksBeforeContinuous)
         {
-            executeAction();
+            if (action && action->isValid())
+            {
+                action->execute(*this);
+            }
 
             ticks = 0;
             ticksBeforeContinuous = ticksInterval;

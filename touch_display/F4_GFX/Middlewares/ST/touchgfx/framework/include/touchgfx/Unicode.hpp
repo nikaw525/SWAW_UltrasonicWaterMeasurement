@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -87,21 +87,21 @@ public:
     static uint16_t strncpy(UnicodeChar* RESTRICT dst, const char* RESTRICT src, uint16_t maxchars);
 
     /**
-     * Integer to ASCII conversion. Supports radix 2 to radix 36.
+     * Integer to ASCII conversion. Supports radix 2 to radix 16.
      *
      * @param       value      to convert.
      * @param [out] buffer     to place result in.
-     * @param       bufferSize Size of buffer (number of UnicodeChar's).
+     * @param       bufferSize Size of buffer (number of 16-bit values).
      * @param       radix      to use (8 for octal, 10 for decimal, 16 for hex)
      */
     static void itoa(int32_t value, UnicodeChar* buffer, uint16_t bufferSize, int radix);
 
     /**
-     * Integer to ASCII conversion. Supports radix 2 to radix 36.
+     * Integer to ASCII conversion. Supports radix 2 to radix 16.
      *
      * @param       value      to convert.
      * @param [out] buffer     to place result in.
-     * @param       bufferSize Size of buffer (number of UnicodeChar's).
+     * @param       bufferSize Size of buffer (number of 16-bit values).
      * @param       radix      to use (8 for octal, 10 for decimal, 16 for hex)
      */
     static void utoa(uint32_t value, UnicodeChar* buffer, uint16_t bufferSize, int radix);
@@ -426,6 +426,27 @@ public:
      *         zero indicates the opposite.
      */
     static int strncmp(const UnicodeChar* RESTRICT str1, const UnicodeChar* RESTRICT str2, uint16_t maxchars);
+
+    ///@cond
+    /**
+     * Like strncmp except that ignore any spaces in the two strings.
+     *
+     * @param  str1     The first string.
+     * @param  str2     The second string.
+     * @param  maxchars The maximum number of chars to compare.
+     *
+     * @return Returns an integral value indicating the relationship between the strings: A
+     *         zero value indicates that the characters compared in both strings are all
+     *         equal. A value greater than zero indicates that the first character that does
+     *         not match has a greater value in str1 than in str2; And a value less than
+     *         zero indicates the opposite.
+     * @see strncmp_ignore_whitespace
+     * @deprecated Use Unicode::strncmp_ignore_whitespace().
+     */
+    TOUCHGFX_DEPRECATED(
+        "Use Unicode::strncmp_ignore_whitespace().",
+        static int strncmp_ignore_white_spaces(const UnicodeChar* RESTRICT str1, const UnicodeChar* RESTRICT str2, uint16_t maxchars));
+    ///@endcond
 
     /**
      * Like strncmp except that ignore any whitespaces in the two strings.

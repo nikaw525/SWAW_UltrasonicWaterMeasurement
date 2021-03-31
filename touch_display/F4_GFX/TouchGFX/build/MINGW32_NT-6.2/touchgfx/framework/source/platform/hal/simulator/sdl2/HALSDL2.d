@@ -28,6 +28,7 @@ build/MINGW32_NT-6.2/touchgfx/framework/source/platform/hal/simulator/sdl2/HALSD
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/Event.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/events/DragEvent.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/events/GestureEvent.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/Transition.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/lcd/LCD.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/Font.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/Unicode.hpp \
@@ -134,6 +135,8 @@ build/MINGW32_NT-6.2/touchgfx/framework/source/platform/hal/simulator/sdl2/HALSD
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/events/DragEvent.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/events/GestureEvent.hpp:
+
+../Middlewares/ST/touchgfx/framework/include/touchgfx/transitions/Transition.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/lcd/LCD.hpp:
 

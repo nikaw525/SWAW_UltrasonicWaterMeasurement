@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -76,19 +76,6 @@ public:
     }
 
     virtual Rect getSolidRect() const;
-
-    /**
-     * Executes the previously set action.
-     *
-     * @see setDeselectedAction
-     */
-    void executeDeselectedAction()
-    {
-        if (deselectedAction && deselectedAction->isValid())
-        {
-            deselectedAction->execute(*this);
-        }
-    }
 
     /**
      * Sets the alpha channel for the RadioButton, i.e. all the images used. The default

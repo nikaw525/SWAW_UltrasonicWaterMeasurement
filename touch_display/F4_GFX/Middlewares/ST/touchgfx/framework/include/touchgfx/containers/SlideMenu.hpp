@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -305,8 +305,6 @@ public:
      */
     virtual void remove(Drawable& d);
 
-    virtual void handleTickEvent();
-
 protected:
     MoveAnimator<Container> menuContainer; ///< The container holding the actual menu items. This is the container that performs the state change animation
     Button stateChangeButton;              ///< The state change button that toggles the SlideMenu state
@@ -344,6 +342,8 @@ protected:
      * @param  container The menuContainer.
      */
     void animationEndedHandler(const MoveAnimator<Container>& container);
+
+    virtual void handleTickEvent();
 
     /**
      * Gets the x coordinate for the collapsed state.

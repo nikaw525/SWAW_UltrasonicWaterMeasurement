@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -34,12 +34,12 @@ namespace touchgfx
  *
  * @note Note that this widget does not support 1 bit per pixel color depth.
  */
-class ScalableImage : public Image
+class ScalableImage : public Widget
 {
 public:
     /**
      * Rendering algorithm to use when scaling the bitmap. Nearest neighbor simply finds the
-     * closest pixel in the source bitmap. Bi-linear interpolation averages 4 pixels to find
+     * closest pixel in the source bitmap. Bilinear interpolation averages 4 pixels to find
      * a much better pixel representation.
      */
     enum ScalingAlgorithm
@@ -48,20 +48,51 @@ public:
         BILINEAR_INTERPOLATION ///< Slower but better image quality. Good for static representation of a scaled image.
     };
 
+    ScalableImage();
+
     /**
-     * Constructs a new ScalableImage with a default alpha value of 255 (solid) and a
-     * default Bitmap (undefined) if none is specified. If a Bitmap is passed to the
-     * constructor, the width and height of this widget is set to those of the bitmap.
+     * Sets the bitmap for this Image and updates the width and height of this widget to
+     * match those of the Bitmap.
      *
-     * @param  bitmap (Optional) The bitmap to display.
+     * @param  bmp The bitmap instance.
+     *
+     * @note The user code must call invalidate() in order to update the image on the display.
+     */
+    virtual void setBitmap(const Bitmap& bmp);
+
+    /**
+     * Gets the Bitmap currently being used by the ScaleableImage widget.
+     *
+     * @return The current Bitmap of the widget.
      *
      * @see setBitmap
+     *
+     * @note The returned bitmap is the original, unscaled, bitmap.
      */
-    ScalableImage(const Bitmap& bitmap = Bitmap());
+    Bitmap getBitmap() const
+    {
+        return bitmap;
+    }
+
+    /**
+     * @copydoc Image::setAlpha
+     */
+    virtual void setAlpha(uint8_t newAlpha)
+    {
+        alpha = newAlpha;
+    }
+
+    /**
+     * @copydoc Image::getAlpha
+     */
+    virtual uint8_t getAlpha() const
+    {
+        return alpha;
+    }
 
     /**
      * Sets the algorithm to be used. In short, there is currently a value for fast (nearest
-     * neighbor) and a value for slow (bi-linear interpolation).
+     * neighbor) and a value for slow (bilinear interpolation).
      *
      * @param  algorithm The algorithm to use when rendering.
      *
@@ -84,8 +115,9 @@ public:
 
 protected:
     ScalingAlgorithm currentScalingAlgorithm; ///< The current scaling algorithm.
+    Bitmap bitmap;                            ///< The bitmap to scale and display.
+    uint8_t alpha;                            ///< An alpha value that is applied to the entire image.
 
-private:
     /// @cond
     /**
      * Draw a triangle part of the bitmap.

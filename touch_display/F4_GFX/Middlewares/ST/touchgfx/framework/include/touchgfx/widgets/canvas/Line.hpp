@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -69,20 +69,20 @@ public:
      * Sets the starting point and ending point of the line.
      *
      * @tparam T Generic type parameter, either int or float.
-     * @param  startX The x coordinate of the start point.
-     * @param  startY The y coordinate of the start point.
-     * @param  endX   The x coordinate of the end point.
-     * @param  endY   The y coordinate of the end point.
+     * @param  x1 The x coordinate of the start point.
+     * @param  y1 The y coordinate of the start point.
+     * @param  x2 The x coordinate of the end point.
+     * @param  y2 The y coordinate of the end point.
      *
      * @see setStart, setEnd
      *
      * @note The area containing the Line is not invalidated.
      */
     template <typename T>
-    void setLine(T startX, T startY, T endX, T endY)
+    void setLine(T x1, T y1, T x2, T y2)
     {
-        setStart(startX, startY);
-        setEnd(endX, endY);
+        setStart(x1, y1);
+        setEnd(x2, y2);
     }
 
     /**
@@ -157,8 +157,8 @@ public:
     template <typename T>
     void getStart(T& x, T& y) const
     {
-        x = startX.to<T>();
-        y = startY.to<T>();
+        x = x1.to<T>();
+        y = y1.to<T>();
     }
 
     /**
@@ -235,8 +235,8 @@ public:
     template <typename T>
     void getEnd(T& x, T& y) const
     {
-        x = endX.to<T>();
-        y = endY.to<T>();
+        x = x2.to<T>();
+        y = y2.to<T>();
     }
 
     /**
@@ -405,14 +405,10 @@ public:
     void updateLengthAndAngle(CWRUtil::Q5 length, CWRUtil::Q5 angle);
 
 private:
-    CWRUtil::Q5 startX;
-    CWRUtil::Q5 startY;
-    CWRUtil::Q5 endX;
-    CWRUtil::Q5 endY;
+    CWRUtil::Q5 x1, y1, x2, y2;
     CWRUtil::Q5 lineWidth;
     LINE_ENDING_STYLE lineEnding;
-    CWRUtil::Q5 xCorner[4];
-    CWRUtil::Q5 yCorner[4];
+    CWRUtil::Q5 xCorner[4], yCorner[4];
     Rect minimalRect;
     int lineCapArcIncrement;
 

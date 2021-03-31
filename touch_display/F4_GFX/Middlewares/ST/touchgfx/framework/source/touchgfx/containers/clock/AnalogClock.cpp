@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -17,19 +17,19 @@
 
 namespace touchgfx
 {
-AnalogClock::AnalogClock()
-    : AbstractClock(),
-      animationEquation(EasingEquations::linearEaseNone),
-      animationDuration(0),
-      clockRotationCenterX(0),
-      clockRotationCenterY(0),
-      lastHour(0),
-      lastMinute(0),
-      lastSecond(0),
-      hourHandMinuteCorrectionActive(false),
-      minuteHandSecondCorrectionActive(false)
+AnalogClock::AnalogClock() :
+    AbstractClock(),
+    animationEquation(EasingEquations::linearEaseNone),
+    animationDuration(0),
+    clockRotationCenterX(0),
+    clockRotationCenterY(0),
+    lastHour(0),
+    lastMinute(0),
+    lastSecond(0),
+    hourHandMinuteCorrectionActive(false),
+    minuteHandSecondCorrectionActive(false)
 {
-    AnalogClock::add(background);
+    Container::add(background);
 
     hourHand.updateZAngle(0.f);
     minuteHand.updateZAngle(0.f);
@@ -48,9 +48,12 @@ void AnalogClock::setBackground(const BitmapId backgroundBitmapId)
 void AnalogClock::setBackground(const BitmapId backgroundBitmapId, const int16_t rotationCenterX, const int16_t rotationCenterY)
 {
     background.setBitmap(Bitmap(backgroundBitmapId));
-    setWidthHeight(background);
 
-    setRotationCenter(rotationCenterX, rotationCenterY);
+    clockRotationCenterX = rotationCenterX;
+    clockRotationCenterY = rotationCenterY;
+
+    setWidth(background.getWidth());
+    setHeight(background.getHeight());
 }
 
 void AnalogClock::setRotationCenter(int16_t rotationCenterX, int16_t rotationCenterY)
@@ -79,7 +82,8 @@ void AnalogClock::setupHand(TextureMapper& hand, const BitmapId bitmapId, int16_
     remove(hand);
 
     hand.setBitmap(Bitmap(bitmapId));
-    hand.setWidthHeight(*this);
+    hand.setWidth(getWidth());
+    hand.setHeight(getHeight());
     hand.setXY(0, 0);
     hand.setBitmapPosition(clockRotationCenterX - rotationCenterX, clockRotationCenterY - rotationCenterY);
     hand.setCameraDistance(300.0f);
@@ -108,19 +112,6 @@ void AnalogClock::initializeTime24Hour(uint8_t hour, uint8_t minute, uint8_t sec
 void AnalogClock::initializeTime12Hour(uint8_t hour, uint8_t minute, uint8_t second, bool am)
 {
     initializeTime24Hour((hour % 12) + (am ? 0 : 12), minute, second);
-}
-
-void AnalogClock::setAlpha(uint8_t newAlpha)
-{
-    background.setAlpha(newAlpha);
-    hourHand.setAlpha(newAlpha);
-    minuteHand.setAlpha(newAlpha);
-    secondHand.setAlpha(newAlpha);
-}
-
-uint8_t AnalogClock::getAlpha() const
-{
-    return background.getAlpha();
 }
 
 void AnalogClock::updateClock()
@@ -240,4 +231,4 @@ void AnalogClock::setAnimation(uint16_t duration, EasingEquation animationProgre
     animationDuration = duration;
     animationEquation = animationProgressionEquation;
 }
-} // namespace touchgfx
+}

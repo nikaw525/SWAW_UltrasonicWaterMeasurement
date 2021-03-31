@@ -1,5 +1,5 @@
 ##############################################################################
-# This file is part of the TouchGFX 4.16.0 distribution.
+# This file is part of the TouchGFX 4.14.0 distribution.
 #
 # <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
 # All rights reserved.</center></h2>
@@ -16,13 +16,12 @@ class FontsCpp
     @@font_convert = font_convert
   end
 
-  def initialize(text_entries, typographies, output_directory, font_asset_path, data_format, generate_binary_fonts, generate_font_format)
+  def initialize(text_entries, typographies, output_directory, font_asset_path, data_format, generate_binary_font_files)
     @typographies = typographies
     @output_directory = output_directory
     @font_asset_path = font_asset_path
     @data_format = data_format
-    @generate_binary_fonts = generate_binary_fonts
-    @generate_font_format = generate_font_format
+    @generate_binary_font_files = generate_binary_font_files
   end
   def run
     unique_typographies = @typographies.map{ |t| Typography.new("", t.font_file, t.font_size, t.bpp, t.fallback_character, t.ellipsis_character) }.uniq
@@ -83,12 +82,9 @@ class FontsCpp
 -b #{typography.bpp} \
 -d #{fallback_char} \
 -e #{ellipsis_char} \
--bf #{@generate_binary_fonts} \
--ff #{@generate_font_format} \
+-bf #{@generate_binary_font_files} \
 #{byte_align}"
-      #puts "Command: #{cmd}"
       output = `#{cmd}`
-      #puts "FontConverter: #{output}\n"
       if !$?.success?
         puts cmd
         puts output

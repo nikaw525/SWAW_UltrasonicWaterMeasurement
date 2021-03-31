@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -100,7 +100,8 @@ HAL& touchgfx_generic_init(DMA_Interface& dma, LCD& display, TouchController& tc
 
     FontManager::setFontProvider(&fontProvider);
 
-    FrontendHeap::getInstance(); // We need to initialize the frontend heap.
+    FrontendHeap& heap = FrontendHeap::getInstance();
+    (void)heap; // we need to obtain the reference above to initialize the frontend heap.
 
     hal.registerEventListener(*(Application::getInstance()));
 

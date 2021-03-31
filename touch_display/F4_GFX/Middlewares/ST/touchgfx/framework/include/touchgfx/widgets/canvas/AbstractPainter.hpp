@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -31,7 +31,7 @@ namespace touchgfx
  * An abstract class for creating painter classes for drawing canvas widgets. All canvas widgets
  * need a painter to fill the shape drawn with a CanvasWidgetRenderer. The painter must
  * provide the color of a pixel on a given coordinate, which will the be blended into
- * the framebuffer depending on the position of the canvas widget and the transparency
+ * the framebuffer depending on the position of the canvas widget and the transparancy
  * of the given pixel.
  *
  * The AbstractPainter also implements a function which will blend each pixel in a

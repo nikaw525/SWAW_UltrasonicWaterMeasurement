@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -18,19 +18,19 @@
 namespace touchgfx
 {
 AbstractProgressIndicator::AbstractProgressIndicator()
-    : Container(), rangeMin(0), rangeMax(100), currentValue(0), rangeSteps(100), rangeStepsMin(0),
-      equation(&EasingEquations::linearEaseNone), animationStartValue(0), animationEndValue(0), animationDuration(0), animationStep(0),
-      valueSetCallback(0), valueUpdatedCallback(0)
+    : Container(), rangeMin(0), rangeMax(100), currentValue(0), rangeSteps(100), rangeStepsMin(0)
 {
     background.setXY(0, 0);
-    AbstractProgressIndicator::add(background);
-    AbstractProgressIndicator::add(progressIndicatorContainer);
+    Container::add(background);
+
+    Container::add(progressIndicatorContainer);
 }
 
-void AbstractProgressIndicator::setBackground(const Bitmap& bitmapBackground)
+void AbstractProgressIndicator::setBackground(const Bitmap& bmpBackground)
 {
-    background.setBitmap(bitmapBackground);
-    setWidthHeight(background);
+    background.setBitmap(bmpBackground);
+    Drawable::setWidth(background.getWidth());
+    Drawable::setHeight(background.getHeight());
 }
 
 void AbstractProgressIndicator::setProgressIndicatorPosition(int16_t x, int16_t y, int16_t width, int16_t height)
@@ -68,7 +68,7 @@ int16_t AbstractProgressIndicator::getProgressIndicatorHeight() const
     return progressIndicatorContainer.getHeight();
 }
 
-void AbstractProgressIndicator::setRange(int min, int max, uint16_t steps /*= 0*/, uint16_t minStep /*= 0*/)
+void AbstractProgressIndicator::setRange(int16_t min, int16_t max, uint16_t steps /*= 0*/, uint16_t minStep /*= 0*/)
 {
     assert(min < max);
     rangeMin = min;
@@ -86,7 +86,7 @@ void AbstractProgressIndicator::setRange(int min, int max, uint16_t steps /*= 0*
     assert(rangeStepsMin < rangeSteps);
 }
 
-void AbstractProgressIndicator::getRange(int& min, int& max, uint16_t& steps, uint16_t& minStep) const
+void AbstractProgressIndicator::getRange(int16_t& min, int16_t& max, uint16_t& steps, uint16_t& minStep) const
 {
     min = rangeMin;
     max = rangeMax;
@@ -94,14 +94,14 @@ void AbstractProgressIndicator::getRange(int& min, int& max, uint16_t& steps, ui
     minStep = rangeStepsMin;
 }
 
-void AbstractProgressIndicator::getRange(int& min, int& max, uint16_t& steps) const
+void AbstractProgressIndicator::getRange(int16_t& min, int16_t& max, uint16_t& steps) const
 {
     min = rangeMin;
     max = rangeMax;
     steps = rangeSteps;
 }
 
-void AbstractProgressIndicator::getRange(int& min, int& max) const
+void AbstractProgressIndicator::getRange(int16_t& min, int16_t& max) const
 {
     min = rangeMin;
     max = rangeMax;
@@ -109,46 +109,9 @@ void AbstractProgressIndicator::getRange(int& min, int& max) const
 
 void AbstractProgressIndicator::setValue(int value)
 {
-    value = MAX(value, rangeMin);
-    value = MIN(value, rangeMax);
-    if (value != currentValue)
-    {
-        currentValue = value;
-        if (valueSetCallback && valueSetCallback->isValid())
-        {
-            valueSetCallback->execute(*this);
-        }
-    }
-}
-
-void AbstractProgressIndicator::setEasingEquation(EasingEquation easingEquation)
-{
-    equation = easingEquation;
-}
-
-void AbstractProgressIndicator::updateValue(int value, uint16_t duration)
-{
-    value = MAX(value, rangeMin);
-    value = MIN(value, rangeMax);
-    if (duration == 0)
-    {
-        setValue(value);
-        if (valueUpdatedCallback && valueUpdatedCallback->isValid())
-        {
-            valueUpdatedCallback->execute(*this);
-        }
-        return;
-    }
-    if (animationDuration > 0)
-    {
-        // Old animation is running, stop it first
-        Application::getInstance()->unregisterTimerWidget(this);
-    }
-    animationStartValue = getValue();
-    animationEndValue = value;
-    animationDuration = duration;
-    animationStep = 0;
-    Application::getInstance()->registerTimerWidget(this);
+    int newValue = MAX(value, rangeMin);
+    newValue = MIN(newValue, rangeMax);
+    currentValue = newValue;
 }
 
 int AbstractProgressIndicator::getValue() const
@@ -169,56 +132,4 @@ uint16_t AbstractProgressIndicator::getProgress(uint16_t range /*= 100*/) const
     int32_t prog = muldiv(step, range, rangeSteps, remainder);
     return (uint16_t)prog;
 }
-
-void AbstractProgressIndicator::setValueSetAction(GenericCallback<const AbstractProgressIndicator&>& callback)
-{
-    valueSetCallback = &callback;
-}
-
-void AbstractProgressIndicator::handleTickEvent()
-{
-    animationStep++;
-    int16_t delta = (int16_t)equation(animationStep, 0, animationEndValue - animationStartValue, animationDuration);
-    setValue(animationStartValue + delta);
-    if (animationStep >= animationDuration)
-    {
-        animationDuration = 0;
-        animationStep = 0;
-        Application::getInstance()->unregisterTimerWidget(this);
-        if (valueUpdatedCallback && valueUpdatedCallback->isValid())
-        {
-            valueUpdatedCallback->execute(*this);
-        }
-    }
-}
-
-void AbstractProgressIndicator::setValueUpdatedAction(GenericCallback<const AbstractProgressIndicator&>& callback)
-{
-    valueUpdatedCallback = &callback;
-}
-
-void AbstractProgressIndicator::getRange(int16_t& min, int16_t& max, uint16_t& steps, uint16_t& minStep) const
-{
-    int imin, imax;
-    getRange(imin, imax, steps, minStep);
-    min = (int16_t)imin;
-    max = (int16_t)imax;
-}
-
-void AbstractProgressIndicator::getRange(int16_t& min, int16_t& max, uint16_t& steps) const
-{
-    int imin, imax;
-    getRange(imin, imax, steps);
-    min = (int16_t)imin;
-    max = (int16_t)imax;
-}
-
-void AbstractProgressIndicator::getRange(int16_t& min, int16_t& max) const
-{
-    int imin, imax;
-    getRange(imin, imax);
-    min = (int16_t)imin;
-    max = (int16_t)imax;
-}
-
 } // namespace touchgfx

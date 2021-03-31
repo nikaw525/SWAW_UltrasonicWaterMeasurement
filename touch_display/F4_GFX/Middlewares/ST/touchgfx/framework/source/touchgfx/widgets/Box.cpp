@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -21,7 +21,7 @@ namespace touchgfx
 Rect Box::getSolidRect() const
 {
     Rect solidRect(0, 0, 0, 0);
-    if (alpha == 255)
+    if (reportAsSolid || alpha == 255)
     {
         solidRect.width = rect.width;
         solidRect.height = rect.height;

@@ -10,9 +10,6 @@ Screen2ViewBase::Screen2ViewBase() :
     sliderValueChangedCallback(this, &Screen2ViewBase::sliderValueChangedCallbackHandler)
 {
 
-    __background.setPosition(0, 0, 480, 272);
-    __background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
-
     box1.setPosition(0, 0, 480, 272);
     box1.setColor(touchgfx::Color::getColorFrom24BitRGB(60, 180, 230));
 
@@ -58,7 +55,6 @@ Screen2ViewBase::Screen2ViewBase() :
     YSlider.setValue(147);
     YSlider.setNewValueCallback(sliderValueChangedCallback);
 
-    add(__background);
     add(box1);
     add(image1);
     add(go_slide_1);

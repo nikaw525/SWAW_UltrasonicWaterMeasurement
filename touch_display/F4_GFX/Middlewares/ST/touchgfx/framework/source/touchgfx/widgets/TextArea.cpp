@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -46,7 +46,7 @@ void TextArea::setTypedText(TypedText t)
     typedText = t;
     // If this TextArea does not yet have a width and height,
     // just assign the smallest possible size to fit current text.
-    if (getWidth() == 0 && getHeight() == 0)
+    if ((getWidth() == 0) && (getHeight() == 0))
     {
         resizeToCurrentText();
     }
@@ -60,11 +60,13 @@ void TextArea::resizeToCurrentText()
         uint16_t h = getTextHeight();
         if (rotation == TEXT_ROTATE_0 || rotation == TEXT_ROTATE_180)
         {
-            setWidthHeight(w, h);
+            setWidth(w);
+            setHeight(h);
         }
         else
         {
-            setWidthHeight(h, w);
+            setWidth(h);
+            setHeight(w);
         }
     }
 }
@@ -98,7 +100,8 @@ void TextArea::resizeToCurrentTextWithAlignment()
                 uint16_t old_y = getY();
                 setY(old_y + (old_height - text_height));
             }
-            setWidthHeight(text_width, text_height);
+            setWidth(text_width);
+            setHeight(text_height);
         }
         else
         {
@@ -122,7 +125,8 @@ void TextArea::resizeToCurrentTextWithAlignment()
                 uint16_t old_x = getX();
                 setX(old_x + (old_width - text_height));
             }
-            setWidthHeight(text_height, text_width);
+            setWidth(text_height);
+            setHeight(text_width);
         }
     }
 }
@@ -139,32 +143,6 @@ void TextArea::resizeHeightToCurrentText()
         else
         {
             setWidth(h);
-        }
-    }
-}
-
-void TextArea::resizeHeightToCurrentTextWithRotation()
-{
-    if (typedText.hasValidId())
-    {
-        uint16_t h = getTextHeight();
-        switch (rotation)
-        {
-        default:
-        case TEXT_ROTATE_0:
-            setHeight(h);
-            break;
-        case TEXT_ROTATE_90:
-            setX(rect.right() - h);
-            setWidth(h);
-            break;
-        case TEXT_ROTATE_180:
-            setY(rect.bottom() - h);
-            setHeight(h);
-            break;
-        case TEXT_ROTATE_270:
-            setWidth(h);
-            break;
         }
     }
 }

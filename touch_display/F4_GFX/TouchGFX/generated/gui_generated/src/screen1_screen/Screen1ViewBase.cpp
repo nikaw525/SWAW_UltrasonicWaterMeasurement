@@ -10,9 +10,6 @@ Screen1ViewBase::Screen1ViewBase() :
     buttonCallback(this, &Screen1ViewBase::buttonCallbackHandler)
 {
 
-    __background.setPosition(0, 0, 480, 272);
-    __background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
-
     box1.setPosition(0, 0, 480, 272);
     box1.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
 
@@ -29,7 +26,6 @@ Screen1ViewBase::Screen1ViewBase() :
     go_slide_2.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     go_slide_2.setAction(buttonCallback);
 
-    add(__background);
     add(box1);
     add(image1);
     add(image2);

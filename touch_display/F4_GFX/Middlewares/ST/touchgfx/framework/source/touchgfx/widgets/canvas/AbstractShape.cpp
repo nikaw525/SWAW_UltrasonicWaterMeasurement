@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -18,13 +18,13 @@
 
 namespace touchgfx
 {
-AbstractShape::AbstractShape()
-    : CanvasWidget(),
-      dx(0), dy(0), shapeAngle(0),
-      xScale(CWRUtil::toQ10<int>(1)), yScale(CWRUtil::toQ10<int>(1)),
-      minimalRect(Rect())
+AbstractShape::AbstractShape() : CanvasWidget(),
+    dx(0), dy(0), shapeAngle(0),
+    xScale(CWRUtil::toQ10<int>(1)), yScale(CWRUtil::toQ10<int>(1)),
+    minimalRect(Rect())
 {
-    Drawable::setWidthHeight(0, 0);
+    Drawable::setWidth(0);
+    Drawable::setHeight(0);
 }
 
 bool AbstractShape::drawCanvasWidget(const Rect& invalidatedArea) const

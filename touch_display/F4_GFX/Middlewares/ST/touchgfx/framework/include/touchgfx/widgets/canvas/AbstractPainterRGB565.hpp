@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -78,7 +78,7 @@ public:
      */
     FORCE_INLINE_FUNCTION uint16_t mixColors(uint16_t R, uint16_t G, uint16_t B, uint16_t bufpix, uint8_t alpha)
     {
-        const uint8_t ialpha = 0xFF - alpha;
+        uint8_t ialpha = 0xFF - alpha;
         return (((R * alpha + (bufpix & RMASK) * ialpha) / 255) & RMASK)
                | (((G * alpha + (bufpix & GMASK) * ialpha) / 255) & GMASK)
                | (((B * alpha + (bufpix & BMASK) * ialpha) / 255) & BMASK);

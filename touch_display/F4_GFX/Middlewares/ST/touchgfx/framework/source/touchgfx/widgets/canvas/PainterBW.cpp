@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -17,60 +17,31 @@
 
 namespace touchgfx
 {
-void PainterBW::render(uint8_t* ptr, int x, int xAdjust, int y, unsigned count, const uint8_t* covers)
+void PainterBW::render(uint8_t* ptr, int x, int xAdjust, int y, unsigned count, const uint8_t* /*covers*/)
 {
     currentX = x + areaOffsetX;
     currentY = y + areaOffsetY;
     x += xAdjust;
     unsigned char* p = ptr + (x / 8);
 
-    const uint8_t totalAlpha = LCD::div255(widgetAlpha * painterAlpha);
-    if (totalAlpha == 0xFF)
+    do
     {
-        do
+        unsigned pixel = 1 << (7 - (x % 8));
+        if (!painterColor)
         {
-            if (*covers++ >= 0x80)
-            {
-                unsigned pixel = 1 << (7 - (x % 8));
-                if (!painterColor)
-                {
-                    *p &= ~pixel;
-                }
-                else
-                {
-                    *p |= pixel;
-                }
-            }
-            if (((++x) % 8) == 0)
-            {
-                p++;
-            }
-            currentX++;
-        } while (--count);
-    }
-    else
-    {
-        do
+            *p &= ~pixel;
+        }
+        else
         {
-            if (totalAlpha * *covers++ >= 0xFF * 0x80)
-            {
-                unsigned pixel = 1 << (7 - (x % 8));
-                if (!painterColor)
-                {
-                    *p &= ~pixel;
-                }
-                else
-                {
-                    *p |= pixel;
-                }
-            }
-            if (((++x) % 8) == 0)
-            {
-                p++;
-            }
-            currentX++;
-        } while (--count);
+            *p |= pixel;
+        }
+        if (((++x) % 8) == 0)
+        {
+            p++;
+        }
+        currentX++;
     }
+    while (--count);
 }
 
 bool PainterBW::renderNext(uint8_t& color)

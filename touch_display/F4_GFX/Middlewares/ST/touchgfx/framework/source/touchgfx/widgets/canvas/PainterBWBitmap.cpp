@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -75,9 +75,9 @@ void PainterBWBitmap::render(uint8_t* ptr, int x, int xAdjust, int y, unsigned c
             {
                 neededBits = remainingBits; // Very narrow src inside same word
             }
-            const uint16_t availableBits = 8 - srcBitX;
+            uint16_t availableBits = 8 - srcBitX;
             uint8_t mask = (1u << neededBits) - 1u;
-            const uint8_t dstShift = static_cast<uint8_t>(8u - (dstBitX + neededBits));
+            uint8_t dstShift = static_cast<uint8_t>(8u - (dstBitX + neededBits));
             mask <<= dstShift;
 
             uint8_t word = *src;
@@ -112,7 +112,7 @@ void PainterBWBitmap::render(uint8_t* ptr, int x, int xAdjust, int y, unsigned c
             uint16_t bytesPerLine = remainingBits / 8;
             if (srcBitX == 0)
             {
-                HAL::getInstance()->blockCopy(dst, src, bytesPerLine);
+                touchgfx::HAL::getInstance()->blockCopy(dst, src, bytesPerLine);
                 src += bytesPerLine;
                 dst += bytesPerLine;
             }
@@ -142,7 +142,7 @@ void PainterBWBitmap::render(uint8_t* ptr, int x, int xAdjust, int y, unsigned c
                 word <<= srcBitX;
                 word |= src[1] >> (8u - srcBitX);
             }
-            const uint8_t mask = ((1u << remainingBits) - 1u) << (8u - remainingBits);
+            uint8_t mask = ((1u << remainingBits) - 1u) << (8u - remainingBits);
             *dst = (*dst & ~mask) | (word & mask);
         }
     }

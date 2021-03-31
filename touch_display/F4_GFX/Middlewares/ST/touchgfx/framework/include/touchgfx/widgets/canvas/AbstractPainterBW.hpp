@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -31,7 +31,7 @@ namespace touchgfx
 /**
  * The AbstractPainterBW class is an abstract class for creating a painter to draw on a BW
  * display using CanvasWidgetRenderer. Pixels are either set or removed, alpha blending
- * (and transparency) is not supported.
+ * (and transparancy) is not supported.
  *
  * @see AbstractPainter
  */
@@ -39,7 +39,7 @@ class AbstractPainterBW : public AbstractPainter
 {
 public:
     AbstractPainterBW()
-        : AbstractPainter(), currentX(0), currentY(0)
+        : currentX(0), currentY(0)
     {
         assert(compatibleFramebuffer(Bitmap::BW) && "The chosen painter only works with BW displays");
     }

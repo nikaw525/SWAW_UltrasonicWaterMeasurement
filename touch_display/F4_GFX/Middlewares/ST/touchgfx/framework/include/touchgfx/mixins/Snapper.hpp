@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -42,7 +42,7 @@ class Snapper : public Draggable<T>
 {
 public:
     Snapper()
-        : Draggable<T>(), snapPositionX(0), snapPositionY(0), dragAction(0), snappedAction(0)
+        : Draggable<T>(), snapPosition(0, 0), dragAction(0), snappedAction(0)
     {
     }
 
@@ -77,12 +77,12 @@ public:
                 snappedAction->execute();
             }
 
-            T::moveTo(snapPositionX, snapPositionY);
+            T::moveTo(snapPosition.first, snapPosition.second);
         }
         else if (evt.getType() == ClickEvent::PRESSED)
         {
-            snapPositionX = T::getX();
-            snapPositionY = T::getY();
+            snapPosition.first = T::getX();
+            snapPosition.second = T::getY();
         }
     }
 
@@ -95,8 +95,8 @@ public:
      */
     void setSnapPosition(int16_t x, int16_t y)
     {
-        snapPositionX = x;
-        snapPositionY = y;
+        snapPosition.first = x;
+        snapPosition.second = y;
     }
 
     /**
@@ -124,8 +124,7 @@ public:
     }
 
 private:
-    int16_t snapPositionX;
-    int16_t snapPositionY;
+    Pair<int16_t, int16_t> snapPosition;
     GenericCallback<const DragEvent&>* dragAction;
     GenericCallback<>* snappedAction;
 };

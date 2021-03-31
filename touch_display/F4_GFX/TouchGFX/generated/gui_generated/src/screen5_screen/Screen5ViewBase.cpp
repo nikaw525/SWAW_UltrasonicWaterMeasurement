@@ -10,9 +10,6 @@ Screen5ViewBase::Screen5ViewBase() :
     buttonCallback(this, &Screen5ViewBase::buttonCallbackHandler)
 {
 
-    __background.setPosition(0, 0, 480, 272);
-    __background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
-
     box1.setPosition(259, 0, 221, 272);
     box1.setColor(touchgfx::Color::getColorFrom24BitRGB(60, 180, 230));
 
@@ -45,7 +42,6 @@ Screen5ViewBase::Screen5ViewBase() :
     digitalClock.setDisplayMode(touchgfx::DigitalClock::DISPLAY_24_HOUR);
     digitalClock.setTime24Hour(10, 10, 0);
 
-    add(__background);
     add(box1);
     add(box1_1);
     add(go_slide_1);

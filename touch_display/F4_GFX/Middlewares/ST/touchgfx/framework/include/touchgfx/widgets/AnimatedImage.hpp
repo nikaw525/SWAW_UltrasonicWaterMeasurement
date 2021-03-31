@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -71,7 +71,7 @@ public:
         : animationDoneAction(0),
           startId(BITMAP_INVALID),
           endId(BITMAP_INVALID),
-          updateTicksInterval(updateInterval),
+          updateTicksInterval(),
           ticksSinceUpdate(0),
           reverse(false),
           loopAnimation(false),
@@ -89,7 +89,7 @@ public:
      *               last if reverse order) bitmap.
      * @param  loop  (Optional) Defines if the animation should loop or do a single animation.
      */
-    virtual void startAnimation(const bool rev, const bool reset = false, const bool loop = false);
+    virtual void startAnimation(const bool& rev, const bool& reset = false, const bool& loop = false);
 
     /**
      * Stops and resets the animation. If the animation should not reset to the first image
@@ -122,6 +122,22 @@ public:
         animationDoneAction = &callback;
     }
 
+    ///@cond
+    /**
+     * Gets the running state of the AnimatedImage.
+     *
+     * @return true if the animation is currently running, false otherwise.
+     *
+     * @deprecated Use AnimatedImage::isAnimatedImageRunning().
+     */
+    TOUCHGFX_DEPRECATED(
+        "Use AnimatedImage::isAnimatedImageRunning().",
+        bool isRunning())
+    {
+        return isAnimatedImageRunning();
+    }
+    ///@endcond
+
     /**
      * Gets the running state of the AnimatedImage.
      *
@@ -143,24 +159,6 @@ public:
     }
 
     /**
-     * @copydoc Image::setBitmap(const Bitmap&)
-     *
-     * @see setBitmaps, setEndBitmap
-     *
-     * @note This only sets the start image.
-     */
-    virtual void setBitmap(const Bitmap& bitmap);
-
-    /**
-     * Sets the end bitmap for this AnimatedImage sequence.
-     *
-     * @param  bitmap The bitmap.
-     *
-     * @see setBitmaps, setBitmap
-     */
-    virtual void setBitmapEnd(const Bitmap& bitmap);
-
-    /**
      * Sets the bitmaps that are used by the animation.
      *
      * The animation will iterate over the bitmaps that lies between the IDs of start and
@@ -168,8 +166,6 @@ public:
      *
      * @param  start Defines the start of the range of images in the animation.
      * @param  end   Defines the end of the range of images in the animation.
-     *
-     * @see setBitmap, SetBitmapEnd
      */
     void setBitmaps(BitmapId start, BitmapId end);
 
@@ -193,6 +189,10 @@ protected:
     bool reverse;                ///< If true, run in reverse direction (last to first).
     bool loopAnimation;          ///< If true, continuously loop animation.
     bool running;                ///< If true, animation is running.
+
+    virtual void setBitmap(const Bitmap& bmp)
+    {
+    }
 };
 
 } // namespace touchgfx

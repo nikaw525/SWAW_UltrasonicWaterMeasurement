@@ -31,7 +31,6 @@ extern const uint8_t* const unicodes_verdana_40_4bpp[] =
     unicodes_verdana_40_4bpp_0
 };
 extern const touchgfx::KerningNode kerning_verdana_40_4bpp[];
-
 touchgfx::GeneratedFont& getFont_verdana_40_4bpp();
 
 touchgfx::GeneratedFont& getFont_verdana_40_4bpp()

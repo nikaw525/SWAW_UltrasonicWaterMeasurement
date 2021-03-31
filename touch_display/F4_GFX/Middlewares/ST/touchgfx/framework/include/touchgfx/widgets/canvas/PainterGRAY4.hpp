@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -45,18 +45,19 @@ public:
     PainterGRAY4(colortype color = 0, uint8_t alpha = 255)
         : AbstractPainterGRAY4()
     {
-        setColor(color);
-        setAlpha(alpha);
+        setColor(color, alpha);
     }
 
     /**
      * Sets color and alpha to use when drawing the CanvasWidget.
      *
      * @param  color The color.
+     * @param  alpha (Optional) the alpha, default is 255 i.e. solid.
      */
-    void setColor(colortype color)
+    void setColor(colortype color, uint8_t alpha = 255)
     {
         painterGray = color & 0x0F;
+        setAlpha(alpha);
     }
 
     /**

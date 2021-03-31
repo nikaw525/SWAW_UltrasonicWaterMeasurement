@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -21,7 +21,6 @@
 #ifndef ABSTRACTPROGRESSINDICATOR_HPP
 #define ABSTRACTPROGRESSINDICATOR_HPP
 
-#include <touchgfx/EasingEquations.hpp>
 #include <touchgfx/containers/Container.hpp>
 #include <touchgfx/widgets/Image.hpp>
 
@@ -44,9 +43,9 @@ public:
      * Sets the background image. The width and height of the progress indicator widget is
      * updated according to the dimensions of the bitmap.
      *
-     * @param  bitmapBackground The background bitmap.
+     * @param  bmpBackground The background bitmap.
      */
-    virtual void setBackground(const Bitmap& bitmapBackground);
+    virtual void setBackground(const Bitmap& bmpBackground);
 
     /**
      * Sets the position and dimensions of the actual progress indicator relative to the
@@ -135,7 +134,7 @@ public:
      *
      * @see setValue, getProgress
      */
-    virtual void setRange(int min, int max, uint16_t steps = 0, uint16_t minStep = 0);
+    virtual void setRange(int16_t min, int16_t max, uint16_t steps = 0, uint16_t minStep = 0);
 
     /**
      * Gets the range set by setRange().
@@ -147,7 +146,7 @@ public:
      *
      * @see setRange
      */
-    virtual void getRange(int& min, int& max, uint16_t& steps, uint16_t& minStep) const;
+    virtual void getRange(int16_t& min, int16_t& max, uint16_t& steps, uint16_t& minStep) const;
 
     /**
      * Gets the range set by setRange().
@@ -158,7 +157,7 @@ public:
      *
      * @see setRange
      */
-    virtual void getRange(int& min, int& max, uint16_t& steps) const;
+    virtual void getRange(int16_t& min, int16_t& max, uint16_t& steps) const;
 
     /**
      * Gets the range set by setRange().
@@ -168,61 +167,16 @@ public:
      *
      * @see setRange
      */
-    virtual void getRange(int& min, int& max) const;
-
-    /// @cond
-    TOUCHGFX_DEPRECATED("Use getRange with int& instead of int16_t& parameters.",
-                        virtual void getRange(int16_t& min, int16_t& max, uint16_t& steps, uint16_t& minStep) const);
-
-    TOUCHGFX_DEPRECATED("Use getRange with int& instead of int16_t& parameters.",
-                        virtual void getRange(int16_t& min, int16_t& max, uint16_t& steps) const);
-
-    TOUCHGFX_DEPRECATED("Use getRange with int& instead of int16_t& parameters.",
-                        virtual void getRange(int16_t& min, int16_t& max) const);
-    /// @endcond
+    virtual void getRange(int16_t& min, int16_t& max) const;
 
     /**
-     * Sets the current value in the range (min..max) set by setRange(). Values lower than min
-     * are mapped to min, values higher than max are mapped to max. If a callback function has
-     * been set using setValueSetAction, that callback will be called (unless the new value
-     * is the same as the current value).
+     * Sets the current value in the range (min..max) set by setRange(). Values lower than
+     * min are mapped to min, values higher than max are mapped to max.
      *
      * @param  value The value.
-     *
-     * @see getValue, updateValue, setValueSetAction
-     *
-     * @note if value is equal to the current value, nothing happens, and the callback will not be
-     *       called.
+     * @see getValue
      */
     virtual void setValue(int value);
-
-    /**
-     * Sets easing equation to be used in updateValue.
-     *
-     * @param  easingEquation The easing equation.
-     *
-     * @see updateValue
-     */
-    virtual void setEasingEquation(EasingEquation easingEquation);
-
-    /**
-     * Update the current value in the range (min..max) set by setRange(). Values lower than min
-     * are mapped to min, values higher than max are mapped to max. The value is changed
-     * gradually in the given number of ticks using the easing equation set in
-     * setEasingEquation. Function setValue() is called for every new value during the change of
-     * value, and if a callback function has been set using setValueSetAction, that callback
-     * will be called for every new value. The callback set using setValueUpdatedCallback is
-     * called when the animation has finished.
-     *
-     * @param  value    The value.
-     * @param  duration The duration.
-     *
-     * @see setValue, setEasingEquation, setValueSetAction, setValueUpdatedAction
-     *
-     * @note If duration is 0, setValue will be called immediately and the valueUpdated action is
-     *       called immediately.
-     */
-    virtual void updateValue(int value, uint16_t duration);
 
     /**
      * Gets the current value set by setValue().
@@ -245,44 +199,14 @@ public:
      */
     virtual uint16_t getProgress(uint16_t range = 100) const;
 
-    /**
-     * Sets callback that will be triggered every time a new value is assigned to the progress
-     * indicator. This can happen directly from setValue() or during a gradual change initiated
-     * using updateValue().
-     *
-     * @param  callback The callback.
-     *
-     * @see setValue, updateValue
-     */
-    void setValueSetAction(GenericCallback<const AbstractProgressIndicator&>& callback);
-
-    /**
-     * Sets callback that will be triggered when updateValue has finished animating to the final
-     * value.
-     *
-     * @param  callback The callback.
-     *
-     * @see updateValue, setValueSetAction
-     */
-    void setValueUpdatedAction(GenericCallback<const AbstractProgressIndicator&>& callback);
-
-    virtual void handleTickEvent();
-
 protected:
-    Image background;                                                        ///< The background image
-    Container progressIndicatorContainer;                                    ///< The container that holds the actual progress indicator
-    int rangeMin;                                                            ///< The range minimum
-    int rangeMax;                                                            ///< The range maximum
-    int currentValue;                                                        ///< The current value
-    uint16_t rangeSteps;                                                     ///< The range steps
-    uint16_t rangeStepsMin;                                                  ///< The range steps minimum
-    EasingEquation equation;                                                 ///< The equation used in updateValue()
-    int animationStartValue;                                                 ///< The animation start value
-    int animationEndValue;                                                   ///< The animation end value
-    int animationDuration;                                                   ///< Duration of the animation
-    int animationStep;                                                       ///< The current animation step
-    GenericCallback<const AbstractProgressIndicator&>* valueSetCallback;     ///< New value assigned Callback.
-    GenericCallback<const AbstractProgressIndicator&>* valueUpdatedCallback; ///< Animation ended Callback.
+    Image background;                     ///< The background image
+    Container progressIndicatorContainer; ///< The container that holds the actual progress indicator
+    int16_t rangeMin;                     ///< The range minimum
+    int16_t rangeMax;                     ///< The range maximum
+    uint16_t currentValue;                ///< The current value
+    uint16_t rangeSteps;                  ///< The range steps
+    uint16_t rangeStepsMin;               ///< The range steps minimum
 };
 
 } // namespace touchgfx

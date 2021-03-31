@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -27,7 +27,7 @@
 namespace touchgfx
 {
 /**
- * PainterBW is used for drawing one 1bpp displays. The color is either on or off. No
+ * PainterBW is used for drawing one 1bpp displays. The color is either on or off No
  * transparency is supported.
  *
  * @see AbstractPainter

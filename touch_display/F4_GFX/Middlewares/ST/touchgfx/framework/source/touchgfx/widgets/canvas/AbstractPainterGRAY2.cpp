@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -36,7 +36,8 @@ void AbstractPainterGRAY2::render(uint8_t* ptr,
             uint8_t gray, alpha;
             if (renderNext(gray, alpha))
             {
-                const uint8_t combinedAlpha = LCD::div255((*covers) * LCD::div255(alpha * widgetAlpha));
+                uint8_t combinedAlpha = LCD::div255((*covers) * LCD::div255(alpha * widgetAlpha));
+                covers++;
 
                 if (combinedAlpha == 0xFF) // max alpha=0xFF on "*covers" and max alpha=0xFF on "widgetAlpha"
                 {
@@ -45,20 +46,20 @@ void AbstractPainterGRAY2::render(uint8_t* ptr,
                 }
                 else
                 {
-                    const uint8_t p_gray = LCD2bpp::getPixel(ptr, x) * 0x55;
-                    const uint8_t ialpha = 0xFF - combinedAlpha;
+                    uint8_t p_gray = LCD2getPixel(ptr, x) * 0x55;
+                    uint8_t ialpha = 0xFF - combinedAlpha;
                     renderPixel(ptr, x, LCD::div255((gray * combinedAlpha + p_gray * ialpha) * 0x55) >> 6);
                 }
             }
-            covers++;
-            x++;
             currentX++;
-        } while (--count != 0);
+            x++;
+        }
+        while (--count != 0);
     }
 }
 
 void AbstractPainterGRAY2::renderPixel(uint8_t* p, uint16_t offset, uint8_t gray)
 {
-    LCD2bpp::setPixel(p, offset, gray);
+    LCD2setPixel(p, offset, gray);
 }
 } // namespace touchgfx

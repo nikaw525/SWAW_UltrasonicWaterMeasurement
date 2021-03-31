@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -87,13 +87,6 @@ public:
     virtual void setColor(colortype color);
 
     /**
-     * Gets the color of the text.
-     *
-     * @return The color.
-     */
-    virtual colortype getColor() const;
-
-    /**
      * Sets the display mode to 12/24 hour clock with or without seconds.
      *
      * @param  dm The new display mode.
@@ -151,7 +144,7 @@ public:
     }
 
 protected:
-    static const int BUFFER_SIZE = 12; ///< Buffer size of the wild card, worst case is "12:59:59 AM" (12 chars)
+    static const int BUFFER_SIZE = 16; ///< Buffer size of the wild card, worst case is "12:59:59 AM" (12 chars)
 
     DisplayMode displayMode;             ///< The current display mode
     bool useLeadingZeroForHourIndicator; ///< Print a leading zero if the hour is less than 10

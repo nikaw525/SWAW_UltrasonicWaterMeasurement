@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -42,7 +42,7 @@ void FrameBufferAllocatorSignalBlockDrawn();
  * This class is an abstract interface for a class allocating partial framebuffer blocks. The
  * interface must be implemented by a subclass.
  *
- * @see ManyBlockAllocator
+ * @see SingleBlockAllocator, ManyBlockAllocator
  */
 class FrameBufferAllocator
 {
@@ -62,11 +62,8 @@ public:
      */
     virtual uint16_t allocateBlock(const uint16_t x, const uint16_t y, const uint16_t width, const uint16_t height, uint8_t** block) = 0;
 
-    /**
-     * Marks a previously allocated block as ready to be transferred to the LCD.
-     *
-     */
-    virtual void markBlockReadyForTransfer() = 0;
+    /** Marks a previously allocated block as ready to be transferred to the LCD. */
+    virtual void markBlockReadyForTransfer() = 0; //only one block can be allocated for drawing
 
     /**
      * Check if a block is ready for transfer to the LCD.
@@ -78,29 +75,11 @@ public:
     /**
      * Get the block ready for transfer.
      *
-     * @param [out] rect Reference to rect to write block x, y, width, and height.
+     * @param [in,out] rect Reference to rect to write block x, y, width, and height.
      *
      * @return Returns the address of the block ready for transfer.
      */
     virtual const uint8_t* getBlockForTransfer(Rect& rect) = 0;
-
-    /**
-     * Get the Rect of the next block to transfer.
-     *
-     * @return Rect ready for transfer.
-     *
-     * @see hasBlockReadyForTransfer
-     *
-     * @note This function should only be called when the allocator has a block ready for transfer.
-     */
-    virtual const Rect& peekBlockForTransfer() = 0;
-
-    /**
-     * Check if a block is ready for drawing (the block is empty).
-     *
-     * @return True if a block is empty.
-     */
-    virtual bool hasEmptyBlock() = 0;
 
     /**
      * Free a block after transfer to the LCD. Marks a previously allocated block as
@@ -112,16 +91,109 @@ public:
     virtual ~FrameBufferAllocator()
     {
     }
+};
 
-protected:
-    /** BlockState is used for internal state of each block. */
+/**
+ * This class is partial framebuffer allocator using just one block. No new buffer can be
+ * allocated until the block has been transferred to LCD.
+ *
+ * @see ManyBlockAllocator
+ */
+template <uint16_t block_size, uint32_t bytes_pr_pixel>
+class SingleBlockAllocator : public FrameBufferAllocator
+{
+public:
+    SingleBlockAllocator()
+        : state(EMPTY)
+    {
+    }
+
+    /**
+     * Allocates a framebuffer block. The block will have at least the width requested. The
+     * height of the allocated block can be lower than requested if not enough memory is
+     * available. This class calls FrameBufferAllocatorWaitOnTransfer() if no block is
+     * available.
+     *
+     * @param          x      The absolute x coordinate of the block on the screen.
+     * @param          y      The absolute y coordinate of the block on the screen.
+     * @param          width  The width of the block.
+     * @param          height The height of the block.
+     * @param [in,out] block  Pointer to pointer to return the block address in.
+     *
+     * @return The height of the allocated block.
+     */
+    virtual uint16_t allocateBlock(const uint16_t x, const uint16_t y, const uint16_t width, const uint16_t height, uint8_t** block)
+    {
+        while (state != EMPTY)
+        {
+            FrameBufferAllocatorWaitOnTransfer();
+        }
+        assert(state == EMPTY);
+        state = ALLOCATED;
+        const int32_t stride = width * bytes_pr_pixel;
+        const int32_t lines = block_size / stride;
+        *block = (uint8_t*)&memory[0];
+        blockRect.x = x;
+        blockRect.y = y;
+        blockRect.width = width;
+        blockRect.height = MIN(height, lines);
+        return blockRect.height;
+    }
+
+    /** Marks a previously allocated block as ready to be transferred to the LCD. */
+    virtual void markBlockReadyForTransfer()
+    {
+        assert(state == ALLOCATED);
+        state = DRAWN;
+        FrameBufferAllocatorSignalBlockDrawn();
+    }
+
+    /**
+     * Check if a block is ready for transfer to the LCD.
+     *
+     * @return True if a block is ready for transfer.
+     */
+    virtual bool hasBlockReadyForTransfer()
+    {
+        return (state == DRAWN);
+    }
+
+    /**
+     * Get the block ready for transfer.
+     *
+     * @param [in,out] rect Reference to rect to write block x, y, width, and height.
+     *
+     * @return Returns the address of the block ready for transfer.
+     */
+    virtual const uint8_t* getBlockForTransfer(Rect& rect)
+    {
+        rect = const_cast<const Rect&>(blockRect);
+        assert(state == DRAWN);
+        state = SENDING;
+        return (const uint8_t*)&memory[0];
+    }
+
+    /**
+     * Free a block after transfer to the LCD. Marks a previously allocated block as
+     * transferred and ready to reuse.
+     */
+    virtual void freeBlockAfterTransfer()
+    {
+        assert(state == SENDING);
+        state = EMPTY;
+    }
+
+private:
     enum BlockState
     {
-        EMPTY,     ///< Block is empty, can be allocated
-        ALLOCATED, ///< Block is allocated for drawing
-        DRAWN,     ///< Block has been drawn to, can be send
-        SENDING    ///< Block is being transmitted to the display
+        EMPTY,
+        ALLOCATED,
+        DRAWN,
+        SENDING
     };
+    volatile BlockState state;
+    uint32_t memory[block_size / 4];
+    volatile Rect blockRect;
 };
 
 /**
@@ -129,7 +201,7 @@ protected:
  * allocated until no free blocks are available. After transfer to LCD, a block is
  * queued for allocation again.
  *
- * @see FrameBufferAllocator
+ * @see SingleBlockAllocator
  */
 template <uint32_t block_size, uint32_t blocks, uint32_t bytes_pr_pixel>
 class ManyBlockAllocator : public FrameBufferAllocator
@@ -226,27 +298,6 @@ public:
         return (const uint8_t*)&memory[sendingBlock][0];
     }
 
-    virtual const Rect& peekBlockForTransfer()
-    {
-        int nextSendingBlock = sendingBlock + 1;
-        if (nextSendingBlock == blocks)
-        {
-            nextSendingBlock = 0;
-        }
-        assert(state[nextSendingBlock] == DRAWN);
-        return blockRect[nextSendingBlock];
-    }
-
-    virtual bool hasEmptyBlock()
-    {
-        int nextDrawingBlock = drawingBlock + 1;
-        if (nextDrawingBlock == blocks)
-        {
-            nextDrawingBlock = 0;
-        }
-        return (state[nextDrawingBlock] == EMPTY);
-    }
-
     /**
      * Free a block after transfer to the LCD.
      *
@@ -259,6 +310,13 @@ public:
     }
 
 private:
+    enum BlockState
+    {
+        EMPTY,
+        ALLOCATED,
+        DRAWN,
+        SENDING
+    };
     volatile BlockState state[blocks];
     uint32_t memory[blocks][block_size / 4];
     Rect blockRect[blocks];

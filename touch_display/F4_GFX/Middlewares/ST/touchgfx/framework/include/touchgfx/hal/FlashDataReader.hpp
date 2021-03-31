@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -62,7 +62,7 @@ public:
     /**
      * Initiate a read operation from flash to a buffer. This can be an asynchrony operation
      * that is still running after this function returns. Buffers must be handled by the
-     * subclass. LCD16bppSerialFlash will at most copy 4 bytes times the width of the
+     * subclass. LCD16bbbSerialFlash will at most copy 4 bytes times the width of the
      * display.
      *
      * @param  src   Address of source data in the flash.

@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -35,27 +35,38 @@ namespace touchgfx
 class GestureEvent : public Event
 {
 public:
-    /** Values that represent gesture types. */
+    /** Values that represent gesture event types. */
     typedef enum
     {
         SWIPE_HORIZONTAL, ///< An enum constant representing a horizontal swipe
         SWIPE_VERTICAL    ///< An enum constant representing a vertical swipe
     } GestureEventType;
 
+    ///@cond
+    /**
+     * Values that represent gesture event types.
+     *
+     * @deprecated Use GestureEvent::GestureEventType.
+     */
+    TOUCHGFX_DEPRECATED(
+        "Use GestureEvent::GestureEventType.",
+        typedef GestureEventType GestureType);
+    ///@endcond
+
     /**
      * Constructor. Create a gesture event of the specified type with the specified
      * coordinates.
      *
-     * @param  type     The type of the gesture event.
-     * @param  velocity The velocity of this gesture (swipe)
-     * @param  x        The x coordinate of the gesture.
-     * @param  y        The y coordinate of the gesture.
+     * @param  t       The type of the gesture event.
+     * @param  v       The velocity of this gesture (swipe)
+     * @param  x_coord The x coordinate of the gesture.
+     * @param  y_coord The y coordinate of the gesture.
      */
-    GestureEvent(GestureEventType type, int16_t velocity, int16_t x, int16_t y)
-        : gestureEventType(type),
-          gestureVelocity(velocity),
-          gestureX(x),
-          gestureY(y)
+    GestureEvent(GestureEventType t, int16_t v, int16_t x_coord, int16_t y_coord)
+        : type(t),
+          velocity(v),
+          x(x_coord),
+          y(y_coord)
     {
     }
 
@@ -66,7 +77,7 @@ public:
      */
     int16_t getVelocity() const
     {
-        return gestureVelocity;
+        return velocity;
     }
 
     /**
@@ -76,7 +87,7 @@ public:
      */
     GestureEventType getType() const
     {
-        return gestureEventType;
+        return type;
     }
 
     /**
@@ -86,7 +97,7 @@ public:
      */
     int16_t getX() const
     {
-        return gestureX;
+        return x;
     }
 
     /**
@@ -96,7 +107,7 @@ public:
      */
     int16_t getY() const
     {
-        return gestureY;
+        return y;
     }
 
     /**
@@ -115,10 +126,10 @@ private:
     {
     }
 
-    GestureEventType gestureEventType;
-    int16_t gestureVelocity;
-    int16_t gestureX;
-    int16_t gestureY;
+    GestureEventType type;
+    int16_t velocity;
+    int16_t x;
+    int16_t y;
 };
 
 } // namespace touchgfx

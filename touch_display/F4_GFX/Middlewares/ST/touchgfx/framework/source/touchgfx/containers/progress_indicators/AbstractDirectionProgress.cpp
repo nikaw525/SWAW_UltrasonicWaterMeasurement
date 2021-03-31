@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -25,15 +25,12 @@ AbstractDirectionProgress::AbstractDirectionProgress()
 
 void AbstractDirectionProgress::setDirection(DirectionType direction)
 {
-    if (direction != progressDirection)
-    {
-        progressDirection = direction;
-        progressIndicatorContainer.invalidate();
-        setValue(getValue());
-    }
+    progressDirection = direction;
+    progressIndicatorContainer.invalidate();
+    setValue(getValue());
 }
 
-AbstractDirectionProgress::DirectionType AbstractDirectionProgress::getDirection() const
+touchgfx::AbstractDirectionProgress::DirectionType AbstractDirectionProgress::getDirection() const
 {
     return progressDirection;
 }

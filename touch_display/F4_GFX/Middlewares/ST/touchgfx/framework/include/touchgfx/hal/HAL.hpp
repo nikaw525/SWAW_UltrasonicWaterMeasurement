@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -38,7 +38,6 @@
 namespace touchgfx
 {
 class UIEventListener;
-class FlashDataReader;
 
 /**
  * Hardware Abstraction Layer.
@@ -82,10 +81,7 @@ public:
           lastTouched(false),
           updateMCULoad(0),
           cc_begin(0),
-          displayOrientationChangeRequested(false),
-          useAuxiliaryLCD(false),
-          useDMAAcceleration(true),
-          lastRenderVariant(HARDWARE)
+          displayOrientationChangeRequested(false)
     {
         instance = this;
         DISPLAY_WIDTH = width;
@@ -272,42 +268,21 @@ public:
      * Function for obtaining the blit capabilities of the concrete HAL implementation. As
      * default, will return whatever blitcaps are reported by the associated DMA object.
      *
-     * DMA operations can be disabled by calling enableDMAAcceleration(bool).
-     *
      * @return a bitmask of the supported blitcaps.
-     *
-     * @see enableDMAAcceleration
      */
     virtual BlitOperations getBlitCaps()
     {
-        if (useDMAAcceleration)
-        {
-            return dma.getBlitCaps();
-        }
-        else
-        {
-            return static_cast<BlitOperations>(0);
-        }
+        return dma.getBlitCaps();
     }
 
     /**
-     * Sets a flag to allow use of DMA operations to speed up drawing operations.
-     *
-     * @param  enable True to enable, false to disable.
-     *
-     * @see getBlitCaps
-     */
-    void enableDMAAcceleration(const bool enable)
-    {
-        useDMAAcceleration = enable;
-    }
-
-    /**
-     * Blits a 2D source-array to the framebuffer performing alpha-blending as specified.
+     * Blits a 2D source-array to the framebuffer performing alpha-blending (and
+     * transparency keying) as specified.
      *
      * @param  pSrc                 The source-array pointer (points to first value to copy)
      * @param  pClut                The CLUT pointer (points to CLUT header data which include
-     *                              the type and size of this CLUT followed by colors data)
+     *                              the type and size of this CLUT followed by colors
+     *                              data)
      * @param  x                    The destination x coordinate on the framebuffer.
      * @param  y                    The destination y coordinate on the framebuffer.
      * @param  width                The width desired area of the source 2D array.
@@ -318,7 +293,8 @@ public:
      * @param  hasTransparentPixels If true, this data copy contains transparent pixels and
      *                              require hardware support for that to be enabled.
      * @param  dstWidth             The distance (in elements) from first value of first line, to
-     *                              first value of second line (the destination 2D array width)
+     *                              first value of second line (the destination 2D array
+     *                              width)
      * @param  srcFormat            The source buffer color format (default is the framebuffer
      *                              format)
      * @param  dstFormat            The destination buffer color format (default is the
@@ -330,7 +306,8 @@ public:
     void blitCopy(const uint16_t* pSrc, const uint8_t* pClut, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t srcWidth, uint8_t alpha, bool hasTransparentPixels, uint16_t dstWidth, Bitmap::BitmapFormat srcFormat, Bitmap::BitmapFormat dstFormat);
 
     /**
-     * Blits a 2D source-array to the framebuffer performing alpha-blending as specified.
+     * Blits a 2D source-array to the framebuffer performing alpha-blending (and
+     * transparency keying) as specified.
      *
      * @param  pSrc                 The source-array pointer (points to first value to copy)
      * @param  x                    The destination x coordinate on the framebuffer.
@@ -343,7 +320,8 @@ public:
      * @param  hasTransparentPixels If true, this data copy contains transparent pixels and
      *                              require hardware support for that to be enabled.
      * @param  dstWidth             The distance (in elements) from first value of first line, to
-     *                              first value of second line (the destination 2D array width)
+     *                              first value of second line (the destination 2D array
+     *                              width)
      * @param  srcFormat            The source buffer color format (default is the framebuffer
      *                              format)
      * @param  dstFormat            The destination buffer color format (default is the
@@ -355,8 +333,8 @@ public:
     virtual void blitCopy(const uint16_t* pSrc, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t srcWidth, uint8_t alpha, bool hasTransparentPixels, uint16_t dstWidth, Bitmap::BitmapFormat srcFormat, Bitmap::BitmapFormat dstFormat);
 
     /**
-     * Blits a 2D source-array to the framebuffer performing alpha-blending as specified using
-     * the default lcd format.
+     * Blits a 2D source-array to the framebuffer performing alpha-blending (and
+     * transparency keying) as specified using the default lcd format.
      *
      * @param  pSrc                 The source-array pointer (points to first value to copy)
      * @param  x                    The destination x coordinate on the framebuffer.
@@ -407,7 +385,8 @@ public:
     virtual void blitCopyGlyph(const uint8_t* pSrc, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t srcWidth, colortype color, uint8_t alpha, BlitOperations operation);
 
     /**
-     * Blits a color value to the framebuffer performing alpha-blending as specified.
+     * Blits a color value to the framebuffer performing alpha-blending (and transparency
+     * keying) as specified.
      *
      * @param  color     The desired fill-color.
      * @param  x         The destination x coordinate on the framebuffer.
@@ -415,9 +394,10 @@ public:
      * @param  width     The width desired area of the source 2D array.
      * @param  height    The height of desired area of the source 2D array.
      * @param  alpha     The alpha value to use for blending (255 = solid, no blending)
-     * @param  dstWidth  The distance (in elements) from first value of first line, to first value
-     *                   of second line (the destination 2D array width)
-     * @param  dstFormat The destination buffer color format (default is the framebuffer format)
+     * @param  dstWidth  The distance (in elements) from first value of first line, to first
+     *                   value of second line (the destination 2D array width)
+     * @param  dstFormat The destination buffer color format (default is the framebuffer
+     *                   format)
      *
      * @note Alpha=255 is assumed "solid" and shall be used if HAL does not support
      *       BLIT_OP_FILL_WITH_ALPHA.
@@ -425,7 +405,8 @@ public:
     virtual void blitFill(colortype color, uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint8_t alpha, uint16_t dstWidth, Bitmap::BitmapFormat dstFormat);
 
     /**
-     * Blits a color value to the framebuffer performing alpha-blending as specified.
+     * Blits a color value to the framebuffer performing alpha-blending (and transparency
+     * keying) as specified.
      *
      * @param  color  The desired fill-color.
      * @param  x      The destination x coordinate on the framebuffer.
@@ -585,16 +566,6 @@ public:
         gestures.setDragThreshold(value);
     }
 
-    /**
-     * Get the Gesture class attached to the HAL instance.
-     *
-     * @return A pointer to the Gestures object.
-     */
-    Gestures* getGestures()
-    {
-        return &gestures;
-    }
-
     static uint16_t DISPLAY_WIDTH;           ///< The width of the LCD display in pixels.
     static uint16_t DISPLAY_HEIGHT;          ///< The height of the LCD display in pixels.
     static DisplayRotation DISPLAY_ROTATION; ///< The rotation from display to framebuffer.
@@ -602,6 +573,58 @@ public:
     static uint16_t FRAME_BUFFER_HEIGHT;     ///< The height of the framebuffer in pixels.
     static bool USE_DOUBLE_BUFFERING;        ///< Is double buffering enabled?
     static bool USE_ANIMATION_STORAGE;       ///< Is animation storage enabled?
+
+    ///@cond
+    /**
+     * Sets the address used for framebuffers, usually located in external memory. Will
+     * reserve memory for one or two framebuffers based on display size. Will optionally
+     * also reserve memory for a third framebuffer used for animationStorage.
+     *
+     * @param [in] adr                 Starting address to use for framebuffers.
+     * @param      depth               (Optional) Depth of each pixel in bits, default is 16.
+     * @param      useDoubleBuffering  (Optional) If true, reserve memory for an extra
+     *                                 framebuffer.
+     * @param      useAnimationStorage (Optional) If true, reserve memory for animation
+     *                                 storage.
+     *
+     * @deprecated Use HAL::setFrameBufferStartAddresses(void*,void*,void*).
+     */
+    TOUCHGFX_DEPRECATED(
+        "Use HAL::setFrameBufferStartAddresses(void*,void*,void*).",
+        virtual void setFrameBufferStartAddress(void* adr, uint16_t depth = 16, bool useDoubleBuffering = true, bool useAnimationStorage = true))
+    {
+        uint16_t stride = lcd().framebufferStride();
+        uint32_t bufferSizeInBytes = stride * FRAME_BUFFER_HEIGHT;
+        uint8_t* ptr = (uint8_t*)adr;
+        void* double_buf = 0;
+        void* anim_store = 0;
+        if (useDoubleBuffering)
+        {
+            ptr += bufferSizeInBytes; // Move past used buffer (framebuffer)
+            double_buf = (void*)ptr;
+        }
+        if (useAnimationStorage)
+        {
+            ptr += bufferSizeInBytes; // Move past used buffer (framebuffer and possibly double buffer)
+            anim_store = (void*)ptr;
+        }
+        switch (depth)
+        {
+        case 32:
+        case 24:
+        case 16:
+        case 8:
+        case 4:
+        case 2:
+        case 1:
+            setFrameBufferStartAddresses(adr, double_buf, anim_store);
+            break;
+        default:
+            assert(0 && "Unsupported bit depth");
+            break;
+        }
+    }
+    ///@endcond
 
     /**
      * Sets framebuffer start addresses.
@@ -749,17 +772,6 @@ public:
     FrameBufferAllocator* getFrameBufferAllocator()
     {
         return frameBufferAllocator;
-    }
-
-    /**
-     * Gets the flash data reader. This method must be implemented in
-     * subclasses that uses a FlashDataReader object.
-     *
-     * @return the FlashDataReader.
-     */
-    virtual FlashDataReader* getFlashDataReader() const
-    {
-        return 0;
     }
 
     /**
@@ -987,26 +999,6 @@ public:
         return auxiliaryLCD;
     }
 
-    /**
-     * A list of rendering variants.
-     *
-     * @see setRenderingVariant
-     */
-    typedef enum
-    {
-        SOFTWARE,
-        HARDWARE
-    } RenderingVariant;
-
-    /**
-     * Set current rendering variant for cache maintenance.
-     *
-     * This function is used to keep track of previous rendering variant and will determine if cache should be flush or invalidated depending on transition state.
-     *
-     * @param variant The rendering variant used.
-     */
-    void setRenderingVariant(RenderingVariant variant);
-
 protected:
     /** This function is called at each timer tick, depending on platform implementation. */
     virtual void tick();
@@ -1077,28 +1069,6 @@ protected:
         }
     }
 
-    /**
-     * Invalidate D-Cache.
-     *
-     * Called by setRenderingVariant when chaning rendering variant
-     * from Hardware to Software indicating the cache should be invalidated.
-     */
-    virtual void InvalidateCache()
-    {
-
-    }
-
-    /**
-     * Flush D-Cache.
-     *
-     * Called by setRenderingVariant when chaning rendering variant
-     * from Software to Hardware indicating the cache should be invalidated.
-     */
-    virtual void FlushCache()
-    {
-
-    }
-
     DMA_Interface& dma;                          ///< A reference to the DMA interface.
     LCD& lcdRef;                                 ///< A reference to the LCD.
     TouchController& touchController;            ///< A reference to the touch controller.
@@ -1137,8 +1107,6 @@ private:
     DisplayOrientation requestedOrientation;
     bool displayOrientationChangeRequested;
     bool useAuxiliaryLCD;
-    bool useDMAAcceleration;
-    RenderingVariant lastRenderVariant;
 
     uint16_t* getDstAddress(uint16_t x, uint16_t y, uint16_t* startAddress, uint16_t dstWidth, Bitmap::BitmapFormat dstFormat) const;
     uint16_t* getDstAddress(uint16_t x, uint16_t y, uint16_t* startAddress) const;

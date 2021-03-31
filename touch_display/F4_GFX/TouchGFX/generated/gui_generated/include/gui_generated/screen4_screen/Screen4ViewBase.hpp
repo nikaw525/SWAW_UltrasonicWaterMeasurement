@@ -26,7 +26,6 @@ protected:
     /*
      * Member Declarations
      */
-    touchgfx::Box __background;
     touchgfx::Box box1_1;
     touchgfx::Box box1;
     touchgfx::ButtonWithIcon go_slide_1;

@@ -4,7 +4,6 @@
       {
         "Components": [
           {
-            "Type": "Box",
             "Color": {
               "Red": 255,
               "Green": 255,
@@ -16,15 +15,14 @@
             "Y": 0,
             "Width": 480,
             "Height": 272,
+            "Type": "Box",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "Image",
             "RelativeFilename": "background1.png",
             "Alpha": 255,
             "Name": "image1",
@@ -32,15 +30,14 @@
             "Y": 0,
             "Width": 480,
             "Height": 272,
+            "Type": "Image",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "Image",
             "RelativeFilename": "STLOGO1.png",
             "Alpha": 255,
             "Name": "image2",
@@ -48,15 +45,14 @@
             "Y": 100,
             "Width": 100,
             "Height": 72,
+            "Type": "Image",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "ButtonWithLabel",
             "Pressed": "__designer\\Dark_Buttons_Round_small_pressed.png",
             "Released": "__designer\\Dark_Buttons_Round_small.png",
             "Alpha": 255,
@@ -77,8 +73,8 @@
             "Y": 187,
             "Width": 170,
             "Height": 60,
+            "Type": "ButtonWithLabel",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -90,14 +86,14 @@
             "InteractionName": "go_slide_2",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "go_slide_2"
+              "TriggerComponent": "go_slide_2",
+              "Type": "TriggerClicked"
             },
             "Action": {
-              "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionCover",
               "ScreenTransitionDirection": "East",
-              "ActionComponent": "Screen2"
+              "ActionComponent": "Screen2",
+              "Type": "ActionGotoScreen"
             }
           }
         ],
@@ -108,7 +104,6 @@
       {
         "Components": [
           {
-            "Type": "Box",
             "Color": {
               "Red": 60,
               "Green": 180,
@@ -120,15 +115,14 @@
             "Y": 0,
             "Width": 480,
             "Height": 272,
+            "Type": "Box",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "Image",
             "RelativeFilename": "slide_2_back.png",
             "Alpha": 255,
             "Name": "image1",
@@ -136,15 +130,14 @@
             "Y": 0,
             "Width": 480,
             "Height": 120,
+            "Type": "Image",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "ButtonWithIcon",
             "Pressed": "__designer\\Dark_Buttons_Round_icon_button_pressed.png",
             "Released": "__designer\\Dark_Buttons_Round_icon_button.png",
             "Alpha": 255,
@@ -159,15 +152,14 @@
             "Y": 3,
             "Width": 60,
             "Height": 60,
+            "Type": "ButtonWithIcon",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "ButtonWithIcon",
             "Pressed": "__designer\\Dark_Buttons_Round_icon_button_pressed.png",
             "Released": "__designer\\Dark_Buttons_Round_icon_button.png",
             "Alpha": 255,
@@ -182,15 +174,14 @@
             "Y": 3,
             "Width": 60,
             "Height": 60,
+            "Type": "ButtonWithIcon",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "AnimatedImage",
             "FileNameFirst": "ani_01.png",
             "FileNameLast": "ani_11.png",
             "UpdateTicksInterval": 60,
@@ -204,15 +195,14 @@
             "Y": 4,
             "Width": 85,
             "Height": 112,
+            "Type": "AnimatedImage",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": true,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "Image",
             "RelativeFilename": "TGFX_shadow_log.png",
             "Alpha": 255,
             "Name": "touchGFX_logo",
@@ -220,15 +210,14 @@
             "Y": 147,
             "Width": 200,
             "Height": 51,
+            "Type": "Image",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "Slider",
             "IsHorizontalSlider": true,
             "BackgroundUnselected": "__designer\\Blue_Slider_Horizontal_Small_slider_horizontal_small_round_back.png",
             "BackgroundSelected": "__designer\\Blue_Slider_Horizontal_Small_slider_horizontal_small_round_fill.png",
@@ -247,15 +236,14 @@
             "Y": 228,
             "Width": 179,
             "Height": 34,
+            "Type": "Slider",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "Slider",
             "IsHorizontalSlider": true,
             "BackgroundUnselected": "__designer\\Blue_Slider_Horizontal_Small_slider_horizontal_small_round_back.png",
             "BackgroundSelected": "__designer\\Blue_Slider_Horizontal_Small_slider_horizontal_small_round_fill.png",
@@ -274,15 +262,14 @@
             "Y": 83,
             "Width": 179,
             "Height": 34,
+            "Type": "Slider",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "Slider",
             "IsHorizontalSlider": false,
             "BackgroundUnselected": "__designer\\Blue_Slider_Vertical_Small_Slider3_Vertical_Round_back.png",
             "BackgroundSelected": "__designer\\Blue_Slider_Vertical_Small_Slider3_Vertical_Round_fill.png",
@@ -301,8 +288,8 @@
             "Y": 83,
             "Width": 34,
             "Height": 179,
+            "Type": "Slider",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -314,64 +301,64 @@
             "InteractionName": "go_slide_1",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "go_slide_1"
+              "TriggerComponent": "go_slide_1",
+              "Type": "TriggerClicked"
             },
             "Action": {
-              "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionCover",
               "ScreenTransitionDirection": "West",
-              "ActionComponent": "Screen1"
+              "ActionComponent": "Screen1",
+              "Type": "ActionGotoScreen"
             }
           },
           {
             "InteractionName": "go_slide_3",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "go_slide_3"
+              "TriggerComponent": "go_slide_3",
+              "Type": "TriggerClicked"
             },
             "Action": {
-              "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionCover",
               "ScreenTransitionDirection": "East",
-              "ActionComponent": "Screen3"
+              "ActionComponent": "Screen3",
+              "Type": "ActionGotoScreen"
             }
           },
           {
             "InteractionName": "AlphaChange",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerSliderValueChanged",
-              "TriggerComponent": "AlphaSlider"
+              "TriggerComponent": "AlphaSlider",
+              "Type": "TriggerSliderValueChanged"
             },
             "Action": {
-              "Type": "ActionCustom",
-              "FunctionName": "AlphaChange"
+              "FunctionName": "AlphaChange",
+              "Type": "ActionCustom"
             }
           },
           {
             "InteractionName": "XChange",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerSliderValueChanged",
-              "TriggerComponent": "XSlider"
+              "TriggerComponent": "XSlider",
+              "Type": "TriggerSliderValueChanged"
             },
             "Action": {
-              "Type": "ActionCustom",
-              "FunctionName": "XChange"
+              "FunctionName": "XChange",
+              "Type": "ActionCustom"
             }
           },
           {
             "InteractionName": "YChange",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerSliderValueChanged",
-              "TriggerComponent": "YSlider"
+              "TriggerComponent": "YSlider",
+              "Type": "TriggerSliderValueChanged"
             },
             "Action": {
-              "Type": "ActionCustom",
-              "FunctionName": "YChange"
+              "FunctionName": "YChange",
+              "Type": "ActionCustom"
             }
           }
         ],
@@ -382,7 +369,6 @@
       {
         "Components": [
           {
-            "Type": "Box",
             "Color": {
               "Red": 255,
               "Green": 255,
@@ -394,15 +380,14 @@
             "Y": 0,
             "Width": 480,
             "Height": 272,
+            "Type": "Box",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "Image",
             "RelativeFilename": "background3.png",
             "Alpha": 255,
             "Name": "image1",
@@ -410,15 +395,14 @@
             "Y": 0,
             "Width": 480,
             "Height": 272,
+            "Type": "Image",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "ButtonWithIcon",
             "Pressed": "__designer\\Dark_Buttons_Round_icon_button_pressed.png",
             "Released": "__designer\\Dark_Buttons_Round_icon_button.png",
             "Alpha": 255,
@@ -433,15 +417,14 @@
             "Y": 14,
             "Width": 60,
             "Height": 60,
+            "Type": "ButtonWithIcon",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "ButtonWithIcon",
             "Pressed": "__designer\\Dark_Buttons_Round_icon_button_pressed.png",
             "Released": "__designer\\Dark_Buttons_Round_icon_button.png",
             "Alpha": 255,
@@ -456,15 +439,14 @@
             "Y": 14,
             "Width": 60,
             "Height": 60,
+            "Type": "ButtonWithIcon",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "ButtonWithIcon",
             "Pressed": "__designer\\Dark_Buttons_Round_icon_button_pressed.png",
             "Released": "__designer\\Dark_Buttons_Round_icon_button.png",
             "Alpha": 255,
@@ -479,15 +461,14 @@
             "Y": 14,
             "Width": 60,
             "Height": 60,
+            "Type": "ButtonWithIcon",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "FlexButton",
             "Alpha": 255,
             "ButtonTrigger": {
               "Type": "ClickButtonTrigger"
@@ -524,15 +505,14 @@
             "Y": 96,
             "Width": 60,
             "Height": 60,
+            "Type": "FlexButton",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "FlexButton",
             "Alpha": 255,
             "ButtonTrigger": {
               "Type": "ClickButtonTrigger"
@@ -569,15 +549,14 @@
             "Y": 165,
             "Width": 60,
             "Height": 60,
+            "Type": "FlexButton",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "Image",
             "RelativeFilename": "__designer\\Blue_Radio_buttons_Radio_button_active.png",
             "Alpha": 255,
             "Name": "SwLedOn",
@@ -585,15 +564,14 @@
             "Y": 139,
             "Width": 44,
             "Height": 44,
+            "Type": "Image",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "Image",
             "RelativeFilename": "__designer\\Blue_Radio_buttons_Radio_button_inactive.png",
             "Alpha": 255,
             "Name": "SwLedOff",
@@ -601,15 +579,14 @@
             "Y": 139,
             "Width": 44,
             "Height": 44,
+            "Type": "Image",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "TextArea",
             "TextId": "SingleUseId4",
             "TextRotation": "0",
             "Color": {
@@ -625,15 +602,14 @@
             "Y": 114,
             "Width": 198,
             "Height": 25,
+            "Type": "TextArea",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "TextArea",
             "TextId": "SingleUseId5",
             "TextRotation": "0",
             "Color": {
@@ -649,8 +625,8 @@
             "Y": 183,
             "Width": 187,
             "Height": 25,
+            "Type": "TextArea",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -662,66 +638,66 @@
             "InteractionName": "go_slide_2",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "go_slide_2"
+              "TriggerComponent": "go_slide_2",
+              "Type": "TriggerClicked"
             },
             "Action": {
-              "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionCover",
               "ScreenTransitionDirection": "West",
-              "ActionComponent": "Screen2"
+              "ActionComponent": "Screen2",
+              "Type": "ActionGotoScreen"
             }
           },
           {
             "InteractionName": "go_slide_1",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "go_slide_1"
+              "TriggerComponent": "go_slide_1",
+              "Type": "TriggerClicked"
             },
             "Action": {
-              "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionCover",
               "ScreenTransitionDirection": "West",
-              "ActionComponent": "Screen1"
+              "ActionComponent": "Screen1",
+              "Type": "ActionGotoScreen"
             }
           },
           {
             "InteractionName": "go_slide_4",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "go_slide_4"
+              "TriggerComponent": "go_slide_4",
+              "Type": "TriggerClicked"
             },
             "Action": {
-              "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionCover",
               "ScreenTransitionDirection": "East",
-              "ActionComponent": "Screen4"
+              "ActionComponent": "Screen4",
+              "Type": "ActionGotoScreen"
             }
           },
           {
             "InteractionName": "SWButtonSWLED",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "SWButtonSWLED"
+              "TriggerComponent": "SWButtonSWLED",
+              "Type": "TriggerClicked"
             },
             "Action": {
-              "Type": "ActionExecuteCode",
-              "Code": "presenter->swButtonSwLedToggle();"
+              "Code": "presenter->swButtonSwLedToggle();",
+              "Type": "ActionExecuteCode"
             }
           },
           {
             "InteractionName": "SWButtonHWLED",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "SWButtonHWLED"
+              "TriggerComponent": "SWButtonHWLED",
+              "Type": "TriggerClicked"
             },
             "Action": {
-              "Type": "ActionExecuteCode",
-              "Code": "presenter->swButtonHwLedToggle();"
+              "Code": "presenter->swButtonHwLedToggle();",
+              "Type": "ActionExecuteCode"
             }
           }
         ],
@@ -732,7 +708,6 @@
       {
         "Components": [
           {
-            "Type": "Box",
             "Color": {
               "Red": 255,
               "Green": 210,
@@ -744,15 +719,14 @@
             "Y": 200,
             "Width": 480,
             "Height": 72,
+            "Type": "Box",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "Box",
             "Color": {
               "Red": 0,
               "Green": 35,
@@ -764,15 +738,14 @@
             "Y": 0,
             "Width": 480,
             "Height": 200,
+            "Type": "Box",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "ButtonWithIcon",
             "Pressed": "__designer\\Dark_Buttons_Round_icon_button_pressed.png",
             "Released": "__designer\\Dark_Buttons_Round_icon_button.png",
             "Alpha": 255,
@@ -787,15 +760,14 @@
             "Y": 206,
             "Width": 60,
             "Height": 60,
+            "Type": "ButtonWithIcon",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "ButtonWithIcon",
             "Pressed": "__designer\\Dark_Buttons_Round_icon_button_pressed.png",
             "Released": "__designer\\Dark_Buttons_Round_icon_button.png",
             "Alpha": 255,
@@ -810,15 +782,14 @@
             "Y": 206,
             "Width": 60,
             "Height": 60,
+            "Type": "ButtonWithIcon",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "ButtonWithIcon",
             "Pressed": "__designer\\Dark_Buttons_Round_icon_button_pressed.png",
             "Released": "__designer\\Dark_Buttons_Round_icon_button.png",
             "Alpha": 255,
@@ -833,15 +804,14 @@
             "Y": 206,
             "Width": 60,
             "Height": 60,
+            "Type": "ButtonWithIcon",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "ImageProgress",
             "FileNameProgress": "hor_therm_progress.png",
             "AnchorAtZero": true,
             "Direction": "Right",
@@ -861,8 +831,8 @@
             "Y": 62,
             "Width": 280,
             "Height": 77,
+            "Type": "ImageProgress",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -874,42 +844,42 @@
             "InteractionName": "go_slide_3",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "go_slide_3"
+              "TriggerComponent": "go_slide_3",
+              "Type": "TriggerClicked"
             },
             "Action": {
-              "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionCover",
               "ScreenTransitionDirection": "West",
-              "ActionComponent": "Screen3"
+              "ActionComponent": "Screen3",
+              "Type": "ActionGotoScreen"
             }
           },
           {
             "InteractionName": "go_slide_5",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "go_slide_5"
+              "TriggerComponent": "go_slide_5",
+              "Type": "TriggerClicked"
             },
             "Action": {
-              "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionCover",
               "ScreenTransitionDirection": "East",
-              "ActionComponent": "Screen5"
+              "ActionComponent": "Screen5",
+              "Type": "ActionGotoScreen"
             }
           },
           {
             "InteractionName": "go_slide_1",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "go_slide_1"
+              "TriggerComponent": "go_slide_1",
+              "Type": "TriggerClicked"
             },
             "Action": {
-              "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionCover",
               "ScreenTransitionDirection": "West",
-              "ActionComponent": "Screen1"
+              "ActionComponent": "Screen1",
+              "Type": "ActionGotoScreen"
             }
           }
         ],
@@ -920,7 +890,6 @@
       {
         "Components": [
           {
-            "Type": "Box",
             "Color": {
               "Red": 60,
               "Green": 180,
@@ -932,15 +901,14 @@
             "Y": 0,
             "Width": 221,
             "Height": 272,
+            "Type": "Box",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "Box",
             "Color": {
               "Red": 3,
               "Green": 35,
@@ -952,15 +920,14 @@
             "Y": 0,
             "Width": 259,
             "Height": 272,
+            "Type": "Box",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "ButtonWithIcon",
             "Pressed": "__designer\\Dark_Buttons_Round_icon_button_pressed.png",
             "Released": "__designer\\Dark_Buttons_Round_icon_button.png",
             "Alpha": 255,
@@ -975,15 +942,14 @@
             "Y": 15,
             "Width": 60,
             "Height": 60,
+            "Type": "ButtonWithIcon",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "ButtonWithIcon",
             "Pressed": "__designer\\Dark_Buttons_Round_icon_button_pressed.png",
             "Released": "__designer\\Dark_Buttons_Round_icon_button.png",
             "Alpha": 255,
@@ -998,15 +964,14 @@
             "Y": 15,
             "Width": 60,
             "Height": 60,
+            "Type": "ButtonWithIcon",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "AnalogClock",
             "FileNameBackground": "__designer\\Blue_Clocks_Backgrounds_clock_standard_background.png",
             "RotationCenterX": 116,
             "RotationCenterY": 116,
@@ -1046,15 +1011,14 @@
             "Y": 15,
             "Width": 233,
             "Height": 243,
+            "Type": "AnalogClock",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
           },
           {
-            "Type": "DigitalClock",
             "TextColor": {
               "Red": 0,
               "Green": 0,
@@ -1073,8 +1037,8 @@
             "Y": 110,
             "Width": 192,
             "Height": 52,
+            "Type": "DigitalClock",
             "Visible": true,
-            "LockPosition": false,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -1086,28 +1050,28 @@
             "InteractionName": "go_slide_4",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "go_slide_4"
+              "TriggerComponent": "go_slide_4",
+              "Type": "TriggerClicked"
             },
             "Action": {
-              "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionCover",
               "ScreenTransitionDirection": "West",
-              "ActionComponent": "Screen4"
+              "ActionComponent": "Screen4",
+              "Type": "ActionGotoScreen"
             }
           },
           {
             "InteractionName": "go_slide_1",
             "HasCompletedTrigger": false,
             "Trigger": {
-              "Type": "TriggerClicked",
-              "TriggerComponent": "go_slide_1"
+              "TriggerComponent": "go_slide_1",
+              "Type": "TriggerClicked"
             },
             "Action": {
-              "Type": "ActionGotoScreen",
               "ScreenTransitionType": "ScreenTransitionCover",
               "ScreenTransitionDirection": "West",
-              "ActionComponent": "Screen1"
+              "ActionComponent": "Screen1",
+              "Type": "ActionGotoScreen"
             }
           }
         ],
@@ -1188,5 +1152,5 @@
     "PortraitSkinY": 0,
     "DisplayOrientation": "Landscape"
   },
-  "Version": "4.16.0"
+  "Version": "4.14.0"
 }

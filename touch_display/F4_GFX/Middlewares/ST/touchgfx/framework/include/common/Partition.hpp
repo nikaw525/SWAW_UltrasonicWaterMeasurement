@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -57,22 +57,54 @@ public:
         SIZE_OF_ELEMENT = INTS_PR_ELEMENT * sizeof(int)
     };
 
+    /**
+     * Specialization of AbstractPartition::capacity().
+     *
+     * @return An uint16_t.
+     *
+     * @see touchgfx::AbstractPartition::capacity
+     */
     virtual uint16_t capacity() const
     {
         return NUMBER_OF_ELEMENTS;
     }
 
+    /**
+     * Specialization of AbstractPartition::element_size().
+     *
+     * @return An uint32_t.
+     *
+     * @see touchgfx::AbstractPartition::element_size
+     */
     virtual uint32_t element_size()
     {
         return sizeof(stBlocks[0]);
     }
 
 protected:
+    /**
+     * Specialization of AbstractPartition::element()
+     *
+     * @param  index Zero-based index of the.
+     *
+     * @return null if it fails, else a void*.
+     *
+     * @see touchgfx::AbstractPartition::element
+     */
     virtual void* element(uint16_t index)
     {
         return &stBlocks[index];
     }
 
+    /**
+     * Specialization of AbstractPartition::element() const.
+     *
+     * @param  index Zero-based index of the.
+     *
+     * @return null if it fails, else a void*.
+     *
+     * @see touchgfx::AbstractPartition::element
+     */
     virtual const void* element(uint16_t index) const
     {
         return &stBlocks[index];

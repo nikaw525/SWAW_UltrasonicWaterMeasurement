@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -27,7 +27,7 @@ namespace touchgfx
 {
 /**
  * This function pointer typedef matches the signature for all easing equations. Thereby
- * #EasingEquation is a convenient shorthand for a pointer to any easing equation.
+ * EasingEquation is a convenient shorthand for a pointer to any easing equation.
  */
 typedef int16_t (*EasingEquation)(uint16_t, int16_t, int16_t, uint16_t);
 

@@ -249,21 +249,6 @@
 			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/Core/Src/stm32f4xx_it.c</locationURI>
 		</link>
 		<link>
-			<name>Drivers/BSP/MASTERS/FT5426.c</name>
-			<type>1</type>
-			<location>C:/masters-eval-gfx/F4/Drivers/BSP/MASTERS/FT5426.c</location>
-		</link>
-		<link>
-			<name>Drivers/BSP/MASTERS/MASTERS_TFT.c</name>
-			<type>1</type>
-			<location>C:/masters-eval-gfx/F4/Drivers/BSP/MASTERS/MASTERS_TFT.c</location>
-		</link>
-		<link>
-			<name>Drivers/BSP/MASTERS/MASTERS_TFT_TS.c</name>
-			<type>1</type>
-			<location>C:/masters-eval-gfx/F4/Drivers/BSP/MASTERS/MASTERS_TFT_TS.c</location>
-		</link>
-		<link>
 			<name>Application/User/TouchGFX/App/app_touchgfx.c</name>
 			<type>1</type>
 			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/TouchGFX/App/app_touchgfx.c</locationURI>
@@ -427,11 +412,6 @@
 			<name>Application/User/generated/Table_verdana_40_4bpp.cpp</name>
 			<type>1</type>
 			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/TouchGFX/generated/fonts/src/Table_verdana_40_4bpp.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/UnmappedDataFont.cpp</name>
-			<type>1</type>
-			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/TouchGFX/generated/fonts/src/UnmappedDataFont.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/FrontendApplicationBase.cpp</name>

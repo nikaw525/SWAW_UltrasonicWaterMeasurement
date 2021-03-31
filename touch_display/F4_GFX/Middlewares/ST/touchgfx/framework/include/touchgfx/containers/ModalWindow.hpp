@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -123,6 +123,19 @@ public:
 
     /** Make the ModalWindow invisible. */
     virtual void hide();
+
+    ///@cond
+    /**
+     * Query if this ModalWindow is showing.
+     *
+     * @return true if showing, false if not.
+     *
+     * @deprecated Use ModalWindow::isVisible().
+     */
+    TOUCHGFX_DEPRECATED(
+        "Use ModalWindow::isVisible().",
+        virtual bool isShowing() const);
+    ///@endcond
 
 protected:
     Box backgroundShade;       ///< The background shade

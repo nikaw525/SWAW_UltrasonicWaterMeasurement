@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -44,30 +44,12 @@ public:
     static void signalVSync();
 
     /**
-     * Signal that the rendering of the frame has completed. Used by
-     * some systems to avoid using any previous vsync.
-     */
-    static void signalRenderingDone();
-
-    /**
      * This function blocks until a VSYNC occurs.
      *
      * @note This function must first clear the mutex/queue and then wait for the next one to
      *       occur.
      */
     static void waitForVSync();
-
-    /**
-     * This function checks if a VSync occurred after last
-     * rendering. The function is used in systems that cannot wait in
-     * waitForVSync (because they are also checking other event
-     * sources.
-     *
-     * @note signalRenderingDone is typically used together with this function.
-     *
-     * @return True if VSync occurred.
-     */
-    static bool isVSyncAvailable();
 
     /** Take the framebuffer semaphore. Blocks until semaphore is available. */
     static void takeFrameBufferSemaphore();

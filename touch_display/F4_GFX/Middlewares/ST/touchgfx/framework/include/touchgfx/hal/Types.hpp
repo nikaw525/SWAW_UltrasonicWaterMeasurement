@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -129,10 +129,10 @@ public:
     /** Default constructor. Resulting in an empty Rect with coordinates 0,0. */
     Rect()
     {
-        x = 0;
-        y = 0;
-        width = 0;
-        height = 0;
+        this->x = 0;
+        this->y = 0;
+        this->width = 0;
+        this->height = 0;
     }
 
     /**
@@ -454,11 +454,16 @@ public:
      * is moved to the position where the element is removed.
      *
      * @param  index The index to remove.
+     *
+     * @return The value of the removed element.
      */
-    void quickRemoveAt(uint16_t index)
+    T quickRemoveAt(uint16_t index)
     {
+        T tmp;
+
         if (index < _size)
         {
+            tmp = _elem[index];
             _size--;
             if (index < _size)
             {
@@ -466,6 +471,7 @@ public:
                 _elem[index] = _elem[_size];
             }
         }
+        return tmp;
     }
 
     /** Reverses the ordering of the elements in the Vector. */
@@ -717,7 +723,7 @@ struct Point3D
  */
 struct TextureSurface
 {
-    const uint16_t* data;     ///< The pixel bits or indexes for color in CLUT entries
+    const uint16_t* data;     ///< The pixel bits or indexe for color in CLUT entries
     const uint8_t* extraData; ///< The alpha channel or clut data
     int32_t width;            ///< The width
     int32_t height;           ///< The height

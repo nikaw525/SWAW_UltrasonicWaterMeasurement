@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -84,10 +84,22 @@ public:
      */
     virtual colortype getColor() const;
 
-    /** @copydoc Image::setAlpha */
-    virtual void setAlpha(uint8_t newAlpha);
+    /**
+     * Sets the alpha of the text area.
+     *
+     * @param  alpha The alpha.
+     *
+     * @see getAlpha, TextArea::setAlpha
+     */
+    virtual void setAlpha(uint8_t alpha);
 
-    /** @copydoc Image::getAlpha() */
+    /**
+     * Gets the alpha of the text area.
+     *
+     * @return The alpha.
+     *
+     * @see setAlpha, TextArea::getAlpha
+     */
     virtual uint8_t getAlpha() const;
 
     /**

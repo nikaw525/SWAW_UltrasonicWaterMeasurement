@@ -6,11 +6,6 @@
 
 #include <touchgfx/FontManager.hpp>
 
-namespace touchgfx
-{
-    class FlashDataReader;
-}
-
 struct Typography
 {
 <% typographies.each_with_index do |typography, index| %>
@@ -30,16 +25,6 @@ class ApplicationFontProvider : public touchgfx::FontProvider
 {
 public:
     virtual touchgfx::Font* getFont(touchgfx::FontId typography);
-
-<% if save_flashreader %>
-    static void setFlashReader(touchgfx::FlashDataReader* flashReader) { fontFlashReader = flashReader; }
-    static touchgfx::FlashDataReader* getFlashReader() { return fontFlashReader; }
-private:
-    static touchgfx::FlashDataReader* fontFlashReader;
-<% else %>
-    static void setFlashReader(touchgfx::FlashDataReader* /* flashReader */) { }
-    static touchgfx::FlashDataReader* getFlashReader() { return 0; }
-<% end %>
 };
 
 #endif // APPLICATIONFONTPROVIDER_HPP

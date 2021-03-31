@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -56,10 +56,9 @@ public:
     static void translatePoint(Point& p);
 
 private:
-    static int32_t muldiv(int32_t factor1, int32_t clzu1, int32_t factor2, int32_t divisor, int32_t& remainder);
-    static uint32_t muldivu(const uint32_t factor1, const uint32_t clzu1, const uint32_t factor2, const uint32_t clzu2, const uint32_t divisor, uint32_t& remainder);
+    static int32_t muldiv(int32_t factor1, int32_t mls, int32_t mls_result, int32_t mls_remainder, int32_t factor2, int32_t divisor, int32_t& remainder);
 
-    static int32_t clzu(uint32_t x);
+    static int32_t clz(int32_t x);
 
     /**
      * A matrix. See http://www.embedded.com/design/system-integration/4023968/How-To-Calibrate-Touch-Screens
@@ -68,7 +67,9 @@ private:
     struct Matrix
     {
         int32_t An, Bn, Cn, Dn, En, Fn, Divider;
-        int32_t clzuAn, clzuBn, clzuDn, clzuEn;
+        int32_t mlsAn, mlsBn, mlsDn, mlsEn;
+        int32_t resAn, resBn, resDn, resEn;
+        int32_t remAn, remBn, remDn, remEn;
     };
 
     typedef struct Matrix Matrix;

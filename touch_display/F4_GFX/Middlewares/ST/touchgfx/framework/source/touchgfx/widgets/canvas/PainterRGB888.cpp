@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -21,12 +21,12 @@ void PainterRGB888::render(uint8_t* ptr, int x, int xAdjust, int /*y*/, unsigned
 {
     uint8_t* p = reinterpret_cast<uint8_t*>(ptr) + ((x + xAdjust) * 3);
     uint8_t pByte;
-    const uint8_t totalAlpha = LCD::div255(widgetAlpha * painterAlpha);
+    uint8_t totalAlpha = LCD::div255(widgetAlpha * painterAlpha);
     if (totalAlpha == 0xFF)
     {
         do
         {
-            const uint8_t alpha = *covers++;
+            uint8_t alpha = *covers++;
             if (alpha == 0xFF)
             {
                 *p++ = painterBlue;
@@ -35,7 +35,7 @@ void PainterRGB888::render(uint8_t* ptr, int x, int xAdjust, int /*y*/, unsigned
             }
             else
             {
-                const uint8_t ialpha = 0xFF - alpha;
+                uint8_t ialpha = 0xFF - alpha;
                 pByte = *p;
                 *p++ = LCD::div255(painterBlue * alpha + pByte * ialpha);
                 pByte = *p;
@@ -43,21 +43,23 @@ void PainterRGB888::render(uint8_t* ptr, int x, int xAdjust, int /*y*/, unsigned
                 pByte = *p;
                 *p++ = LCD::div255(painterRed * alpha + pByte * ialpha);
             }
-        } while (--count != 0);
+        }
+        while (--count != 0);
     }
     else if (totalAlpha != 0)
     {
         do
         {
-            const uint8_t alpha = LCD::div255(*covers++ * totalAlpha);
-            const uint8_t ialpha = 0xFF - alpha;
+            uint8_t alpha = LCD::div255(*covers++ * totalAlpha);
+            uint8_t ialpha = 0xFF - alpha;
             pByte = *p;
             *p++ = LCD::div255(painterBlue * alpha + pByte * ialpha);
             pByte = *p;
             *p++ = LCD::div255(painterGreen * alpha + pByte * ialpha);
             pByte = *p;
             *p++ = LCD::div255(painterRed * alpha + pByte * ialpha);
-        } while (--count != 0);
+        }
+        while (--count != 0);
     }
 }
 

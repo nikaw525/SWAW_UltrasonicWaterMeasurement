@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -83,7 +83,6 @@ Canvas::Canvas(const CanvasWidget* _widget, const Rect& invalidatedArea)
         break;
     case Bitmap::BW_RLE:
     case Bitmap::A4:
-    case Bitmap::CUSTOM:
         assert(0 && "Unsupported bit depth");
         break;
     }
@@ -180,7 +179,7 @@ void Canvas::lineTo(CWRUtil::Q5 x, CWRUtil::Q5 y)
     previousOutside = outside;
 }
 
-bool Canvas::render(uint8_t customAlpha)
+bool Canvas::render()
 {
     // If the invalidated rect is too wide compared to the allocated buffer for CWR,
     // redrawing will not help. The CanvasWidget needs to know about this situation
@@ -201,8 +200,7 @@ bool Canvas::render(uint8_t customAlpha)
         return true; // Nothing drawn. Done
     }
 
-    const uint8_t alpha = LCD::div255(widget->getAlpha() * customAlpha);
-    if (alpha == 0)
+    if (widget->getAlpha() == 0)
     {
         return true; // Invisible. Done
     }
@@ -210,7 +208,7 @@ bool Canvas::render(uint8_t customAlpha)
     close();
 
     widget->getPainter().setOffset(offsetX /*+widget->getX()*/, offsetY /*+widget->getY()*/);
-    widget->getPainter().setWidgetAlpha(alpha);
+    widget->getPainter().setWidgetAlpha(widget->getAlpha());
     Renderer renderer(rbuf, widget->getPainter());
     return ras.render(renderer);
 }

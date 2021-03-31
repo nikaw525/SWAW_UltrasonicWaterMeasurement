@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -170,13 +170,89 @@ public:
     /**
      * Draws a filled rectangle in the framebuffer in the specified color and opacity. By
      * default the rectangle will be drawn as a solid box. The rectangle can be drawn with
-     * transparency by specifying alpha from 0=invisible to 255=solid.
+     * transparancy by specifying alpha from 0=invisible to 255=solid.
      *
      * @param  rect  The rectangle to draw in absolute display coordinates.
      * @param  color The rectangle color.
      * @param  alpha (Optional) The rectangle opacity, from 0=invisible to 255=solid.
      */
     virtual void fillRect(const Rect& rect, colortype color, uint8_t alpha = 255) = 0;
+
+    ///@cond
+    /**
+     * Draws a horizontal line with the specified color and opacity. By default the line
+     * will be drawn as a solid line. The line can be drawn with transparency by specifying
+     * alpha from 0=invisible to 255=solid.
+     *
+     * @param  x         The x coordinate of the starting point in absolute display
+     *                   coordinates.
+     * @param  y         The y coordinate of the starting point in absolute display
+     *                   coordinates.
+     * @param  width     The length of the line.
+     * @param  lineWidth The width of the line.
+     * @param  color     The color to use.
+     * @param  alpha     (Optional) The rectangle opacity, from 0=invisible to 255=solid.
+     *
+     * @deprecated Use LCD::fillRect().
+     */
+    TOUCHGFX_DEPRECATED(
+        "Use LCD::fillRect().",
+        void drawHorizontalLine(int16_t x, int16_t y, uint16_t width, uint16_t lineWidth, colortype color, uint8_t alpha = 255));
+    ///@endcond
+
+    ///@cond
+    /**
+     * Draws a vertical line with the specified color and opacity. By default the line will
+     * be drawn as a solid line. The line can be drawn with transparency by specifying alpha
+     * from 0=invisible to 255=solid.
+     *
+     * @param  x         The x coordinate of the starting point in absolute display
+     *                   coordinates.
+     * @param  y         The y coordinate of the starting point in absolute display
+     *                   coordinates.
+     * @param  height    The length of the line.
+     * @param  lineWidth The width of the line.
+     * @param  color     The color to use.
+     * @param  alpha     (Optional) The rectangle opacity, from 0=invisible to 255=solid.
+     *
+     * @deprecated Use LCD::fillRect().
+     */
+    TOUCHGFX_DEPRECATED(
+        "Use LCD::fillRect().",
+        void drawVerticalLine(int16_t x, int16_t y, uint16_t height, uint16_t lineWidth, colortype color, uint8_t alpha = 255));
+    ///@endcond
+
+    ///@cond
+    /**
+     * Draws a rectangle using the specified line color and opacity. This is the same as
+     * calling drawBorder with a line width of 1.
+     *
+     * @param  rect  The rectangle to draw in absolute display coordinates.
+     * @param  color The color to use.
+     * @param  alpha (Optional) The rectangle opacity, from 0=invisible to 255=solid.
+     *
+     * @deprecated Use 4 calls to LCD::fillRect().
+     */
+    TOUCHGFX_DEPRECATED(
+        "Use 4 calls to LCD::fillRect().",
+        void drawRect(const Rect& rect, colortype color, uint8_t alpha = 255));
+    ///@endcond
+
+    ///@cond
+    /**
+     * Draws a rectangle width the specified line width, color and opacity.
+     *
+     * @param  rect      The rectangle x, y, width, height in absolute coordinates.
+     * @param  lineWidth The width of the line.
+     * @param  color     The color to use.
+     * @param  alpha     (Optional) The rectangle opacity, from 0=invisible to 255=solid.
+     *
+     * @deprecated Use four calls to LCD::fillRect().
+     */
+    TOUCHGFX_DEPRECATED(
+        "Use four calls to LCD::fillRect().",
+        void drawBorder(const Rect& rect, uint16_t lineWidth, colortype color, uint8_t alpha = 255));
+    ///@endcond
 
     /** The visual elements when writing a string. */
     struct StringVisuals
@@ -363,14 +439,14 @@ public:
      * @param  subDivisionSize   (Optional) the size of the subdivisions of the scan line.
      *                           Default is 12.
      */
-    virtual void drawTextureMapTriangle(const DrawingSurface& dest,
-                                        const Point3D* vertices,
-                                        const TextureSurface& texture,
-                                        const Rect& absoluteRect,
-                                        const Rect& dirtyAreaAbsolute,
-                                        RenderingVariant renderVariant,
-                                        uint8_t alpha = 255,
-                                        uint16_t subDivisionSize = 12);
+    void drawTextureMapTriangle(const DrawingSurface& dest,
+                                const Point3D* vertices,
+                                const TextureSurface& texture,
+                                const Rect& absoluteRect,
+                                const Rect& dirtyAreaAbsolute,
+                                RenderingVariant renderVariant,
+                                uint8_t alpha = 255,
+                                uint16_t subDivisionSize = 12);
 
     /**
      * Approximates an integer division of a 16bit value by 255. Divides numerator num (e.g.
@@ -447,13 +523,15 @@ protected:
          * @param  dest           Destination drawing surface.
          * @param  destX          Destination x coordinate.
          * @param  destY          Destination y coordinate.
+         * @param  bitmapWidth    Width of the bitmap.
+         * @param  bitmapHeight   Height of the bitmap.
          * @param  texture        The texture.
          * @param  alpha          The global alpha.
          * @param  dOneOverZdXAff 1/ZdX affine.
          * @param  dUOverZdXAff   U/ZdX affine.
          * @param  dVOverZdXAff   V/ZdX affine.
          */
-        virtual void drawTextureMapScanLineSubdivisions(int subdivisions, const int widthModLength, int pixelsToDraw, const int affineLength, float oneOverZRight, float UOverZRight, float VOverZRight, fixed16_16 U, fixed16_16 V, fixed16_16 deltaU, fixed16_16 deltaV, float ULeft, float VLeft, float URight, float VRight, float ZRight, const DrawingSurface& dest, const int destX, const int destY, const TextureSurface& texture, uint8_t alpha, const float dOneOverZdXAff, const float dUOverZdXAff, const float dVOverZdXAff) = 0;
+        virtual void drawTextureMapScanLineSubdivisions(int subdivisions, const int widthModLength, int pixelsToDraw, const int affineLength, float oneOverZRight, float UOverZRight, float VOverZRight, fixed16_16 U, fixed16_16 V, fixed16_16 deltaU, fixed16_16 deltaV, float ULeft, float VLeft, float URight, float VRight, float ZRight, const DrawingSurface& dest, const int destX, const int destY, const int16_t bitmapWidth, const int16_t bitmapHeight, const TextureSurface& texture, uint8_t alpha, const float dOneOverZdXAff, const float dUOverZdXAff, const float dVOverZdXAff) = 0;
 
     protected:
         static const fixed16_16 half = 0x8000; ///< 1/2 in fixed16_16 format
@@ -535,7 +613,7 @@ protected:
          */
         FORCE_INLINE_FUNCTION bool is2Inside(int value, int limit)
         {
-            return is1Inside(value, limit - 1);
+            return (value >= 0 && value + 1 < limit);
         }
 
         /**
@@ -563,7 +641,7 @@ protected:
          */
         FORCE_INLINE_FUNCTION bool is2PartiallyInside(int value, int limit)
         {
-            return is1Inside(value + 1, limit + 1);
+            return (value >= -1 && value < limit);
         }
 
         /**
@@ -764,8 +842,11 @@ protected:
      */
     static uint16_t getNumLines(TextProvider& textProvider, WideTextAction wideTextAction, TextDirection textDirection, const Font* font, int16_t width);
 
+    /** A font. */
     friend class Font;
+    /** A text area. */
     friend class TextArea;
+    /** A text area with wildcard base. */
     friend class TextAreaWithWildcardBase;
 
     /**

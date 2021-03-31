@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -295,28 +295,14 @@ public:
      * for the current selected language. This is especially useful for texts with WordWrap
      * enabled.
      *
-     * @see resizeToCurrentText, setWideTextAction, setRotation,
-     *      resizeHeightToCurrentTextWithRotation
+     * @see resizeToCurrentText, setWideTextAction, setRotation
      *
      * @note If the current text rotation is either 90 or 270 degrees, the width of the text area
      *       will be set and not the height, as the text is rotated.
-     * @note If the current text is rotated, the x/y coordinate is not updated, which means that
-     *       the text will be repositioned on the display.
+     * @note If the current text is rotated e.g. 90 degrees, the x coordinate is not updated,
+     *       which means that the text will be repositioned on the display.
      */
     void resizeHeightToCurrentText();
-
-    /**
-     * Sets the height of the TextArea to match the height of the current associated text
-     * for the current selected language. This is especially useful for texts with WordWrap
-     * enabled.
-     *
-     * @see resizeToCurrentText, setWideTextAction, setRotation, resizeHeightToCurrentText
-     *
-     * @note If the current text rotation is either 90 or 270 degrees, the width of the text area
-     *       will be set and not the height, as the text is rotated. Also, the x or y
-     *       coordinates will be updated.
-     */
-    void resizeHeightToCurrentTextWithRotation();
 
     /**
      * Defines what to do if a line of text is wider than the text area. Default action is

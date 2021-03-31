@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -18,11 +18,11 @@
 
 namespace touchgfx
 {
-void SDL2TouchController::init()
+void touchgfx::SDL2TouchController::init()
 {
 }
 
-bool SDL2TouchController::sampleTouch(int32_t& x, int32_t& y)
+bool touchgfx::SDL2TouchController::sampleTouch(int32_t& x, int32_t& y)
 {
     return static_cast<HALSDL2*>(HAL::getInstance())->doSampleTouch(x, y); //lint !e1774
 }

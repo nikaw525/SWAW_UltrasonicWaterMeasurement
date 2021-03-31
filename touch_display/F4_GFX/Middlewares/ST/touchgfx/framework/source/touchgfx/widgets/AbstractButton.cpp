@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -26,10 +26,13 @@ void AbstractButton::handleClickEvent(const ClickEvent& event)
         // Pressed state changed, so invalidate
         invalidate();
     }
-    if (wasPressed && (event.getType() == ClickEvent::RELEASED))
+    if (wasPressed && (event.getType() == ClickEvent::RELEASED) && action)
     {
         // This is a click. Fire callback.
-        executeAction();
+        if (action->isValid())
+        {
+            action->execute(*this);
+        }
     }
 }
 } // namespace touchgfx

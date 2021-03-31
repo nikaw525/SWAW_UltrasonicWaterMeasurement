@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -334,9 +334,9 @@ int16_t DrawableList::getDrawableIndex(int16_t itemIndex, int16_t prevDrawableIn
 
 void DrawableList::refreshDrawables()
 {
+    numDrawables = 0;
     if (drawableItems == 0)
     {
-        numDrawables = 0;
         return;
     }
     numDrawables = getRequiredNumberOfDrawables();

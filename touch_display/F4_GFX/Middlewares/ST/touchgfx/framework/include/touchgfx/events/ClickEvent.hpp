@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -54,7 +54,7 @@ public:
      *               will always be zero.
      */
     ClickEvent(ClickEventType type, int16_t x, int16_t y, int16_t force = 0)
-        : clickEventType(type), clickX(x), clickY(y), clickForce(force)
+        : _type(type), _x(x), _y(y), _force(force)
     {
     }
 
@@ -65,7 +65,7 @@ public:
      */
     int16_t getX() const
     {
-        return clickX;
+        return _x;
     }
 
     /**
@@ -75,7 +75,7 @@ public:
      */
     int16_t getY() const
     {
-        return clickY;
+        return _y;
     }
 
     /**
@@ -85,7 +85,7 @@ public:
      */
     void setX(int16_t x)
     {
-        clickX = x;
+        _x = x;
     }
 
     /**
@@ -95,7 +95,7 @@ public:
      */
     void setY(int16_t y)
     {
-        clickY = y;
+        _y = y;
     }
 
     /**
@@ -105,7 +105,7 @@ public:
      */
     void setType(ClickEventType type)
     {
-        clickEventType = type;
+        _type = type;
     }
 
     /**
@@ -115,7 +115,7 @@ public:
      */
     ClickEventType getType() const
     {
-        return clickEventType;
+        return _type;
     }
 
     /**
@@ -126,7 +126,7 @@ public:
      */
     int16_t getForce() const
     {
-        return clickForce;
+        return _force;
     }
 
     /**
@@ -140,10 +140,10 @@ public:
     }
 
 private:
-    ClickEventType clickEventType;
-    int16_t clickX;
-    int16_t clickY;
-    int16_t clickForce;
+    ClickEventType _type;
+    int16_t _x;
+    int16_t _y;
+    int16_t _force;
 };
 
 } // namespace touchgfx

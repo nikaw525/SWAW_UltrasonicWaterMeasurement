@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -38,16 +38,16 @@ namespace touchgfx
  *
  * @see Widget, setWriteMemoryUsageReport, getWriteMemoryUsageReport
  */
-class CanvasWidgetRenderer
+class CanvasWidgetRenderer : public Widget
 {
 public:
     /**
      * Setup the buffers used by CanvasWidget.
      *
-     * @param [in] buffer     Buffer reserved for CanvasWidget.
-     * @param      bufferSize The size of the buffer.
+     * @param [in] buffer  Buffer reserved for CanvasWidget.
+     * @param      bufsize The size of the buffer.
      */
-    static void setupBuffer(uint8_t* buffer, unsigned bufferSize);
+    static void setupBuffer(uint8_t* buffer, unsigned bufsize);
 
     /// @cond
     /**

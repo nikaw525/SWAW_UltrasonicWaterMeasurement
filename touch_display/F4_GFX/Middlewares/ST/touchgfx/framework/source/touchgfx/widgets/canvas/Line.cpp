@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -17,40 +17,40 @@
 
 namespace touchgfx
 {
-Line::Line()
-    : CanvasWidget(),
-      startX(0), startY(0), endX(0), endY(0),
-      lineWidth(CWRUtil::toQ5<int>(1)),
-      lineEnding(BUTT_CAP_ENDING),
-      lineCapArcIncrement(18)
+Line::Line() : CanvasWidget(),
+    x1(0), y1(0), x2(0), y2(0),
+    lineWidth(CWRUtil::toQ5<int>(1)),
+    lineEnding(BUTT_CAP_ENDING),
+    lineCapArcIncrement(18)
 {
-    Drawable::setWidthHeight(0, 0);
+    Drawable::setWidth(0);
+    Drawable::setHeight(0);
 }
 
 void Line::setStart(CWRUtil::Q5 xQ5, CWRUtil::Q5 yQ5)
 {
-    if (startX == xQ5 && startY == yQ5)
+    if (x1 == xQ5 && y1 == yQ5)
     {
         return;
     }
 
-    startX = xQ5;
-    startY = yQ5;
+    x1 = xQ5;
+    y1 = yQ5;
 
     updateCachedShape();
 }
 
 void Line::updateStart(CWRUtil::Q5 xQ5, CWRUtil::Q5 yQ5)
 {
-    if (startX == xQ5 && startY == yQ5)
+    if (x1 == xQ5 && y1 == yQ5)
     {
         return;
     }
 
     Rect rectBefore = getMinimalRect();
 
-    startX = xQ5;
-    startY = yQ5;
+    x1 = xQ5;
+    y1 = yQ5;
 
     updateCachedShape();
 
@@ -61,28 +61,28 @@ void Line::updateStart(CWRUtil::Q5 xQ5, CWRUtil::Q5 yQ5)
 
 void Line::setEnd(CWRUtil::Q5 xQ5, CWRUtil::Q5 yQ5)
 {
-    if (endX == xQ5 && endY == yQ5)
+    if (x2 == xQ5 && y2 == yQ5)
     {
         return;
     }
 
-    endX = xQ5;
-    endY = yQ5;
+    x2 = xQ5;
+    y2 = yQ5;
 
     updateCachedShape();
 }
 
 void Line::updateEnd(CWRUtil::Q5 xQ5, CWRUtil::Q5 yQ5)
 {
-    if (endX == xQ5 && endY == yQ5)
+    if (x2 == xQ5 && y2 == yQ5)
     {
         return;
     }
 
     Rect rectBefore = getMinimalRect();
 
-    endX = xQ5;
-    endY = yQ5;
+    x2 = xQ5;
+    y2 = yQ5;
 
     updateCachedShape();
 
@@ -120,7 +120,7 @@ bool Line::drawCanvasWidget(const Rect& invalidatedArea) const
     Canvas canvas(this, invalidatedArea);
 
     CWRUtil::Q5 radius;
-    int angleInDegrees = CWRUtil::angle(xCorner[0] - startX, yCorner[0] - startY, radius);
+    int angleInDegrees = CWRUtil::angle(xCorner[0] - x1, yCorner[0] - y1, radius);
 
     canvas.moveTo(xCorner[0], yCorner[0]);
     canvas.lineTo(xCorner[1], yCorner[1]);
@@ -129,7 +129,7 @@ bool Line::drawCanvasWidget(const Rect& invalidatedArea) const
         // Fixed 10 steps (steps 0 and 9 are at Corner[1] and [2])
         for (int i = lineCapArcIncrement; i < 180; i += lineCapArcIncrement)
         {
-            canvas.lineTo(endX + radius * CWRUtil::sine(angleInDegrees - i), endY - radius * CWRUtil::cosine(angleInDegrees - i));
+            canvas.lineTo(x2 + radius * CWRUtil::sine(angleInDegrees - i), y2 - radius * CWRUtil::cosine(angleInDegrees - i));
         }
     }
     canvas.lineTo(xCorner[2], yCorner[2]);
@@ -139,7 +139,7 @@ bool Line::drawCanvasWidget(const Rect& invalidatedArea) const
         // Fixed 10 steps (steps 0 and 9 are at Corner[3] and [0])
         for (int i = 180 - lineCapArcIncrement; i > 0; i -= lineCapArcIncrement)
         {
-            canvas.lineTo(startX + radius * CWRUtil::sine(angleInDegrees + i), startY - radius * CWRUtil::cosine(angleInDegrees + i));
+            canvas.lineTo(x1 + radius * CWRUtil::sine(angleInDegrees + i), y1 - radius * CWRUtil::cosine(angleInDegrees + i));
         }
     }
 
@@ -148,16 +148,16 @@ bool Line::drawCanvasWidget(const Rect& invalidatedArea) const
 
 void Line::updateCachedShape()
 {
-    CWRUtil::Q5 dx = endX - startX;
-    CWRUtil::Q5 dy = endY - startY;
+    CWRUtil::Q5 dx = x2 - x1;
+    CWRUtil::Q5 dy = y2 - y1;
     CWRUtil::Q5 d = CWRUtil::toQ5<int>(0);
     // Look for horizontal, vertical or no-line
     if ((int32_t)dx == 0)
     {
         if ((int32_t)dy == 0)
         {
-            xCorner[0] = xCorner[1] = xCorner[2] = xCorner[3] = startX;
-            yCorner[0] = yCorner[1] = yCorner[2] = yCorner[3] = startY;
+            xCorner[0] = xCorner[1] = xCorner[2] = xCorner[3] = x1;
+            yCorner[0] = yCorner[1] = yCorner[2] = yCorner[3] = y1;
             return;
         }
         d = abs(dy);
@@ -206,28 +206,28 @@ void Line::updateCachedShape()
     switch (lineEnding)
     {
     case BUTT_CAP_ENDING:
-        xCorner[0] = startX - dy;
-        yCorner[0] = startY + dx;
-        xCorner[1] = endX - dy;
-        yCorner[1] = endY + dx;
-        xCorner[2] = endX + dy;
-        yCorner[2] = endY - dx;
-        xCorner[3] = startX + dy;
-        yCorner[3] = startY - dx;
+        xCorner[0] = x1 - dy;
+        yCorner[0] = y1 + dx;
+        xCorner[1] = x2 - dy;
+        yCorner[1] = y2 + dx;
+        xCorner[2] = x2 + dy;
+        yCorner[2] = y2 - dx;
+        xCorner[3] = x1 + dy;
+        yCorner[3] = y1 - dx;
         break;
     case ROUND_CAP_ENDING:
     // Nothing cached, calculated on each draw, but extremes are same as SQUARE_CAP_ENDING, so
     // Fall Through (for calculations)
     default:
     case SQUARE_CAP_ENDING:
-        xCorner[0] = startX - dy - dx;
-        yCorner[0] = startY + dx - dy;
-        xCorner[1] = endX - dy + dx;
-        yCorner[1] = endY + dx + dy;
-        xCorner[2] = endX + dy + dx;
-        yCorner[2] = endY - dx + dy;
-        xCorner[3] = startX + dy - dx;
-        yCorner[3] = startY - dx - dy;
+        xCorner[0] = x1 - dy - dx;
+        yCorner[0] = y1 + dx - dy;
+        xCorner[1] = x2 - dy + dx;
+        yCorner[1] = y2 + dx + dy;
+        xCorner[2] = x2 + dy + dx;
+        yCorner[2] = y2 - dx + dy;
+        xCorner[3] = x1 + dy - dx;
+        yCorner[3] = y1 - dx - dy;
         break;
     }
 
@@ -254,22 +254,22 @@ void Line::updateCachedShape()
             yMax = yCorner[i];
         }
     }
-    int16_t minX = xMin.to<int>();
-    int16_t minY = yMin.to<int>();
-    int16_t maxX = xMax.to<int>();
-    int16_t maxY = yMax.to<int>();
+    int16_t minX = xMin.to<int16_t>();
+    int16_t minY = yMin.to<int16_t>();
+    int16_t maxX = xMax.to<int16_t>();
+    int16_t maxY = yMax.to<int16_t>();
     minimalRect = Rect(minX, minY, maxX - minX + 1, maxY - minY + 1);
 
     if (lineEnding == ROUND_CAP_ENDING)
     {
-        xCorner[0] = startX - dy;
-        yCorner[0] = startY + dx;
-        xCorner[1] = endX - dy;
-        yCorner[1] = endY + dx;
-        xCorner[2] = endX + dy;
-        yCorner[2] = endY - dx;
-        xCorner[3] = startX + dy;
-        yCorner[3] = startY - dx;
+        xCorner[0] = x1 - dy;
+        yCorner[0] = y1 + dx;
+        xCorner[1] = x2 - dy;
+        yCorner[1] = y2 + dx;
+        xCorner[2] = x2 + dy;
+        yCorner[2] = y2 - dx;
+        xCorner[3] = x1 + dy;
+        yCorner[3] = y1 - dx;
     }
 }
 
@@ -280,6 +280,6 @@ Rect Line::getMinimalRect() const
 
 void Line::updateLengthAndAngle(CWRUtil::Q5 length, CWRUtil::Q5 angle)
 {
-    updateEnd(startX + length * CWRUtil::sine(angle), startY - length * CWRUtil::cosine(angle));
+    updateEnd(x1 + length * CWRUtil::sine(angle), y1 - length * CWRUtil::cosine(angle));
 }
 } // namespace touchgfx

@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -46,18 +46,18 @@ uint8_t PixelDataWidget::getAlpha() const
     return alpha;
 }
 
-void PixelDataWidget::draw(const Rect& invalidatedArea) const
+void PixelDataWidget::draw(const touchgfx::Rect& invalidatedArea) const
 {
     if (buffer != 0)
     {
         //convert to lcd coordinates
-        const Rect absolute = getAbsoluteRect();
+        const touchgfx::Rect absolute = getAbsoluteRect();
         //copy to LCD
         HAL::lcd().blitCopy(buffer, format, absolute, invalidatedArea, alpha, false);
     }
 }
 
-Rect PixelDataWidget::getSolidRect() const
+touchgfx::Rect PixelDataWidget::getSolidRect() const
 {
     Rect solidRect(0, 0, 0, 0);
     if (alpha == 255)
@@ -82,7 +82,6 @@ Rect PixelDataWidget::getSolidRect() const
         case Bitmap::BGRA2222: ///< 8-bit color
         case Bitmap::L8:       ///< 8-bit indexed color
         case Bitmap::A4:       ///< 4-bit alpha level
-        case Bitmap::CUSTOM:   ///< Custom pixelformat
             //No knowledge about solid pixels
             break;
         }

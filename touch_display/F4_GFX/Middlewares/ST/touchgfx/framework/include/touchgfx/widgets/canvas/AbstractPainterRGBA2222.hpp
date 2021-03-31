@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -39,7 +39,7 @@ class AbstractPainterRGBA2222 : public AbstractPainter
 {
 public:
     AbstractPainterRGBA2222()
-        : AbstractPainter(), currentX(0), currentY(0)
+        : currentX(0), currentY(0)
     {
         assert(compatibleFramebuffer(Bitmap::RGBA2222) && "The chosen painter only works with RGBA2222 displays");
     }
@@ -61,13 +61,13 @@ public:
      */
     FORCE_INLINE_FUNCTION uint8_t mixColors(uint8_t R, uint8_t G, uint8_t B, uint8_t bufpix, uint8_t alpha)
     {
-        const uint8_t ialpha = 0xFF - alpha;
-        const uint8_t p_red = LCD8bpp_RGBA2222::getRedFromColor((colortype)bufpix);
-        const uint8_t p_green = LCD8bpp_RGBA2222::getGreenFromColor((colortype)bufpix);
-        const uint8_t p_blue = LCD8bpp_RGBA2222::getBlueFromColor((colortype)bufpix);
-        const uint8_t red = LCD::div255(R * alpha + p_red * ialpha);
-        const uint8_t green = LCD::div255(G * alpha + p_green * ialpha);
-        const uint8_t blue = LCD::div255(B * alpha + p_blue * ialpha);
+        uint8_t ialpha = 0xFF - alpha;
+        uint8_t p_red = LCD8bpp_RGBA2222::getRedFromColor((colortype)bufpix);
+        uint8_t p_green = LCD8bpp_RGBA2222::getGreenFromColor((colortype)bufpix);
+        uint8_t p_blue = LCD8bpp_RGBA2222::getBlueFromColor((colortype)bufpix);
+        uint8_t red = LCD::div255(R * alpha + p_red * ialpha);
+        uint8_t green = LCD::div255(G * alpha + p_green * ialpha);
+        uint8_t blue = LCD::div255(B * alpha + p_blue * ialpha);
         return LCD8bpp_RGBA2222::getColorFromRGB(red, green, blue);
     }
 

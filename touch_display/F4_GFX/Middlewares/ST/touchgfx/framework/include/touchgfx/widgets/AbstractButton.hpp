@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -65,19 +65,6 @@ public:
     void setAction(GenericCallback<const AbstractButton&>& callback)
     {
         action = &callback;
-    }
-
-    /**
-     * Executes the previously set action.
-     *
-     * @see setAction
-     */
-    virtual void executeAction()
-    {
-        if (action && action->isValid())
-        {
-            action->execute(*this);
-        }
     }
 
     /**

@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -45,14 +45,14 @@ public:
      * and one bitmap for the pressed state. The images are expected to be of the same
      * dimensions, and the Button is resized to the dimensions of the pressed Bitmap.
      *
-     * @param  bitmapReleased Bitmap to use when button is released.
-     * @param  bitmapPressed  Bitmap to use when button is pressed.
+     * @param  bmpReleased Bitmap to use when button is released.
+     * @param  bmpPressed  Bitmap to use when button is pressed.
      *
      * @note It is assumed that the dimensions of the bitmaps are the same. Unexpected (visual)
      *       behavior may be observed if the bitmaps are of different sizes.
      * @note The user code must call invalidate() in order to update the button on the display.
      */
-    virtual void setBitmaps(const Bitmap& bitmapReleased, const Bitmap& bitmapPressed);
+    virtual void setBitmaps(const Bitmap& bmpReleased, const Bitmap& bmpPressed);
 
     virtual Rect getSolidRect() const;
 

@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -295,6 +295,23 @@ public:
 
         return *this;
     }
+
+    ///@cond
+    /**
+     * Gets the identity. Instead of using "Matrix4x4::identity()" consider using
+     * "Matrix4x4()" instead.
+     *
+     * @return A matrix_4x4.
+     *
+     * @deprecated Use Matrix4x4() instead.
+     */
+    TOUCHGFX_DEPRECATED(
+        "Use Matrix4x4() instead.",
+        static Matrix4x4 identity())
+    {
+        return Matrix4x4();
+    }
+    ///@endcond
 
     /**
      * Concatenate x coordinate rotation.

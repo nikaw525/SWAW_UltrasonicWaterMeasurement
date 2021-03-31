@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -40,10 +40,10 @@ public:
     /** Values that represent different animation parameter. */
     enum AnimationParameter
     {
-        X_ROTATION, ///< Rotation around the X axis
-        Y_ROTATION, ///< Rotation around the Y axis
-        Z_ROTATION, ///< Rotation around the Z axis
-        SCALE       ///< Scaling of the image
+        X_ROTATION = 0, ///< Rotation around the X axis
+        Y_ROTATION,     ///< Rotation around the Y axis
+        Z_ROTATION,     ///< Rotation around the Z axis
+        SCALE           ///< Scaling of the image
     };
 
     static const int NUMBER_OF_ANIMATION_PARAMETERS = SCALE + 1; ///< Number of animation parameters
@@ -115,9 +115,9 @@ public:
      */
     virtual uint16_t getAnimationStep();
 
+protected:
     virtual void handleTickEvent();
 
-protected:
     /** Information about how a specific animation parameter should be animated. */
     struct AnimationSetting
     {
@@ -127,6 +127,14 @@ protected:
         uint16_t animationDelay;                     ///< A delay before the actual animation start. Expressed in ticks.
         uint16_t animationDuration;                  ///< The complete duration of the animation. Expressed in ticks.
         EasingEquation animationProgressionEquation; ///< EasingEquation expressing the development of the value during the animation.
+    };
+
+    /** Values that represent different states during an animation. */
+    enum AnimationState
+    {
+        ANIMATION_FINISHED = 0, ///< The animation is finished
+        ANIMATION_DELAYED,      ///< The animation is in the delay mode
+        ANIMATION_RUNNING       ///< The animation is currently running
     };
 
     AnimationSetting animations[NUMBER_OF_ANIMATION_PARAMETERS]; ///< Descriptions of the animation of specific animation parameters

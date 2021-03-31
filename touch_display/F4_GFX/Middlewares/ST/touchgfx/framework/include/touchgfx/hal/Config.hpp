@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -101,15 +101,10 @@
 /** A macro for placing Font table attribute in memory. */
 #define FONT_TABLE_LOCATION_FLASH_ATTRIBUTE LOCATION_ATTRIBUTE("FontFlashSection")
 
-/** A macro for placing Font lookup table in memory. */
-#define FONT_SEARCHTABLE_LOCATION_FLASH_PRAGMA LOCATION_PRAGMA("FontSearchFlashSection")
-/** A macro for placing Font table attribute in memory. */
-#define FONT_SEARCHTABLE_LOCATION_FLASH_ATTRIBUTE LOCATION_ATTRIBUTE("FontSearchFlashSection")
-
 /** A macro for placing Font kerning in memory. */
-#define FONT_KERNING_LOCATION_FLASH_PRAGMA LOCATION_PRAGMA("FontSearchFlashSection")
+#define FONT_KERNING_LOCATION_FLASH_PRAGMA LOCATION_PRAGMA("FontFlashSection")
 /** A macro for placing Font kerning attribute in memory. */
-#define FONT_KERNING_LOCATION_FLASH_ATTRIBUTE LOCATION_ATTRIBUTE("FontSearchFlashSection")
+#define FONT_KERNING_LOCATION_FLASH_ATTRIBUTE LOCATION_ATTRIBUTE("FontFlashSection")
 
 /** A macro for placing Text kerning in memory. */
 #define TEXT_LOCATION_FLASH_PRAGMA LOCATION_PRAGMA("TextFlashSection")

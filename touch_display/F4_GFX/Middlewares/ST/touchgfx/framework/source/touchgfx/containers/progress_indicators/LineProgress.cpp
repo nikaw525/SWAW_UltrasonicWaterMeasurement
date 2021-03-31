@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -78,7 +78,7 @@ void LineProgress::setLineEndingStyle(Line::LINE_ENDING_STYLE lineEndingStyle)
     line.setLineEndingStyle(lineEndingStyle);
 }
 
-Line::LINE_ENDING_STYLE LineProgress::getLineEndingStyle() const
+touchgfx::Line::LINE_ENDING_STYLE LineProgress::getLineEndingStyle() const
 {
     return line.getLineEndingStyle();
 }

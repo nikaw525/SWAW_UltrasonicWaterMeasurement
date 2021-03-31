@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -462,14 +462,14 @@ protected:
     {
     }
 
-    uint16_t fontHeight;                    ///< The font height in pixels
-    uint8_t pixelsBelowBaseline;            ///< The number of pixels below the base line
-    uint8_t bPerPixel : 7;                  ///< The number of bits per pixel
-    uint8_t bAlignRow : 1;                  ///< The glyphs are saved with each row byte aligned
-    uint8_t maxPixelsLeft;                  ///< The maximum number of pixels a glyph extends to the left
-    uint8_t maxPixelsRight;                 ///< The maximum number of pixels a glyph extends to the right
+    uint16_t fontHeight;                     ///< The font height in pixels
+    uint8_t pixelsBelowBaseline;             ///< The number of pixels below the base line
+    uint8_t bPerPixel : 7;                   ///< The number of bits per pixel
+    uint8_t bAlignRow : 1;                   ///< The glyphs are saved with each row byte aligned
+    uint8_t maxPixelsLeft;                   ///< The maximum number of pixels a glyph extends to the left
+    uint8_t maxPixelsRight;                  ///< The maximum number of pixels a glyph extends to the right
     Unicode::UnicodeChar fallbackCharacter; ///< The fallback character to use when no glyph exists for the wanted character
-    Unicode::UnicodeChar ellipsisCharacter; ///< The ellipsis character used for truncating long texts.
+    Unicode::UnicodeChar ellipsisCharacter;  ///< The ellipsis character used for truncating long texts.
 
 private:
     Font();

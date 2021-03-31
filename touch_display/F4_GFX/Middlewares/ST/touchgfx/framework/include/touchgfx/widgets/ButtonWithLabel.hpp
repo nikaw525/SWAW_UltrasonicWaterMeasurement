@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -81,6 +81,32 @@ public:
         color = col;
     }
 
+    ///@cond
+    /**
+     * Sets label color for the text when the button is in the normal, released state.
+     *
+     * @param  col               The color with which the text label should be drawn.
+     * @param  performInvalidate If true, performs an instant invalidation of the button.
+     *
+     * @see setLabelColorPressed
+     *
+     * @note If the button is currently in the normal, released state, the button should be forced
+     *       to redraw itself. This is done by calling invalidate() on the ButtonWithLabel.
+     *
+     * @deprecated The use of performInvalidate is scheduled to be removed
+     */
+    TOUCHGFX_DEPRECATED(
+        "The use of performInvalidate is scheduled to be removed",
+        void setLabelColor(colortype col, bool performInvalidate))
+    {
+        color = col;
+        if (performInvalidate)
+        {
+            invalidate();
+        }
+    }
+    ///@endcond
+
     /**
      * Sets label color for the text when the button is in the pressed state.
      *
@@ -97,6 +123,33 @@ public:
     {
         colorPressed = col;
     }
+
+    ///@cond
+    /**
+     * Sets label color for the text when the button is in the pressed state.
+     *
+     * @param  col               The color with which the text label should be drawn when the
+     *                           button is pressed.
+     * @param  performInvalidate If true, performs an instant invalidation of the button.
+     *
+     * @see setLabelColor
+     *
+     * @note If the button is currently in the pressed state, the button should be forced to
+     *       redraw itself. This is done by calling invalidate() on the ButtonWithLabel.
+     *
+     * @deprecated The use of performInvalidate is scheduled to be removed
+     */
+    TOUCHGFX_DEPRECATED(
+        "The use of performInvalidate is scheduled to be removed",
+        void setLabelColorPressed(colortype col, bool performInvalidate))
+    {
+        colorPressed = col;
+        if (performInvalidate)
+        {
+            invalidate();
+        }
+    }
+    ///@endcond
 
     /**
      * Sets the rotation of the text on the label. The text can be rotated in steps of 90
@@ -143,6 +196,11 @@ public:
         {
             textHeightIncludingSpacing = 0;
         }
+    }
+
+    virtual Rect getSolidRect() const
+    {
+        return Button::getSolidRect();
     }
 
     virtual void draw(const Rect& area) const;

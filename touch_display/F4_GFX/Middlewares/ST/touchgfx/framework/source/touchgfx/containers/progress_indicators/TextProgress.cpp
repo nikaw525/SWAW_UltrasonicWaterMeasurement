@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -17,10 +17,10 @@
 
 namespace touchgfx
 {
-TextProgress::TextProgress()
-    : AbstractProgressIndicator(),
-      textArea(),
-      decimals(0)
+TextProgress::TextProgress() :
+    AbstractProgressIndicator(),
+    textArea(),
+    decimals(0)
 {
     textBuffer[0] = 0;
     progressIndicatorContainer.add(textArea);
@@ -38,7 +38,7 @@ void TextProgress::setTypedText(const TypedText& t)
     textArea.setTypedText(t);
 }
 
-TypedText TextProgress::getTypedText() const
+touchgfx::TypedText TextProgress::getTypedText() const
 {
     return textArea.getTypedText();
 }
@@ -48,14 +48,14 @@ void TextProgress::setColor(colortype color)
     textArea.setColor(color);
 }
 
-colortype TextProgress::getColor() const
+touchgfx::colortype TextProgress::getColor() const
 {
     return textArea.getColor();
 }
 
-void TextProgress::setAlpha(uint8_t newAlpha)
+void TextProgress::setAlpha(uint8_t alpha)
 {
-    textArea.setAlpha(newAlpha);
+    textArea.setAlpha(alpha);
 }
 
 uint8_t TextProgress::getAlpha() const

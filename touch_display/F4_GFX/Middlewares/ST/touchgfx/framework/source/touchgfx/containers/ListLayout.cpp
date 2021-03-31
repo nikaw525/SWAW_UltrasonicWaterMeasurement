@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -20,13 +20,10 @@ namespace touchgfx
 class AdjustElements
 {
 public:
-    AdjustElements(Drawable* d, Direction dir)
-        : insertedCoord(0),
-          newElementPassed(false),
-          newElement(d),
-          direction(dir)
-    {
-    }
+    AdjustElements(Drawable* d, Direction dir) : insertedCoord(0),
+        newElementPassed(false),
+        newElement(d),
+        direction(dir) {}
 
     void handleInsert(Drawable& d)
     {
@@ -180,7 +177,8 @@ void ListLayout::setDirection(const Direction d)
     {
         direction = d;
         offset = 0;
-        setWidthHeight(0, 0);
+        setWidth(0);
+        setHeight(0);
         Callback<ListLayout, Drawable&> function(this, &ListLayout::internalAddElement);
         forEachChild(&function);
         if (parent)
@@ -203,7 +201,8 @@ void ListLayout::add(Drawable& d)
 void ListLayout::removeAll()
 {
     offset = 0;
-    setWidthHeight(0, 0);
+    setWidth(0);
+    setHeight(0);
     Container::removeAll();
     if (parent)
     {

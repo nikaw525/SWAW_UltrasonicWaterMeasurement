@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -47,14 +47,15 @@ void PainterBGRA2222Bitmap::render(uint8_t* ptr,
         count = bitmapRectToFrameBuffer.width - currentX;
     }
 
-    const uint8_t totalAlpha = LCD::div255(widgetAlpha * painterAlpha);
+    uint8_t totalAlpha = LCD::div255(widgetAlpha * painterAlpha);
     const uint8_t* src = bitmapBGRA2222Pointer;
     if (totalAlpha == 0xFF)
     {
         do
         {
-            const uint8_t srcAlpha = ((*src) & 0x03) * 0x55;
-            const uint8_t alpha = LCD::div255((*covers++) * srcAlpha);
+            uint8_t srcAlpha = ((*src) & 0x03) * 0x55;
+            uint8_t alpha = LCD::div255((*covers) * srcAlpha);
+            covers++;
             if (alpha == 0xFF)
             {
                 // Solid pixel
@@ -67,14 +68,16 @@ void PainterBGRA2222Bitmap::render(uint8_t* ptr,
             }
             p++;
             src++;
-        } while (--count != 0);
+        }
+        while (--count != 0);
     }
     else
     {
         do
         {
-            const uint8_t srcAlpha = ((*src) & 0x03) * 0x55;
-            const uint8_t alpha = LCD::div255((*covers++) * srcAlpha);
+            uint8_t srcAlpha = ((*src) & 0x03) * 0x55;
+            uint8_t alpha = LCD::div255((*covers) * srcAlpha);
+            covers++;
             if (alpha) // This can never get to max=0xFF*0xFF as totalAlpha<255
             {
                 // Non-Transparent pixel
@@ -82,7 +85,8 @@ void PainterBGRA2222Bitmap::render(uint8_t* ptr,
             }
             p++;
             src++;
-        } while (--count != 0);
+        }
+        while (--count != 0);
     }
 }
 

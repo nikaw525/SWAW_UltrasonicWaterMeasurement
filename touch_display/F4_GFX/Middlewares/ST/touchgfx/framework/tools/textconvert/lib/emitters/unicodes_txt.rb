@@ -1,5 +1,5 @@
 ##############################################################################
-# This file is part of the TouchGFX 4.16.0 distribution.
+# This file is part of the TouchGFX 4.14.0 distribution.
 #
 # <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
 # All rights reserved.</center></h2>
@@ -393,8 +393,8 @@ class UnicodeForTypographyTxt
 
   def check_for_rtl(unicodes)
     return if @text_entries.is_rtl # No need to look for unicode if RTL already detected
-    # Look for hebrew (0x0590-0x05ff) or arabic (0x0600-0x06ff) + arabic ligatures (0xFE70-0xFEFF)
-    @text_entries.unicode_uses_rtl if unicodes.any?{|u| u.between?(0x0590, 0x05FF) || u.between?(0x0600, 0x06FF) || u.between?(0xFE70, 0xFEFE) }
+    # Look for hebrew (0x0500-0x05ff) or arabic (0x0600-0x06ff) + arabic ligatures (0xFE70-0xFEFF)
+    @text_entries.unicode_uses_rtl if unicodes.any?{|u| u.between?(0x0500, 0x05FF) || u.between?(0x0600, 0x06FF) || u.between?(0xFE70, 0xFEFE) }
   end
 
   def decode_ranges(str)
@@ -529,7 +529,6 @@ class UnicodeForTypographyTxt
 
     unicodes = add_thai(unicodes)
 
-    unicodes.delete(0x0002) # TouchGFX wildcard character
     unicodes.delete(0x200B) # ZERO WIDTH SPACE
     unicodes.delete(0xFEFF) # ZERO WIDTH NO-BREAK SPACE
 

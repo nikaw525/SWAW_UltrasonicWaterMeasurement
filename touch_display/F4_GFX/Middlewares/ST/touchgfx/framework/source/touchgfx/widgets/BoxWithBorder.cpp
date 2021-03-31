@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -18,40 +18,42 @@
 
 namespace touchgfx
 {
+Rect BoxWithBorder::getSolidRect() const
+{
+    Rect solidRect(0, 0, 0, 0);
+    if (alpha == 255)
+    {
+        solidRect.width = rect.width;
+        solidRect.height = rect.height;
+    }
+    return solidRect;
+}
+
 void BoxWithBorder::draw(const Rect& area) const
 {
-    const Rect center = Rect(borderSize, borderSize, getWidth() - (2 * borderSize), getHeight() - (2 * borderSize));
-    if (center.isEmpty())
-    {
-        Rect dirty = area;
-        translateRectToAbsolute(dirty);
-        HAL::lcd().fillRect(dirty, borderColor, alpha);
-        return;
-    }
+    Rect dirty = area & Rect(borderSize, borderSize, getWidth() - (2 * borderSize), getHeight() - (2 * borderSize));
+    translateRectToAbsolute(dirty);
+    HAL::lcd().fillRect(dirty, color, alpha);
 
-    Rect dirty = area & center;
-    Box::draw(dirty);
-
-    if (borderSize == 0)
+    if (borderSize > 0)
     {
-        return;
-    }
-
-    Rect borders[4] =
-    {
-        Rect(0, 0, getWidth(), borderSize),                                                   // Upper
-        Rect(0, getHeight() - borderSize, getWidth(), borderSize),                            // lower
-        Rect(0, borderSize, borderSize, getHeight() - (2 * borderSize)),                      // left
-        Rect(getWidth() - borderSize, borderSize, borderSize, getHeight() - (2 * borderSize)) // right
-    };
-    for (int i = 0; i < 4; i++)
-    {
-        Rect borderDirty = borders[i] & area;
-        if (!borderDirty.isEmpty())
+        Rect borders[4] =
         {
-            translateRectToAbsolute(borderDirty);
-            HAL::lcd().fillRect(borderDirty, borderColor, alpha);
+            Rect(0, 0, getWidth(), borderSize),                                                     // Upper
+            Rect(0, getHeight() - borderSize, getWidth(), borderSize),                              // lower
+            Rect(0, borderSize, borderSize, getHeight() - (2 * borderSize)),                        // left
+            Rect(getWidth() - borderSize, borderSize, borderSize, getHeight() - (2 * borderSize))   // right
+        };
+
+        for (int i = 0; i < 4; i++)
+        {
+            Rect borderDirty = borders[i] & area;
+            if (!borderDirty.isEmpty())
+            {
+                translateRectToAbsolute(borderDirty);
+                HAL::lcd().fillRect(borderDirty, borderColor, alpha);
+            }
         }
     }
 }
-} // namespace touchgfx
+}

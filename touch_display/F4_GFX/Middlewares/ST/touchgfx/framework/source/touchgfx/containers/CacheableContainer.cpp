@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -18,15 +18,6 @@
 
 namespace touchgfx
 {
-CacheableContainer::CacheableContainer()
-    : Container(),
-      cachedBitmapId(BITMAP_INVALID),
-      cachedImage(),
-      isCachedMode(false),
-      childWasInvalidated(false)
-{
-}
-
 void CacheableContainer::setCacheBitmap(BitmapId bitmapId)
 {
     Bitmap bitmap(bitmapId);
@@ -49,11 +40,6 @@ void CacheableContainer::setCacheBitmap(BitmapId bitmapId)
         cachedBitmapId = bitmapId;
         cachedImage.setBitmap(Bitmap(cachedBitmapId));
     }
-}
-
-BitmapId CacheableContainer::getCacheBitmap() const
-{
-    return cachedBitmapId;
 }
 
 void CacheableContainer::updateCache()
@@ -84,11 +70,6 @@ void CacheableContainer::invalidateRect(Rect& invalidatedArea) const
     {
         const_cast<CacheableContainer*>(this)->childWasInvalidated = true;
     }
-}
-
-bool CacheableContainer::setSolidRect(const Rect& rect)
-{
-    return Bitmap::dynamicBitmapSetSolidRect(cachedBitmapId, rect);
 }
 
 bool CacheableContainer::isChildInvalidated() const

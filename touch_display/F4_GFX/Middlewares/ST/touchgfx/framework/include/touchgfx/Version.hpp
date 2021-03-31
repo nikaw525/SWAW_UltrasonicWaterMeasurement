@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -16,9 +16,9 @@
 #ifndef VERSION_HPP
 #define VERSION_HPP
 
-#define TOUCHGFX_VERSION 41600
+#define TOUCHGFX_VERSION 41400
 #define TOUCHGFX_VERSION_MAJOR 4
-#define TOUCHGFX_VERSION_MINOR 16
+#define TOUCHGFX_VERSION_MINOR 14
 #define TOUCHGFX_VERSION_PATCH 0
 
 #endif // VERSION_HPP

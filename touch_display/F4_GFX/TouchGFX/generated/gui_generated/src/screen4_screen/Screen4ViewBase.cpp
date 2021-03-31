@@ -9,9 +9,6 @@ Screen4ViewBase::Screen4ViewBase() :
     buttonCallback(this, &Screen4ViewBase::buttonCallbackHandler)
 {
 
-    __background.setPosition(0, 0, 480, 272);
-    __background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
-
     box1_1.setPosition(0, 200, 480, 72);
     box1_1.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 210, 0));
 
@@ -42,7 +39,6 @@ Screen4ViewBase::Screen4ViewBase() :
     temperatureBar.setValue(59);
     temperatureBar.setAnchorAtZero(true);
 
-    add(__background);
     add(box1_1);
     add(box1);
     add(go_slide_1);

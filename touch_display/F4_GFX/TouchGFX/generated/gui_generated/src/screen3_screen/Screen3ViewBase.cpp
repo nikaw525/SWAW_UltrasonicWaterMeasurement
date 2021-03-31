@@ -11,9 +11,6 @@ Screen3ViewBase::Screen3ViewBase() :
     flexButtonCallback(this, &Screen3ViewBase::flexButtonCallbackHandler)
 {
 
-    __background.setPosition(0, 0, 480, 272);
-    __background.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
-
     box1.setPosition(0, 0, 480, 272);
     box1.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
 
@@ -67,7 +64,6 @@ Screen3ViewBase::Screen3ViewBase() :
     textLogLED.setLinespacing(0);
     textLogLED.setTypedText(touchgfx::TypedText(T_SINGLEUSEID5));
 
-    add(__background);
     add(box1);
     add(image1);
     add(go_slide_1);

@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -125,19 +125,8 @@ public:
      * Sets the selected page.
      *
      * @param  pageIndex Zero-based index of the page. Range from 0 to numberOfPages-1.
-     *
-     * @see getSelectedPage
      */
     void setSelectedPage(uint8_t pageIndex);
-
-    /**
-     * Gets the currently selected page.
-     *
-     * @return Zero-based index of the current page. Rage from 0 to numberOfPages-1.
-     *
-     * @see setSelectedPage
-     */
-    uint8_t getSelectedPage() const;
 
 private:
     static const int16_t DRAG_CANCEL_THRESHOLD = 3;

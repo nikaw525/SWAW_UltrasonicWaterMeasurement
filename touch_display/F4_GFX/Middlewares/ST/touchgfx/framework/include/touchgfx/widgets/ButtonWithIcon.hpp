@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -38,7 +38,7 @@ class ButtonWithIcon : public Button
 public:
     ButtonWithIcon();
 
-#ifdef __IAR_SYSTEMS_ICC__ // Only include in IAR compilation
+#ifdef __IAR_SYSTEMS_ICC__    // Only include in IAR compilation
 #pragma diag_suppress = Pe997 // Suppress warning for intentional virtual function override
 #elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 6000000)
 #pragma diag_suppress 997

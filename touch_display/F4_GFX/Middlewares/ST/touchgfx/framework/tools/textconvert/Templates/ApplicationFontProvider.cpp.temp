@@ -4,10 +4,6 @@
 #include <fonts/ApplicationFontProvider.hpp>
 #include <fonts/GeneratedFont.hpp>
 #include <texts/TypedTextDatabase.hpp>
-<% if save_flashreader %>
-
-touchgfx::FlashDataReader* ApplicationFontProvider::fontFlashReader = 0;
-<% end %>
 
 touchgfx::Font* ApplicationFontProvider::getFont(touchgfx::FontId typography)
 {

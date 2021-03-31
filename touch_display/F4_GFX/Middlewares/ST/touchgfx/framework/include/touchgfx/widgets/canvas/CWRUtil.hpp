@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -197,44 +197,22 @@ struct CWRUtil
          */
         Q5 operator/(const Q5 q5) const
         {
-            return Q5(v * Rasterizer::POLY_BASE_SIZE / q5.v);
+            return Q5(int(v) * Rasterizer::POLY_BASE_SIZE / q5.v);
         }
 
         /**
-         * Convert the Q5 value to an integer by removing the 5 bits used for the fraction, or
-         * to a floating point value by dividing by 32, depending on the type specified as T.
+         * Convert the Q5 value to an integer by removing the 5 bits used for the
+         * fraction, or to a floating point value by dividing by 32, depending on the
+         * type specified as T.
          *
          * @tparam T Either int or float.
          *
          * @return Q5 value as a type T.
-         *
-         * @note Using "to<int16_t>()" result in loss of precision. Use "(int16_t)to<int>()" instead.
          */
         template <typename T>
         T to() const
         {
-            return (T)((T)v / (T)Rasterizer::POLY_BASE_SIZE);
-        }
-
-        /**
-         * Convert the Q5 value to an integer by removing the 5 bits used for the fraction. The
-         * number is rounded up to the nearest integer.
-         *
-         * @return The first integer value higher than (or equal to) the Q5 value.
-         */
-        int ceil() const
-        {
-            return v < 0 ? to<int>() : (v + (Rasterizer::POLY_BASE_SIZE - 1)) / Rasterizer::POLY_BASE_SIZE;
-        }
-
-        /**
-         * Round the Q5 value to the nearest integer value.
-         *
-         * @return The integer closest to the Q5 value.
-         */
-        int round() const
-        {
-            return v < 0 ? Q5((v + 1) - toQ5(1).v / 2).to<int>() : Q5(v + toQ5(1).v / 2).to<int>();
+            return (T)v / (T)Rasterizer::POLY_BASE_SIZE;
         }
 
     private:
@@ -340,7 +318,7 @@ struct CWRUtil
         template <typename T>
         T to() const
         {
-            return (T)(v / (Rasterizer::POLY_BASE_SIZE * Rasterizer::POLY_BASE_SIZE));
+            return (T)v / (T)(Rasterizer::POLY_BASE_SIZE * Rasterizer::POLY_BASE_SIZE);
         }
 
     private:
@@ -714,28 +692,8 @@ struct CWRUtil
      */
     static Q5 muldivQ5(Q5 factor1, Q5 factor2, Q5 divisor)
     {
-        return Q5(muldiv(int(factor1), int(factor2), int(divisor)));
-    }
-
-    /**
-     * Multiply two integers and divide by an integer without overflowing the multiplication.
-     * The result is returned in a Q5 thus allowing a more precise calculation to be performed.
-     *
-     * @param  factor1 The first factor.
-     * @param  factor2 The second factor.
-     * @param  divisor The divisor.
-     *
-     * @return factor1 * factor2 / divisor as a Q5
-     */
-    static Q5 muldiv_toQ5(int32_t factor1, int32_t factor2, int32_t divisor)
-    {
         int32_t remainder;
-        int32_t result = muldiv(factor1, factor2, divisor, remainder);
-        if (result >= 0)
-        {
-            return toQ5(result) + muldivQ5(Q5(Rasterizer::POLY_BASE_SIZE), Q5(remainder), Q5(divisor));
-        }
-        return toQ5(result) - muldivQ5(Q5(Rasterizer::POLY_BASE_SIZE), Q5(remainder), Q5(divisor));
+        return Q5(muldiv(int(factor1), int(factor2), int(divisor), remainder));
     }
 
     /**
@@ -815,7 +773,8 @@ private:
             }
             root >>= 1;
             bit >>= 2;
-        } while (bit);
+        }
+        while (bit);
         return root;
     }
 };

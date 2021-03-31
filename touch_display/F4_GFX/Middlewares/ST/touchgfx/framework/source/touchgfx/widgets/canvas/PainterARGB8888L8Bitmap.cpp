@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -42,7 +42,7 @@ void PainterARGB8888L8Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, un
         count = bitmapRectToFrameBuffer.width - currentX;
     }
 
-    const uint8_t totalAlpha = LCD::div255(widgetAlpha * painterAlpha);
+    uint8_t totalAlpha = LCD::div255(widgetAlpha * painterAlpha);
     switch ((Bitmap::ClutFormat)((const uint16_t*)bitmapExtraPointer)[-2])
     {
     case Bitmap::CLUT_FORMAT_L8_RGB565:
@@ -51,7 +51,7 @@ void PainterARGB8888L8Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, un
             do
             {
                 const uint16_t srcpix = ((const uint16_t*)bitmapExtraPointer)[*bitmapPointer++];
-                const uint8_t alpha = *covers++;
+                uint8_t alpha = *covers++;
                 uint16_t red = (srcpix & 0xF800) >> 11;
                 uint16_t green = (srcpix & 0x07E0) >> 5;
                 uint16_t blue = srcpix & 0x001F;
@@ -69,7 +69,7 @@ void PainterARGB8888L8Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, un
                 else
                 {
                     // Non-Transparent pixel
-                    const uint8_t ialpha = 0xFF - alpha;
+                    uint8_t ialpha = 0xFF - alpha;
                     uint8_t pByte = *p;
                     *p++ = LCD::div255(blue * alpha + pByte * ialpha);
                     pByte = *p;
@@ -79,14 +79,16 @@ void PainterARGB8888L8Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, un
                     pByte = *p;
                     *p++ = pByte + alpha - LCD::div255(pByte * alpha);
                 }
-            } while (--count != 0);
+            }
+            while (--count != 0);
         }
         else
         {
             do
             {
                 const uint16_t srcpix = ((const uint16_t*)bitmapExtraPointer)[*bitmapPointer++];
-                const uint8_t alpha = LCD::div255((*covers++) * totalAlpha);
+                uint8_t alpha = LCD::div255((*covers) * totalAlpha);
+                covers++;
                 uint16_t red = (srcpix & 0xF800) >> 11;
                 uint16_t green = (srcpix & 0x07E0) >> 5;
                 uint16_t blue = srcpix & 0x001F;
@@ -95,7 +97,7 @@ void PainterARGB8888L8Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, un
                 blue = (blue * 527 + 23) >> 6;
                 if (alpha)
                 {
-                    const uint8_t ialpha = 0xFF - alpha;
+                    uint8_t ialpha = 0xFF - alpha;
                     uint8_t pByte = *p;
                     *p++ = LCD::div255(blue * alpha + pByte * ialpha);
                     pByte = *p;
@@ -109,7 +111,8 @@ void PainterARGB8888L8Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, un
                 {
                     p += 4;
                 }
-            } while (--count != 0);
+            }
+            while (--count != 0);
         }
         break;
     case Bitmap::CLUT_FORMAT_L8_RGB888:
@@ -118,7 +121,7 @@ void PainterARGB8888L8Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, un
             do
             {
                 const uint8_t* src = bitmapExtraPointer + *bitmapPointer++ * 3;
-                const uint8_t alpha = *covers++;
+                uint8_t alpha = *covers++;
                 if (alpha == 0xFF)
                 {
                     // Solid pixel
@@ -130,7 +133,7 @@ void PainterARGB8888L8Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, un
                 else
                 {
                     // Non-Transparent pixel
-                    const uint8_t ialpha = 0xFF - alpha;
+                    uint8_t ialpha = 0xFF - alpha;
                     uint8_t pByte = *p;
                     *p++ = LCD::div255(*src++ * alpha + pByte * ialpha);
                     pByte = *p;
@@ -140,17 +143,19 @@ void PainterARGB8888L8Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, un
                     pByte = *p;
                     *p++ = pByte + alpha - LCD::div255(pByte * alpha);
                 }
-            } while (--count != 0);
+            }
+            while (--count != 0);
         }
         else
         {
             do
             {
-                const uint8_t alpha = LCD::div255((*covers++) * totalAlpha);
+                uint8_t alpha = LCD::div255((*covers) * totalAlpha);
+                covers++;
                 if (alpha)
                 {
                     const uint8_t* src = bitmapExtraPointer + *bitmapPointer++ * 3;
-                    const uint8_t ialpha = 0xFF - alpha;
+                    uint8_t ialpha = 0xFF - alpha;
                     uint8_t pByte = *p;
                     *p++ = LCD::div255(*src++ * alpha + pByte * ialpha);
                     pByte = *p;
@@ -164,7 +169,8 @@ void PainterARGB8888L8Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, un
                 {
                     p += 4;
                 }
-            } while (--count != 0);
+            }
+            while (--count != 0);
         }
         break;
     case Bitmap::CLUT_FORMAT_L8_ARGB8888:
@@ -173,8 +179,9 @@ void PainterARGB8888L8Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, un
             do
             {
                 uint32_t src = ((const uint32_t*)bitmapExtraPointer)[*bitmapPointer++];
-                const uint8_t srcAlpha = src >> 24;
-                const uint8_t alpha = LCD::div255((*covers++) * srcAlpha);
+                uint8_t srcAlpha = src >> 24;
+                uint8_t alpha = LCD::div255((*covers) * srcAlpha);
+                covers++;
                 if (alpha == 0xFF)
                 {
                     // Solid pixel
@@ -186,7 +193,7 @@ void PainterARGB8888L8Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, un
                 else
                 {
                     // Non-Transparent pixel
-                    const uint8_t ialpha = 0xFF - alpha;
+                    uint8_t ialpha = 0xFF - alpha;
                     uint8_t pByte = *p;
                     *p++ = LCD::div255((src & 0xFF) * alpha + pByte * ialpha);
                     pByte = *p;
@@ -196,18 +203,20 @@ void PainterARGB8888L8Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, un
                     pByte = *p;
                     *p++ = pByte + alpha - LCD::div255(pByte * alpha);
                 }
-            } while (--count != 0);
+            }
+            while (--count != 0);
         }
         else
         {
             do
             {
                 uint32_t src = ((const uint32_t*)bitmapExtraPointer)[*bitmapPointer++];
-                const uint8_t srcAlpha = src >> 24;
-                const uint8_t alpha = LCD::div255((*covers++) * LCD::div255(srcAlpha * totalAlpha));
+                uint8_t srcAlpha = src >> 24;
+                uint8_t alpha = LCD::div255((*covers) * LCD::div255(srcAlpha * totalAlpha));
+                covers++;
                 if (alpha)
                 {
-                    const uint8_t ialpha = 0xFF - alpha;
+                    uint8_t ialpha = 0xFF - alpha;
                     uint8_t pByte = *p;
                     *p++ = LCD::div255((src & 0xFF) * alpha + pByte * ialpha);
                     pByte = *p;
@@ -221,7 +230,8 @@ void PainterARGB8888L8Bitmap::render(uint8_t* ptr, int x, int xAdjust, int y, un
                 {
                     p += 4;
                 }
-            } while (--count != 0);
+            }
+            while (--count != 0);
         }
         break;
     }

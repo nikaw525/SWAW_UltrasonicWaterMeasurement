@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -57,14 +57,15 @@ public:
     /**
      * Sets the bitmaps.
      *
-     * @param  bitmapStart The bitmap start.
-     * @param  bitmapEnd   The bitmap end.
+     * @param  bmpStart The bitmap start.
+     * @param  bmpEnd   The bitmap end.
      */
-    void setBitmaps(const Bitmap& bitmapStart, const Bitmap& bitmapEnd)
+    void setBitmaps(const Bitmap& bmpStart, const Bitmap& bmpEnd)
     {
-        buttonAnimatedImage.setBitmaps(bitmapStart.getId(), bitmapEnd.getId());
+        buttonAnimatedImage.setBitmaps(bmpStart.getId(), bmpEnd.getId());
 
-        AbstractButtonContainer::setWidthHeight(bitmapStart);
+        AbstractButtonContainer::setWidth(bmpStart.getWidth());
+        AbstractButtonContainer::setHeight(bmpStart.getHeight());
 
         handlePressedUpdated();
     }

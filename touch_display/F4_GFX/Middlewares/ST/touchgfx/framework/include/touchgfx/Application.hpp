@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -26,13 +26,12 @@
 #include <touchgfx/events/DragEvent.hpp>
 #include <touchgfx/events/GestureEvent.hpp>
 #include <touchgfx/hal/Types.hpp>
-#include <touchgfx/lcd/LCD.hpp>
+#include <touchgfx/transitions/Transition.hpp>
 
 namespace touchgfx
 {
 class Drawable;
 class Screen;
-class Transition;
 
 /**
  * The Application class is the main interface for manipulating screen contents. It holds a
@@ -157,7 +156,7 @@ public:
     virtual void handlePendingScreenTransition();
 
     /**
-     * This function allows for deferring draw operations to a later time. If active, calls
+     * This functions allows for deferring draw operations to a later time. If active, calls
      * to draw will simply note that the specified area is dirty, but not perform any actual
      * drawing. When disabling the draw cache, the dirty area will be flushed (drawn)
      * immediately.
@@ -167,15 +166,6 @@ public:
      *                     drawn immediately.
      */
     virtual void cacheDrawOperations(bool enableCache);
-
-    /**
-     * This function copies the parts that were updated in the
-     * previous frame (in the tft buffer) to the active framebuffer
-     * (client buffer).
-     *
-     * This function only copies pixels in double buffering mode.
-     */
-    void copyInvalidatedAreasFromTFTToClientBuffer();
 
     /**
      * Adds a widget to the list of widgets receiving ticks every frame (typically
@@ -280,11 +270,10 @@ protected:
     /** Protected constructor. */
     Application();
 
-    typedef Vector<Rect, 8> RectVector_t;              ///< Type to ensure the same number of rects are in the Vector
     Vector<Drawable*, MAX_TIMER_WIDGETS> timerWidgets; ///< List of widgets that receive timer ticks.
     uint8_t timerWidgetCounter[MAX_TIMER_WIDGETS];     ///< A counter for each potentially registered timer widget. Increase when registering for timer events, decrease when unregistering.
-    RectVector_t cachedDirtyAreas;                     ///< When draw caching is enabled, these rects keeps track of the dirty screen area.
-    RectVector_t lastRects;                            ///< The dirty areas from last frame that needs to be redrawn because we have swapped frame buffers.
+    Vector<Rect, 8> cachedDirtyAreas;                  ///< When draw caching is enabled, these rects keeps track of the dirty screen area.
+    Vector<Rect, 8> lastRects;                         ///< The dirty areas from last frame that needs to be redrawn because we have swapped frame buffers.
     Rect redraw;                                       ///< Rect describing application requested invalidate area
     bool drawCacheEnabled;                             ///< True when draw caching is active.
     bool transitionHandled;                            ///< True if the transition is done and Screen::afterTransition has been called.

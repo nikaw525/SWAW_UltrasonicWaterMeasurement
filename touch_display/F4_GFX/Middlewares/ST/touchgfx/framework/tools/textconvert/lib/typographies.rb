@@ -1,5 +1,5 @@
 ##############################################################################
-# This file is part of the TouchGFX 4.16.0 distribution.
+# This file is part of the TouchGFX 4.14.0 distribution.
 #
 # <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
 # All rights reserved.</center></h2>
@@ -13,6 +13,6 @@
 
 class Typography < Struct.new(:name, :font_file, :font_size, :bpp, :fallback_character, :ellipsis_character, :wildcard_characters, :wildcard_ranges)
   def cpp_name
-    font_file.gsub(/\.ttf$/,"").gsub(/[^0-9a-zA-Z]/, "_")
+    font_file.gsub(/\.ttf$/,"").gsub(".", "_").gsub(" ", "_").gsub("-","_")
   end
 end

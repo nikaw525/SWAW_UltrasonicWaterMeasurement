@@ -1,5 +1,5 @@
 ##############################################################################
-# This file is part of the TouchGFX 4.16.0 distribution.
+# This file is part of the TouchGFX 4.14.0 distribution.
 #
 # <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
 # All rights reserved.</center></h2>
@@ -12,9 +12,8 @@
 ##############################################################################
 
 class ApplicationFontProviderHpp < Template
-  def initialize(text_entries, typographies, output_directory, generate_font_format)
-    super(text_entries, typographies, output_directory)
-    @generate_font_format = generate_font_format
+  def initialize(text_entries, typographies, output_directory)
+    super
     @cache = {}
   end
   def input_path
@@ -31,7 +30,6 @@ class ApplicationFontProviderHpp < Template
   end
   def run
     @cache["typographies"] = typographies.collect{|t| [t.name, t.font_file, t.font_size, t.bpp] }
-    @cache["generate_font_format"] = @generate_font_format
     @max_length = 0
     typographies.each do |t|
       if t.name.length > @max_length
@@ -86,8 +84,5 @@ class ApplicationFontProviderHpp < Template
     typography = typographies[index]
     spaces = @max_length - typography.name.length
     "#{' '*spaces}// #{typography.cpp_name}_#{typography.font_size}_#{typography.bpp}bpp"
-  end
-  def save_flashreader
-    @generate_font_format == "1"
   end
 end

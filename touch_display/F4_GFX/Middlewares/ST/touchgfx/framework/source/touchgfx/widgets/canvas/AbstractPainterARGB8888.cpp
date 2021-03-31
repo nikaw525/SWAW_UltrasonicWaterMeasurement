@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -36,7 +36,8 @@ void AbstractPainterARGB8888::render(uint8_t* ptr,
             uint8_t red, green, blue, alpha;
             if (renderNext(red, green, blue, alpha))
             {
-                const uint8_t combinedAlpha = LCD::div255((*covers) * LCD::div255(alpha * widgetAlpha));
+                uint8_t combinedAlpha = LCD::div255((*covers) * LCD::div255(alpha * widgetAlpha));
+                covers++;
 
                 if (combinedAlpha == 0xFF) // max alpha=0xFF on "*covers" and max alpha=0xFF on "widgetAlpha"
                 {
@@ -45,11 +46,11 @@ void AbstractPainterARGB8888::render(uint8_t* ptr,
                 }
                 else
                 {
-                    const uint8_t ialpha = 0xFF - combinedAlpha;
-                    const uint8_t p_blue = p[0];
-                    const uint8_t p_green = p[1];
-                    const uint8_t p_red = p[2];
-                    const uint8_t p_alpha = p[3];
+                    uint8_t ialpha = 0xFF - combinedAlpha;
+                    uint8_t p_blue = p[0];
+                    uint8_t p_green = p[1];
+                    uint8_t p_red = p[2];
+                    uint8_t p_alpha = p[3];
                     renderPixel(reinterpret_cast<uint16_t*>(p),
                                 LCD::div255(red * combinedAlpha + p_red * ialpha),
                                 LCD::div255(green * combinedAlpha + p_green * ialpha),
@@ -57,10 +58,10 @@ void AbstractPainterARGB8888::render(uint8_t* ptr,
                                 p_alpha + combinedAlpha - LCD::div255(p_alpha * combinedAlpha));
                 }
             }
-            covers++;
             p += 4;
             currentX++;
-        } while (--count != 0);
+        }
+        while (--count != 0);
     }
 }
 

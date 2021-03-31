@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -105,8 +105,8 @@ public:
     template <typename T>
     void setCenter(const T x, const T y)
     {
-        this->circleCenterX = CWRUtil::toQ5(x);
-        this->circleCenterY = CWRUtil::toQ5(y);
+        this->circleCenterX = CWRUtil::toQ5<T>(x);
+        this->circleCenterY = CWRUtil::toQ5<T>(y);
     }
 
     /**
@@ -122,20 +122,6 @@ public:
     void setCenter(const int16_t x, const int16_t y)
     {
         setCenter<int>(x, y);
-    }
-
-    /**
-     * Sets the center of the circle / arc in the middle of a pixel. Normally the coordinate is
-     * between pixel number x and x+1 horizontally and between pixel y and y+1 vertically. This
-     * function will set the center in the middle of the pixel by adding 0.5 to both x and y.
-     *
-     * @param  x The x coordinate of the center of the circle.
-     * @param  y The y coordinate of the center of the circle.
-     */
-    void setPixelCenter(int x, int y)
-    {
-        int32_t half = (int32_t)CWRUtil::toQ5(1) / 2;
-        setCenter<CWRUtil::Q5>(CWRUtil::Q5((int32_t)CWRUtil::toQ5(x) + half), CWRUtil::Q5((int32_t)CWRUtil::toQ5(y) + half));
     }
 
     /**
@@ -167,7 +153,7 @@ public:
     template <typename T>
     void setRadius(const T r)
     {
-        this->circleRadius = CWRUtil::toQ5(r);
+        this->circleRadius = CWRUtil::toQ5<T>(r);
     }
 
     /**
@@ -198,8 +184,8 @@ public:
     template <typename T>
     void setArc(const T startAngle, const T endAngle)
     {
-        circleArcAngleStart = CWRUtil::toQ5(startAngle);
-        circleArcAngleEnd = CWRUtil::toQ5(endAngle);
+        circleArcAngleStart = CWRUtil::toQ5<T>(startAngle);
+        circleArcAngleEnd = CWRUtil::toQ5<T>(endAngle);
     }
 
     /**
@@ -298,7 +284,7 @@ public:
     template <typename T>
     void updateArcStart(const T startAngle)
     {
-        CWRUtil::Q5 startAngleQ5 = CWRUtil::toQ5(startAngle);
+        CWRUtil::Q5 startAngleQ5 = CWRUtil::toQ5<T>(startAngle);
         if (circleArcAngleStart == startAngleQ5)
         {
             return;
@@ -352,7 +338,120 @@ public:
     template <typename T>
     void updateArc(const T startAngle, const T endAngle)
     {
-        updateArc(CWRUtil::toQ5(startAngle), CWRUtil::toQ5(endAngle));
+        CWRUtil::Q5 startAngleQ5 = CWRUtil::toQ5<T>(startAngle);
+        CWRUtil::Q5 endAngleQ5 = CWRUtil::toQ5(endAngle);
+        if (circleArcAngleStart == startAngleQ5 && circleArcAngleEnd == endAngleQ5)
+        {
+            return;
+        }
+
+        // Make sure old start < end
+        if (circleArcAngleStart > circleArcAngleEnd)
+        {
+            CWRUtil::Q5 tmp = circleArcAngleStart;
+            circleArcAngleStart = circleArcAngleEnd;
+            circleArcAngleEnd = tmp;
+        }
+        // Make sure new start < end
+        if (startAngleQ5 > endAngleQ5)
+        {
+            CWRUtil::Q5 tmp = startAngleQ5;
+            startAngleQ5 = endAngleQ5;
+            endAngleQ5 = tmp;
+        }
+
+        // Nice constant
+        const CWRUtil::Q5 _360 = CWRUtil::toQ5<int>(360);
+
+        // Get old circle range start in [0..360[
+        if (circleArcAngleStart >= _360)
+        {
+            int x = (circleArcAngleStart / _360).to<int>();
+            circleArcAngleStart = circleArcAngleStart - _360 * x;
+            circleArcAngleEnd = circleArcAngleEnd - _360 * x;
+        }
+        else if (circleArcAngleStart < 0)
+        {
+            int x = 1 + ((-circleArcAngleStart) / _360).to<int>();
+            circleArcAngleStart = circleArcAngleStart + _360 * x;
+            circleArcAngleEnd = circleArcAngleEnd + _360 * x;
+        }
+        // Detect full circle
+        if ((circleArcAngleEnd - circleArcAngleStart) > _360)
+        {
+            circleArcAngleEnd = circleArcAngleStart + _360;
+        }
+
+        // Get new circle range start in [0..360[
+        if (startAngleQ5 >= _360)
+        {
+            int x = (startAngleQ5 / _360).to<int>();
+            startAngleQ5 = startAngleQ5 - _360 * x;
+            endAngleQ5 = endAngleQ5 - _360 * x;
+        }
+        else if (startAngleQ5 < 0)
+        {
+            int x = 1 + (-startAngleQ5 / _360).to<int>();
+            startAngleQ5 = startAngleQ5 + _360 * x;
+            endAngleQ5 = endAngleQ5 + _360 * x;
+        }
+        // Detect full circle
+        if ((endAngleQ5 - startAngleQ5) >= _360)
+        {
+            // Align full new circle with old start.
+            // So old[90..270] -> new[0..360] becomes new[90..450] for smaller invalidated area
+            startAngleQ5 = circleArcAngleStart;
+            endAngleQ5 = startAngleQ5 + _360;
+        }
+        else if ((circleArcAngleEnd - circleArcAngleStart) >= _360)
+        {
+            // New circle is not full, but old is. Align old circle with new.
+            // So old[0..360] -> new[90..270] becomes old[90..450] for smaller invalidated area
+            circleArcAngleStart = startAngleQ5;
+            circleArcAngleEnd = circleArcAngleStart + _360;
+        }
+
+        // New start is after old end. Could be overlap
+        // if old[10..30]->new[350..380] becomes new[-10..20]
+        if (startAngleQ5 > circleArcAngleEnd && endAngleQ5 - _360 >= circleArcAngleStart)
+        {
+            startAngleQ5 = startAngleQ5 - _360;
+            endAngleQ5 = endAngleQ5 - _360;
+        }
+        // Same as above but for old instead of new
+        if (circleArcAngleStart > endAngleQ5 && circleArcAngleEnd - _360 >= startAngleQ5)
+        {
+            circleArcAngleStart = circleArcAngleStart - _360;
+            circleArcAngleEnd = circleArcAngleEnd - _360;
+        }
+
+        Rect r;
+        if (startAngleQ5 > circleArcAngleEnd || endAngleQ5 < circleArcAngleStart)
+        {
+            // Arcs do not overlap. Invalidate both arcs.
+            r = getMinimalRect(circleArcAngleStart, circleArcAngleEnd);
+            invalidateRect(r);
+
+            r = getMinimalRect(startAngleQ5, endAngleQ5);
+            invalidateRect(r);
+        }
+        else
+        {
+            // Arcs overlap. Invalidate both ends.
+            if (circleArcAngleStart != startAngleQ5)
+            {
+                r = getMinimalRectForUpdatedStartAngle(startAngleQ5);
+                invalidateRect(r);
+            }
+            if (circleArcAngleEnd != endAngleQ5)
+            {
+                r = getMinimalRectForUpdatedEndAngle(endAngleQ5);
+                invalidateRect(r);
+            }
+        }
+
+        circleArcAngleStart = CWRUtil::toQ5<T>(startAngle);
+        circleArcAngleEnd = CWRUtil::toQ5(endAngle);
     }
 
     /**
@@ -369,7 +468,7 @@ public:
     template <typename T>
     void setLineWidth(const T width)
     {
-        this->circleLineWidth = CWRUtil::toQ5(width);
+        this->circleLineWidth = CWRUtil::toQ5<T>(width);
     }
 
     /**
@@ -457,20 +556,6 @@ public:
      * @return The minimal rectangle.
      */
     Rect getMinimalRect(CWRUtil::Q5 arcStart, CWRUtil::Q5 arcEnd) const;
-
-protected:
-    /**
-     * Updates the start and end angle in degrees for this Circle arc.
-     *
-     * @param  setStartAngleQ5 The new start angle in degrees.
-     * @param  setEndAngleQ5   The new end angle in degrees.
-     *
-     * @see setArc, getArc, updateArcStart, updateArcEnd
-     *
-     * @note The areas containing the updated Circle arcs are invalidated. As little as possible
-     *       will be invalidated for best performance.
-     */
-    void updateArc(const CWRUtil::Q5 setStartAngleQ5, const CWRUtil::Q5 setEndAngleQ5);
 
 private:
     CWRUtil::Q5 circleCenterX;

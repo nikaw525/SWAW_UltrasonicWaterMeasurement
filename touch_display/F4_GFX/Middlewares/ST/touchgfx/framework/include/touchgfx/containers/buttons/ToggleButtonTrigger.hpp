@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * This file is part of the TouchGFX 4.16.0 distribution.
+  * This file is part of the TouchGFX 4.14.0 distribution.
   *
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -89,9 +89,12 @@ public:
             invalidate();
         }
 
-        if (!toggleCanceled && (event.getType() == ClickEvent::RELEASED))
+        if (!toggleCanceled && (event.getType() == ClickEvent::RELEASED) && action)
         {
-            executeAction();
+            if (action->isValid())
+            {
+                action->execute(*this);
+            }
         }
     }
 
