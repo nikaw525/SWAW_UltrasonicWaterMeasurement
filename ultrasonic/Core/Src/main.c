@@ -50,7 +50,7 @@
 
 /* USER CODE BEGIN PV */
 
-volatile uint16_t distance;
+volatile float distance;
 uint8_t data[30];
 volatile uint8_t PowerMode_flag;
 uint32_t time;
@@ -122,8 +122,7 @@ int main(void)
 #ifdef TESTING
 		//A test section that allow to display the data using the serial port
 		if ((HAL_GetTick() - time) > 1000) {
-			size_t size = sprintf(data, "Distance = %u\n\r", distance);
-
+			size_t size = sprintf(data, "%f", distance); // @suppress("Float formatting support")
 			HAL_UART_Transmit_DMA(&huart2, data, size + 2);
 			time = HAL_GetTick();
 		}
@@ -195,8 +194,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
 		uint16_t time =
 				(uint16_t) ((uint16_t) __HAL_TIM_GetCompare(&htim3, HCSR04_STOP_CHANNEL)
 						- (uint16_t) __HAL_TIM_GetCompare(&htim3, HCSR04_START_CHANNEL));
-		distance = (uint16_t) time / 58u;
-
+		distance = kalman_filter((float) time /2.0 * 0.0343);
 		HAL_TIM_IC_Start_IT(&htim3, HCSR04_STOP_CHANNEL);
 	}
 }

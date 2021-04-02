@@ -14,4 +14,6 @@
 
 /* TO DO: Kalman fiter  */
 
+float kalman_filter(float u);
+
 #endif /* INC_HCSR04_H_ */
