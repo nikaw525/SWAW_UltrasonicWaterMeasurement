@@ -38,7 +38,10 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
+/* Macro to activate test mode*/
 #define TESTING
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -49,18 +52,19 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+typedef enum
+{
+  OFF = -1,
+  INIT = 0,
+  FULL_OPERATIONAL,
+  SLEEP_MODE,
+  ERROR_MODE = 255
+} PowerMode;
 
-volatile float distance;
+volatile dist distance;
 uint8_t data[30];
-volatile uint8_t PowerMode_flag;
+volatile PowerMode PowerMode_flag = OFF;
 uint32_t time;
-/*
- float F = 1.0f;
- float B = 0;
- float H = 1.0f;
- float Q = 1e-5f;
- float R = 3e-3;
- */
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -85,7 +89,7 @@ int main(void)
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
-
+  PowerMode_flag = INIT;
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
@@ -107,38 +111,35 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
-	HAL_TIM_Base_Start(&htim3);
-	HAL_TIM_PWM_Start(&htim3, HCSR04_PWM_CHANNEL);
-	HAL_TIM_IC_Start(&htim3, HCSR04_START_CHANNEL);
-	HAL_TIM_IC_Start_IT(&htim3, HCSR04_STOP_CHANNEL);
-	time = HAL_GetTick();
+  HAL_TIM_Base_Start(&htim3);
+  HAL_TIM_PWM_Start(&htim3, HCSR04_PWM_CHANNEL);
+  HAL_TIM_IC_Start(&htim3, HCSR04_START_CHANNEL);
+  HAL_TIM_IC_Start_IT(&htim3, HCSR04_STOP_CHANNEL);
 
+#ifdef TESTING
+  time = HAL_GetTick();
+#endif
+  PowerMode_flag = FULL_OPERATIONAL;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	while (1) {
+  while (1)
+  {
 
 #ifdef TESTING
-		//A test section that allow to display the data using the serial port
-		if ((HAL_GetTick() - time) > 1000) {
-			size_t size = sprintf(data, "%f", distance); // @suppress("Float formatting support")
-			HAL_UART_Transmit_DMA(&huart2, data, size + 2);
-			time = HAL_GetTick();
-		}
-
-		if ((uint8_t)0x01 == PowerMode_flag) {
-			HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
-			PowerMode_flag = 0x00;
-			HAL_SuspendTick();
-			HAL_PWR_EnableSleepOnExit();
-			HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
-		}
+    //A test section that allow to display the data using the serial port
+    if ((HAL_GetTick() - time) > 1000)
+    {
+      size_t size = sprintf(data, "%f", distance); // @suppress("Float formatting support")
+      HAL_UART_Transmit_DMA(&huart2, data, size + 2);
+      time = HAL_GetTick();
+    }
 #endif
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	}
+  }
   /* USER CODE END 3 */
 }
 
@@ -168,8 +169,7 @@ void SystemClock_Config(void)
   }
   /** Initializes the CPU, AHB and APB buses clocks
   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
@@ -179,7 +179,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2|RCC_PERIPHCLK_TIM34;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_TIM34;
   PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
   PeriphClkInit.Tim34ClockSelection = RCC_TIM34CLK_HCLK;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -189,22 +189,41 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
-	if (htim->Instance == TIM3) {
-		uint16_t time =
-				(uint16_t) ((uint16_t) __HAL_TIM_GetCompare(&htim3, HCSR04_STOP_CHANNEL)
-						- (uint16_t) __HAL_TIM_GetCompare(&htim3, HCSR04_START_CHANNEL));
-		distance = kalman_filter((float) time /2.0 * 0.0343);
-		HAL_TIM_IC_Start_IT(&htim3, HCSR04_STOP_CHANNEL);
-	}
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
+{
+  if (htim->Instance == TIM3)
+  {
+    uint16_t time =
+        (uint16_t)((uint16_t)__HAL_TIM_GetCompare(&htim3, HCSR04_STOP_CHANNEL) - (uint16_t)__HAL_TIM_GetCompare(&htim3, HCSR04_START_CHANNEL));
+    distance = kalman_filter((float)time / 2.0 * 0.0343);
+    HAL_TIM_IC_Start_IT(&htim3, HCSR04_STOP_CHANNEL);
+  }
 }
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	if (GPIO_Pin == SWITCH_Pin) {
-		HAL_ResumeTick();
-		HAL_PWR_DisableSleepOnExit();
-		HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-	}
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  if (GPIO_Pin == SWITCH_Pin)
+  {
+    if (FULL_OPERATIONAL == PowerMode_flag)
+    {
+      PowerMode_flag = SLEEP_MODE;
+      HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+      HAL_SuspendTick();
+      HAL_PWR_EnableSleepOnExit();
+      HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+    }
+    else if (SLEEP_MODE == PowerMode_flag)
+    {
+      HAL_ResumeTick();
+      HAL_PWR_DisableSleepOnExit();
+      HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+      PowerMode_flag = FULL_OPERATIONAL;
+    }
+    else
+    {
+      /* Do nothing */
+    }
+  }
 }
 
 /* USER CODE END 4 */
@@ -216,14 +235,16 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-	/* User can add his own implementation to report the HAL error return state */
-	__disable_irq();
-	while (1) {
-	}
+  /* User can add his own implementation to report the HAL error return state */
+  PowerMode_flag = ERROR_MODE;
+  __disable_irq();
+  while (1)
+  {
+  }
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef  USE_FULL_ASSERT
+#ifdef USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.

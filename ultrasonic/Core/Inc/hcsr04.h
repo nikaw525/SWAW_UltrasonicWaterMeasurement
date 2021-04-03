@@ -8,12 +8,12 @@
 #ifndef INC_HCSR04_H_
 #define INC_HCSR04_H_
 
+typedef dist float;
+
 #define HCSR04_PWM_CHANNEL TIM_CHANNEL_3
 #define HCSR04_START_CHANNEL TIM_CHANNEL_1
 #define HCSR04_STOP_CHANNEL TIM_CHANNEL_2
 
-/* TO DO: Kalman fiter  */
-
-float kalman_filter(float u);
+dist kalman_filter(const dist u);
 
 #endif /* INC_HCSR04_H_ */

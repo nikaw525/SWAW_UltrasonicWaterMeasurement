@@ -7,8 +7,8 @@
 
 #include "hcsr04.h"
 
-float kalman_filter(float u) {
-
+dist kalman_filter(const dist u)
+{
 	// parametrs init
 	const float R = 40;
 	const float H = 1.0;
@@ -17,11 +17,10 @@ float kalman_filter(float u) {
 	static float U_pri = 0;
 	static float K = 0;
 
+	K = P * H / (H * P * H + R);		 // update Kalman gain
+	U_pri = U_pri + K * (u - H * U_pri); // update estimated
 
-	K = P*H/(H*P*H+R); // update Kalman gain
-	U_pri = U_pri + K*(u - H*U_pri); // update estimated
-
-	P = (1-K*H)*P+Q; // update error covariance
+	P = (1 - K * H) * P + Q; // update error covariance
 
 	return U_pri;
 }
