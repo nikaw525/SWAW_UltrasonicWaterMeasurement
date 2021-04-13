@@ -7,6 +7,12 @@
 
 #include "hcsr04.h"
 
+Prefault_distance_T Prefault_distance={
+		.invalid_msg = false,
+		.debounce_counter = 0,
+		.distance = 0
+};
+
 dist kalman_filter(const dist u)
 {
 	// parametrs init
@@ -23,4 +29,10 @@ dist kalman_filter(const dist u)
 	P = (1 - K * H) * P + Q; // update error covariance
 
 	return U_pri;
+}
+
+void reset_counter(Prefault_distance_T *self)
+{
+    self->debounce_counter = 0;
+    self->invalid_msg = false;
 }

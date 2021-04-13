@@ -19,6 +19,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
 #include "dma.h"
 #include "tim.h"
 #include "usart.h"
@@ -29,6 +30,7 @@
 
 #include "hcsr04.h"
 #include <stdio.h>
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -40,12 +42,13 @@
 /* USER CODE BEGIN PD */
 
 /* Macro to activate test mode*/
-#define TESTING
+//#define TESTING
 
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
+#define V_REF 9.0f
 
 /* USER CODE END PM */
 
@@ -61,10 +64,13 @@ typedef enum
   ERROR_MODE = 255
 } PowerMode;
 
-volatile dist distance;
+extern Prefault_distance_T Prefault_distance;
 uint8_t data[30];
 volatile PowerMode PowerMode_flag = OFF;
-uint32_t time;
+uint32_t clock_tick;
+uint16_t adc_read;
+float Vbat;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -89,7 +95,7 @@ int main(void)
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
-  PowerMode_flag = INIT;
+
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
@@ -109,15 +115,18 @@ int main(void)
   MX_DMA_Init();
   MX_TIM3_Init();
   MX_USART2_UART_Init();
+  MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
 
   HAL_TIM_Base_Start(&htim3);
   HAL_TIM_PWM_Start(&htim3, HCSR04_PWM_CHANNEL);
   HAL_TIM_IC_Start(&htim3, HCSR04_START_CHANNEL);
   HAL_TIM_IC_Start_IT(&htim3, HCSR04_STOP_CHANNEL);
+  HAL_ADC_Start_DMA(&hadc1, &adc_read, sizeof(uint16_t));
+
 
 #ifdef TESTING
-  time = HAL_GetTick();
+  clock_tick = HAL_GetTick();
 #endif
   PowerMode_flag = FULL_OPERATIONAL;
   /* USER CODE END 2 */
@@ -127,13 +136,29 @@ int main(void)
   while (1)
   {
 
+	  Vbat = (adc_read *3.3f/ 4095) * 3;
+
+
+	  if((Prefault_distance.debounce_counter < DEBOUNCE_CYCLES)
+		 && (false == Prefault_distance.invalid_msg))
+	  {
+		  Prefault_distance.debounce_counter++;
+	  }
+	  else
+	  {
+		  Prefault_distance.invalid_msg = true;
+		  Prefault_distance.debounce_counter = 0;
+	  }
+
+
 #ifdef TESTING
     //A test section that allow to display the data using the serial port
-    if ((HAL_GetTick() - time) > 1000)
+    if (((HAL_GetTick() - clock_tick) > 100000)
+    	&& (true == Prefault_distance.invalid_msg))
     {
-      size_t size = sprintf(data, "%f", distance); // @suppress("Float formatting support")
+      size_t size = sprintf(data, "%f", Prefault_distance.distance); // @suppress("Float formatting support")
       HAL_UART_Transmit_DMA(&huart2, data, size + 2);
-      time = HAL_GetTick();
+      clock_tick = HAL_GetTick();
     }
 #endif
     /* USER CODE END WHILE */
@@ -169,7 +194,8 @@ void SystemClock_Config(void)
   }
   /** Initializes the CPU, AHB and APB buses clocks
   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
@@ -179,7 +205,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2 | RCC_PERIPHCLK_TIM34;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2|RCC_PERIPHCLK_TIM34;
   PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
   PeriphClkInit.Tim34ClockSelection = RCC_TIM34CLK_HCLK;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -195,7 +221,8 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
   {
     uint16_t time =
         (uint16_t)((uint16_t)__HAL_TIM_GetCompare(&htim3, HCSR04_STOP_CHANNEL) - (uint16_t)__HAL_TIM_GetCompare(&htim3, HCSR04_START_CHANNEL));
-    distance = kalman_filter((float)time / 2.0 * 0.0343);
+    Prefault_distance.distance = kalman_filter((float)time / 2.0 * 0.0343);
+    reset_counter(&Prefault_distance);
     HAL_TIM_IC_Start_IT(&htim3, HCSR04_STOP_CHANNEL);
   }
 }
@@ -226,6 +253,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   }
 }
 
+
 /* USER CODE END 4 */
 
 /**
@@ -244,7 +272,7 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef USE_FULL_ASSERT
+#ifdef  USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.
