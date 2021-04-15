@@ -15,10 +15,6 @@
 #include <gui/screen2_screen/Screen2Presenter.hpp>
 #include <gui/screen3_screen/Screen3View.hpp>
 #include <gui/screen3_screen/Screen3Presenter.hpp>
-#include <gui/screen4_screen/Screen4View.hpp>
-#include <gui/screen4_screen/Screen4Presenter.hpp>
-#include <gui/screen5_screen/Screen5View.hpp>
-#include <gui/screen5_screen/Screen5Presenter.hpp>
 
 using namespace touchgfx;
 
@@ -50,17 +46,6 @@ void FrontendApplicationBase::gotoScreen1ScreenNoTransitionImpl()
     touchgfx::makeTransition<Screen1View, Screen1Presenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
-void FrontendApplicationBase::gotoScreen1ScreenCoverTransitionWest()
-{
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoScreen1ScreenCoverTransitionWestImpl);
-    pendingScreenTransitionCallback = &transitionCallback;
-}
-
-void FrontendApplicationBase::gotoScreen1ScreenCoverTransitionWestImpl()
-{
-    touchgfx::makeTransition<Screen1View, Screen1Presenter, touchgfx::CoverTransition<WEST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
-}
-
 // Screen2
 
 void FrontendApplicationBase::gotoScreen2ScreenCoverTransitionEast()
@@ -74,17 +59,6 @@ void FrontendApplicationBase::gotoScreen2ScreenCoverTransitionEastImpl()
     touchgfx::makeTransition<Screen2View, Screen2Presenter, touchgfx::CoverTransition<EAST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 
-void FrontendApplicationBase::gotoScreen2ScreenCoverTransitionWest()
-{
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoScreen2ScreenCoverTransitionWestImpl);
-    pendingScreenTransitionCallback = &transitionCallback;
-}
-
-void FrontendApplicationBase::gotoScreen2ScreenCoverTransitionWestImpl()
-{
-    touchgfx::makeTransition<Screen2View, Screen2Presenter, touchgfx::CoverTransition<WEST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
-}
-
 // Screen3
 
 void FrontendApplicationBase::gotoScreen3ScreenCoverTransitionEast()
@@ -96,52 +70,4 @@ void FrontendApplicationBase::gotoScreen3ScreenCoverTransitionEast()
 void FrontendApplicationBase::gotoScreen3ScreenCoverTransitionEastImpl()
 {
     touchgfx::makeTransition<Screen3View, Screen3Presenter, touchgfx::CoverTransition<EAST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
-}
-
-void FrontendApplicationBase::gotoScreen3ScreenCoverTransitionWest()
-{
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoScreen3ScreenCoverTransitionWestImpl);
-    pendingScreenTransitionCallback = &transitionCallback;
-}
-
-void FrontendApplicationBase::gotoScreen3ScreenCoverTransitionWestImpl()
-{
-    touchgfx::makeTransition<Screen3View, Screen3Presenter, touchgfx::CoverTransition<WEST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
-}
-
-// Screen4
-
-void FrontendApplicationBase::gotoScreen4ScreenCoverTransitionEast()
-{
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoScreen4ScreenCoverTransitionEastImpl);
-    pendingScreenTransitionCallback = &transitionCallback;
-}
-
-void FrontendApplicationBase::gotoScreen4ScreenCoverTransitionEastImpl()
-{
-    touchgfx::makeTransition<Screen4View, Screen4Presenter, touchgfx::CoverTransition<EAST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
-}
-
-void FrontendApplicationBase::gotoScreen4ScreenCoverTransitionWest()
-{
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoScreen4ScreenCoverTransitionWestImpl);
-    pendingScreenTransitionCallback = &transitionCallback;
-}
-
-void FrontendApplicationBase::gotoScreen4ScreenCoverTransitionWestImpl()
-{
-    touchgfx::makeTransition<Screen4View, Screen4Presenter, touchgfx::CoverTransition<WEST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
-}
-
-// Screen5
-
-void FrontendApplicationBase::gotoScreen5ScreenCoverTransitionEast()
-{
-    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoScreen5ScreenCoverTransitionEastImpl);
-    pendingScreenTransitionCallback = &transitionCallback;
-}
-
-void FrontendApplicationBase::gotoScreen5ScreenCoverTransitionEastImpl()
-{
-    touchgfx::makeTransition<Screen5View, Screen5Presenter, touchgfx::CoverTransition<EAST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }

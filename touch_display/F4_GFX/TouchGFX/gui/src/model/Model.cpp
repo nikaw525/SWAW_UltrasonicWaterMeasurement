@@ -27,7 +27,7 @@ void Model::tick()
 		modelListener->userButtonPressed();
 	}
 #endif /*SIMULATOR*/
-
+/*
 	 tickCounter++;
 	    if (((tickCounter % 20) == 0) && (scanJunctionTemp))
 	    {
@@ -37,16 +37,16 @@ void Model::tick()
 	      }
 	    }
 
-
+*/
 }
 
 
 void Model::toggleHwLed() {
 	#ifndef SIMULATOR
 		TOGGLE_LED1();
-	#endif /*SIMULATOR*/
+	#endif
 }
-
+/*
 
 void Model::setScanJunctionTemp(bool scanEnabled)
 {
@@ -66,4 +66,5 @@ int Model::getTempValue()
      return 25;
 #endif
 }
+*/
 

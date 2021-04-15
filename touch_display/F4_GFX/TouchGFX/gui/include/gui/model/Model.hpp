@@ -17,9 +17,6 @@ public:
 
     void toggleHwLed();
 
-    void setScanJunctionTemp(bool scanEnabled);
-    int getTempValue();
-
 protected:
     ModelListener* modelListener;
 

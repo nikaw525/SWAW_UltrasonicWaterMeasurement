@@ -16,3 +16,8 @@ void Screen2Presenter::deactivate()
 {
 
 }
+
+void Screen2Presenter::NumberButtonClicked(int number)
+{
+	view.updateTxt(number);
+}

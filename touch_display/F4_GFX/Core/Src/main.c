@@ -636,6 +636,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
 void TOGGLE_LED1()
 {
 	HAL_GPIO_TogglePin(GPIOE, USER_LED_Pin);
@@ -650,7 +651,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	}
 }
 
-
+/*
 uint32_t TEMP_SENSOR_GetValue(void)
 {
 	#define TEMP30_CAL_VALUE   ((uint16_t*)((uint32_t) 0x1FFF7A2C))
@@ -665,7 +666,7 @@ uint32_t TEMP_SENSOR_GetValue(void)
 	}
 	return  0xFFFFFFFF;
 }
-
+*/
 
 /* USER CODE END 4 */
 

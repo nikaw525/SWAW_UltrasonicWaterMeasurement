@@ -3,67 +3,163 @@
 /*********************************************************************************/
 #include <gui_generated/screen2_screen/Screen2ViewBase.hpp>
 #include <touchgfx/Color.hpp>
+#include <texts/TextKeysAndLanguages.hpp>
 #include "BitmapDatabase.hpp"
 
 Screen2ViewBase::Screen2ViewBase() :
-    buttonCallback(this, &Screen2ViewBase::buttonCallbackHandler),
-    sliderValueChangedCallback(this, &Screen2ViewBase::sliderValueChangedCallbackHandler)
+    buttonCallback(this, &Screen2ViewBase::buttonCallbackHandler)
 {
 
     box1.setPosition(0, 0, 480, 272);
-    box1.setColor(touchgfx::Color::getColorFrom24BitRGB(60, 180, 230));
+    box1.setColor(touchgfx::Color::getColorFrom24BitRGB(115, 183, 212));
 
-    image1.setXY(0, 0);
-    image1.setBitmap(touchgfx::Bitmap(BITMAP_SLIDE_2_BACK_ID));
+    textArea1.setXY(47, 9);
+    textArea1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea1.setLinespacing(0);
+    textArea1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID8));
 
-    go_slide_1.setXY(356, 3);
-    go_slide_1.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_PRESSED_ID), touchgfx::Bitmap(BITMAP_BLUE_ICONS_HOME_32_ID), touchgfx::Bitmap(BITMAP_BLUE_ICONS_HOME_32_ID));
-    go_slide_1.setIconXY(15, 16);
-    go_slide_1.setAction(buttonCallback);
+    button_ok.setXY(285, 189);
+    button_ok.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_PRESSED_ID));
+    button_ok.setLabelText(touchgfx::TypedText(T_SINGLEUSEID9));
+    button_ok.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_ok.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_ok.setAction(buttonCallback);
 
-    go_slide_3.setXY(416, 3);
-    go_slide_3.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_PRESSED_ID), touchgfx::Bitmap(BITMAP_BLUE_ICONS_NEXT_ARROW_32_ID), touchgfx::Bitmap(BITMAP_BLUE_ICONS_NEXT_ARROW_32_ID));
-    go_slide_3.setIconXY(22, 15);
-    go_slide_3.setAction(buttonCallback);
+    button_1.setXY(285, 129);
+    button_1.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_PRESSED_ID));
+    button_1.setLabelText(touchgfx::TypedText(T_SINGLEUSEID10));
+    button_1.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_1.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_1.setAction(buttonCallback);
 
-    animatedImage1.setXY(7, 4);
-    animatedImage1.setBitmaps(BITMAP_ANI_01_ID, BITMAP_ANI_11_ID);
-    animatedImage1.setUpdateTicksInterval(4);
-    animatedImage1.startAnimation(false, true, true);
+    button_2.setXY(344, 129);
+    button_2.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_PRESSED_ID));
+    button_2.setLabelText(touchgfx::TypedText(T_SINGLEUSEID11));
+    button_2.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_2.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_2.setAction(buttonCallback);
 
-    touchGFX_logo.setXY(170, 147);
-    touchGFX_logo.setBitmap(touchgfx::Bitmap(BITMAP_TGFX_SHADOW_LOG_ID));
+    button_3.setXY(404, 129);
+    button_3.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_PRESSED_ID));
+    button_3.setLabelText(touchgfx::TypedText(T_SINGLEUSEID12));
+    button_3.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_3.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_3.setAction(buttonCallback);
 
-    AlphaSlider.setXY(181, 228);
-    AlphaSlider.setBitmaps(touchgfx::Bitmap(BITMAP_BLUE_SLIDER_HORIZONTAL_SMALL_SLIDER_HORIZONTAL_SMALL_ROUND_BACK_ID), touchgfx::Bitmap(BITMAP_BLUE_SLIDER_HORIZONTAL_SMALL_SLIDER_HORIZONTAL_SMALL_ROUND_FILL_ID), touchgfx::Bitmap(BITMAP_BLUE_SLIDER_HORIZONTAL_SMALL_INDICATORS_SLIDER_HORIZONTAL_SMALL_ROUND_KNOB_ID));
-    AlphaSlider.setupHorizontalSlider(3, 7, 0, 0, 125);
-    AlphaSlider.setValueRange(0, 255);
-    AlphaSlider.setValue(255);
-    AlphaSlider.setNewValueCallback(sliderValueChangedCallback);
+    button_4.setXY(285, 69);
+    button_4.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_PRESSED_ID));
+    button_4.setLabelText(touchgfx::TypedText(T_SINGLEUSEID13));
+    button_4.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_4.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_4.setAction(buttonCallback);
 
-    XSlider.setXY(181, 83);
-    XSlider.setBitmaps(touchgfx::Bitmap(BITMAP_BLUE_SLIDER_HORIZONTAL_SMALL_SLIDER_HORIZONTAL_SMALL_ROUND_BACK_ID), touchgfx::Bitmap(BITMAP_BLUE_SLIDER_HORIZONTAL_SMALL_SLIDER_HORIZONTAL_SMALL_ROUND_FILL_ID), touchgfx::Bitmap(BITMAP_BLUE_SLIDER_HORIZONTAL_SMALL_INDICATORS_SLIDER_HORIZONTAL_SMALL_ROUND_KNOB_ID));
-    XSlider.setupHorizontalSlider(3, 7, 0, 0, 125);
-    XSlider.setValueRange(0, 280);
-    XSlider.setValue(181);
-    XSlider.setNewValueCallback(sliderValueChangedCallback);
+    button_5.setXY(344, 69);
+    button_5.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_PRESSED_ID));
+    button_5.setLabelText(touchgfx::TypedText(T_SINGLEUSEID14));
+    button_5.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_5.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_5.setAction(buttonCallback);
 
-    YSlider.setXY(398, 83);
-    YSlider.setBitmaps(touchgfx::Bitmap(BITMAP_BLUE_SLIDER_VERTICAL_SMALL_SLIDER3_VERTICAL_ROUND_BACK_ID), touchgfx::Bitmap(BITMAP_BLUE_SLIDER_VERTICAL_SMALL_SLIDER3_VERTICAL_ROUND_FILL_ID), touchgfx::Bitmap(BITMAP_BLUE_SLIDER_VERTICAL_SMALL_INDICATORS_SLIDER3_VERTICAL_ROUND_NOB_ID));
-    YSlider.setupVerticalSlider(7, 3, 0, 0, 125);
-    YSlider.setValueRange(0, 221);
-    YSlider.setValue(147);
-    YSlider.setNewValueCallback(sliderValueChangedCallback);
+    button_6.setXY(405, 69);
+    button_6.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_PRESSED_ID));
+    button_6.setLabelText(touchgfx::TypedText(T_SINGLEUSEID15));
+    button_6.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_6.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_6.setAction(buttonCallback);
+
+    button_7.setXY(284, 9);
+    button_7.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_PRESSED_ID));
+    button_7.setLabelText(touchgfx::TypedText(T_SINGLEUSEID16));
+    button_7.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_7.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_7.setAction(buttonCallback);
+
+    button_8.setXY(345, 9);
+    button_8.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_PRESSED_ID));
+    button_8.setLabelText(touchgfx::TypedText(T_SINGLEUSEID17));
+    button_8.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_8.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_8.setAction(buttonCallback);
+
+    button_9.setXY(405, 9);
+    button_9.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_PRESSED_ID));
+    button_9.setLabelText(touchgfx::TypedText(T_SINGLEUSEID18));
+    button_9.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_9.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_9.setAction(buttonCallback);
+
+    button_0.setXY(345, 189);
+    button_0.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_PRESSED_ID));
+    button_0.setLabelText(touchgfx::TypedText(T_SINGLEUSEID19));
+    button_0.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_0.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_0.setAction(buttonCallback);
+
+    value_waga.setXY(187, 70);
+    value_waga.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    value_waga.setLinespacing(0);
+    Unicode::snprintf(value_wagaBuffer, VALUE_WAGA_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID28).getText());
+    value_waga.setWildcard(value_wagaBuffer);
+    value_waga.resizeToCurrentText();
+    value_waga.setTypedText(touchgfx::TypedText(T_SINGLEUSEID27));
+
+    value_wzrost.setXY(184, 140);
+    value_wzrost.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    value_wzrost.setLinespacing(0);
+    value_wzrost.setWildcard(touchgfx::TypedText(T_SINGLEUSEID31).getText());
+    value_wzrost.resizeToCurrentText();
+    value_wzrost.setTypedText(touchgfx::TypedText(T_SINGLEUSEID30));
+
+    value_pojemnosc.setXY(194, 207);
+    value_pojemnosc.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    value_pojemnosc.setLinespacing(0);
+    value_pojemnosc.setWildcard(touchgfx::TypedText(T_SINGLEUSEID34).getText());
+    value_pojemnosc.resizeToCurrentText();
+    value_pojemnosc.setTypedText(touchgfx::TypedText(T_SINGLEUSEID33));
+
+    Button_waga.setXY(4, 52);
+    Button_waga.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
+    Button_waga.setLabelText(touchgfx::TypedText(T_SINGLEUSEID35));
+    Button_waga.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    Button_waga.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+
+    Button_wzrost.setXY(4, 122);
+    Button_wzrost.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
+    Button_wzrost.setLabelText(touchgfx::TypedText(T_SINGLEUSEID36));
+    Button_wzrost.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    Button_wzrost.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+
+    Button_pojemnosc.setXY(4, 189);
+    Button_pojemnosc.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
+    Button_pojemnosc.setLabelText(touchgfx::TypedText(T_SINGLEUSEID37));
+    Button_pojemnosc.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    Button_pojemnosc.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+
+    textArea2.setXY(242, 69);
+    textArea2.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea2.setLinespacing(0);
+    textArea2.setTypedText(touchgfx::TypedText(T_SINGLEUSEID38));
 
     add(box1);
-    add(image1);
-    add(go_slide_1);
-    add(go_slide_3);
-    add(animatedImage1);
-    add(touchGFX_logo);
-    add(AlphaSlider);
-    add(XSlider);
-    add(YSlider);
+    add(textArea1);
+    add(button_ok);
+    add(button_1);
+    add(button_2);
+    add(button_3);
+    add(button_4);
+    add(button_5);
+    add(button_6);
+    add(button_7);
+    add(button_8);
+    add(button_9);
+    add(button_0);
+    add(value_waga);
+    add(value_wzrost);
+    add(value_pojemnosc);
+    add(Button_waga);
+    add(Button_wzrost);
+    add(Button_pojemnosc);
+    add(textArea2);
 }
 
 void Screen2ViewBase::setupScreen()
@@ -73,43 +169,81 @@ void Screen2ViewBase::setupScreen()
 
 void Screen2ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
 {
-    if (&src == &go_slide_1)
+    if (&src == &button_ok)
     {
-        //go_slide_1
-        //When go_slide_1 clicked change screen to Screen1
-        //Go to Screen1 with screen transition towards West
-        application().gotoScreen1ScreenCoverTransitionWest();
-    }
-    else if (&src == &go_slide_3)
-    {
-        //go_slide_3
-        //When go_slide_3 clicked change screen to Screen3
+        //Go_to_Screen_3
+        //When button_ok clicked change screen to Screen3
         //Go to Screen3 with screen transition towards East
         application().gotoScreen3ScreenCoverTransitionEast();
     }
-}
-
-void Screen2ViewBase::sliderValueChangedCallbackHandler(const touchgfx::Slider& src, int value)
-{
-    if (&src == &AlphaSlider)
+    else if (&src == &button_1)
     {
-        //AlphaChange
-        //When AlphaSlider value changed call virtual function
-        //Call AlphaChange
-        AlphaChange(value);
+        //Button_1
+        //When button_1 clicked execute C++ code
+        //Execute C++ code
+        presenter->NumberButtonClicked(1);
     }
-    else if (&src == &XSlider)
+    else if (&src == &button_2)
     {
-        //XChange
-        //When XSlider value changed call virtual function
-        //Call XChange
-        XChange(value);
+        //Button_2
+        //When button_2 clicked execute C++ code
+        //Execute C++ code
+        presenter->NumberButtonClicked(2);
     }
-    else if (&src == &YSlider)
+    else if (&src == &button_3)
     {
-        //YChange
-        //When YSlider value changed call virtual function
-        //Call YChange
-        YChange(value);
+        //Button_3
+        //When button_3 clicked execute C++ code
+        //Execute C++ code
+        presenter->NumberButtonClicked(3);
+    }
+    else if (&src == &button_4)
+    {
+        //Button_4
+        //When button_4 clicked execute C++ code
+        //Execute C++ code
+        presenter->NumberButtonClicked(4);
+    }
+    else if (&src == &button_5)
+    {
+        //Button_5
+        //When button_5 clicked execute C++ code
+        //Execute C++ code
+        presenter->NumberButtonClicked(5);
+    }
+    else if (&src == &button_6)
+    {
+        //Button_6
+        //When button_6 clicked execute C++ code
+        //Execute C++ code
+        presenter->NumberButtonClicked(6);
+    }
+    else if (&src == &button_7)
+    {
+        //button_7
+        //When button_7 clicked execute C++ code
+        //Execute C++ code
+        presenter->NumberButtonClicked(7);
+    }
+    else if (&src == &button_8)
+    {
+        //Button_8
+        //When button_8 clicked execute C++ code
+        //Execute C++ code
+        presenter->NumberButtonClicked(8);
+    }
+    else if (&src == &button_9)
+    {
+        //Button_9
+        //When button_9 clicked execute C++ code
+        //Execute C++ code
+        presenter->NumberButtonClicked(9);
+    }
+    else if (&src == &button_0)
+    {
+        //Button_0
+        //When button_0 clicked execute C++ code
+        //Execute C++ code
+        presenter->NumberButtonClicked(0);
     }
 }

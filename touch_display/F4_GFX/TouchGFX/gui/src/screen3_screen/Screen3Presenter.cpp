@@ -17,6 +17,3 @@ void Screen3Presenter::deactivate()
 
 }
 
-void Screen3Presenter::swButtonHwLedToggle(){model->toggleHwLed();}
-void Screen3Presenter::swButtonSwLedToggle(){view.toggleSwLed();}
-void Screen3Presenter::userButtonPressed(){view.toggleSwLed();}

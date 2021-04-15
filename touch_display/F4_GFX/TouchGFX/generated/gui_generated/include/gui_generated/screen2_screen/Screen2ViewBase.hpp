@@ -8,11 +8,9 @@
 #include <mvp/View.hpp>
 #include <gui/screen2_screen/Screen2Presenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <touchgfx/widgets/Image.hpp>
-#include <touchgfx/widgets/ButtonWithIcon.hpp>
-#include <touchgfx/widgets/AnimatedImage.hpp>
-#include <touchgfx/containers/Slider.hpp>
-#include <touchgfx/mixins/Draggable.hpp>
+#include <touchgfx/widgets/TextArea.hpp>
+#include <touchgfx/widgets/ButtonWithLabel.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 
 class Screen2ViewBase : public touchgfx::View<Screen2Presenter>
 {
@@ -20,24 +18,6 @@ public:
     Screen2ViewBase();
     virtual ~Screen2ViewBase() {}
     virtual void setupScreen();
-
-    /*
-     * Virtual Action Handlers
-     */
-    virtual void AlphaChange(int value)
-    {
-        // Override and implement this function in Screen2
-    }
-
-    virtual void XChange(int value)
-    {
-        // Override and implement this function in Screen2
-    }
-
-    virtual void YChange(int value)
-    {
-        // Override and implement this function in Screen2
-    }
 
 protected:
     FrontendApplication& application() {
@@ -48,14 +28,31 @@ protected:
      * Member Declarations
      */
     touchgfx::Box box1;
-    touchgfx::Image image1;
-    touchgfx::ButtonWithIcon go_slide_1;
-    touchgfx::ButtonWithIcon go_slide_3;
-    touchgfx::Draggable< touchgfx::AnimatedImage > animatedImage1;
-    touchgfx::Image touchGFX_logo;
-    touchgfx::Slider AlphaSlider;
-    touchgfx::Slider XSlider;
-    touchgfx::Slider YSlider;
+    touchgfx::TextArea textArea1;
+    touchgfx::ButtonWithLabel button_ok;
+    touchgfx::ButtonWithLabel button_1;
+    touchgfx::ButtonWithLabel button_2;
+    touchgfx::ButtonWithLabel button_3;
+    touchgfx::ButtonWithLabel button_4;
+    touchgfx::ButtonWithLabel button_5;
+    touchgfx::ButtonWithLabel button_6;
+    touchgfx::ButtonWithLabel button_7;
+    touchgfx::ButtonWithLabel button_8;
+    touchgfx::ButtonWithLabel button_9;
+    touchgfx::ButtonWithLabel button_0;
+    touchgfx::TextAreaWithOneWildcard value_waga;
+    touchgfx::TextAreaWithOneWildcard value_wzrost;
+    touchgfx::TextAreaWithOneWildcard value_pojemnosc;
+    touchgfx::ButtonWithLabel Button_waga;
+    touchgfx::ButtonWithLabel Button_wzrost;
+    touchgfx::ButtonWithLabel Button_pojemnosc;
+    touchgfx::TextArea textArea2;
+
+    /*
+     * Wildcard Buffers
+     */
+    static const uint16_t VALUE_WAGA_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar value_wagaBuffer[VALUE_WAGA_SIZE];
 
 private:
 
@@ -63,13 +60,11 @@ private:
      * Callback Declarations
      */
     touchgfx::Callback<Screen2ViewBase, const touchgfx::AbstractButton&> buttonCallback;
-    touchgfx::Callback<Screen2ViewBase, const touchgfx::Slider&, int> sliderValueChangedCallback;
 
     /*
      * Callback Handler Declarations
      */
     void buttonCallbackHandler(const touchgfx::AbstractButton& src);
-    void sliderValueChangedCallbackHandler(const touchgfx::Slider& src, int value);
 
 };
 

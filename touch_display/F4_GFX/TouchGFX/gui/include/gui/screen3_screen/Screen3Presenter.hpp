@@ -28,11 +28,6 @@ public:
     virtual ~Screen3Presenter() {};
 
 
-    void swButtonHwLedToggle();
-    void swButtonSwLedToggle();
-    void userButtonPressed();
-
-
 private:
     Screen3Presenter();
 

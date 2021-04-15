@@ -17,7 +17,6 @@ public:
 
     virtual void userButtonPressed() {}
 
-    virtual void newJunctionTempValue(int value) {}
 
 
 protected:

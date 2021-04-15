@@ -8,9 +8,10 @@
 #include <mvp/View.hpp>
 #include <gui/screen3_screen/Screen3Presenter.hpp>
 #include <touchgfx/widgets/Box.hpp>
-#include <touchgfx/widgets/Image.hpp>
-#include <touchgfx/widgets/ButtonWithIcon.hpp>
-#include <touchgfx/containers/buttons/Buttons.hpp>
+#include <touchgfx/containers/progress_indicators/ImageProgress.hpp>
+#include <touchgfx/widgets/ButtonWithLabel.hpp>
+#include <touchgfx/containers/ModalWindow.hpp>
+#include <touchgfx/Color.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 
 class Screen3ViewBase : public touchgfx::View<Screen3Presenter>
@@ -29,16 +30,13 @@ protected:
      * Member Declarations
      */
     touchgfx::Box box1;
-    touchgfx::Image image1;
-    touchgfx::ButtonWithIcon go_slide_1;
-    touchgfx::ButtonWithIcon go_slide_4;
-    touchgfx::ButtonWithIcon go_slide_2;
-    touchgfx::TextButtonStyle< touchgfx::ImageButtonStyle< touchgfx::ClickButtonTrigger > > SWButtonHWLED;
-    touchgfx::TextButtonStyle< touchgfx::ImageButtonStyle< touchgfx::ClickButtonTrigger > > SWButtonSWLED;
-    touchgfx::Image SwLedOn;
-    touchgfx::Image SwLedOff;
-    touchgfx::TextArea textPhysLED;
-    touchgfx::TextArea textLogLED;
+    touchgfx::ImageProgress imageProgress1;
+    touchgfx::ButtonWithLabel button_reset;
+    touchgfx::ImageProgress imageProgress1_1;
+    touchgfx::ModalWindow Are_you_sure_window;
+    touchgfx::ButtonWithLabel button_yes_reset;
+    touchgfx::TextArea textArea1;
+    touchgfx::ButtonWithLabel button_no_reset;
 
 private:
 
@@ -46,13 +44,11 @@ private:
      * Callback Declarations
      */
     touchgfx::Callback<Screen3ViewBase, const touchgfx::AbstractButton&> buttonCallback;
-    touchgfx::Callback<Screen3ViewBase, const touchgfx::AbstractButtonContainer&> flexButtonCallback;
 
     /*
      * Callback Handler Declarations
      */
     void buttonCallbackHandler(const touchgfx::AbstractButton& src);
-    void flexButtonCallbackHandler(const touchgfx::AbstractButtonContainer& src);
 
 };
 

@@ -27,6 +27,10 @@ public:
 
     virtual ~Screen2Presenter() {};
 
+
+    void NumberButtonClicked(int);
+    void updateTxt(int);
+
 private:
     Screen2Presenter();
 

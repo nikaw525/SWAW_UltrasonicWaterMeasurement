@@ -7,74 +7,69 @@
 #include <texts/TextKeysAndLanguages.hpp>
 
 Screen3ViewBase::Screen3ViewBase() :
-    buttonCallback(this, &Screen3ViewBase::buttonCallbackHandler),
-    flexButtonCallback(this, &Screen3ViewBase::flexButtonCallbackHandler)
+    buttonCallback(this, &Screen3ViewBase::buttonCallbackHandler)
 {
 
     box1.setPosition(0, 0, 480, 272);
-    box1.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    box1.setColor(touchgfx::Color::getColorFrom24BitRGB(141, 178, 224));
 
-    image1.setXY(0, 0);
-    image1.setBitmap(touchgfx::Bitmap(BITMAP_BACKGROUND3_ID));
+    imageProgress1.setXY(23, 78);
+    imageProgress1.setProgressIndicatorPosition(2, 2, 16, 180);
+    imageProgress1.setRange(0, 100);
+    imageProgress1.setDirection(touchgfx::AbstractDirectionProgress::DOWN);
+    imageProgress1.setBackground(touchgfx::Bitmap(BITMAP_DARK_PROGRESSINDICATORS_BG_MEDIUM_PROGRESS_INDICATOR_BG_SQUARE_90_DEGREES_ID));
+    imageProgress1.setBitmap(BITMAP_DARK_PROGRESSINDICATORS_FILL_TILING_PROGRESS_INDICATOR_FILL_STRIPED_NORMAL_VERTICAL_ID);
+    imageProgress1.setValue(60);
+    imageProgress1.setAnchorAtZero(false);
 
-    go_slide_1.setXY(355, 14);
-    go_slide_1.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_PRESSED_ID), touchgfx::Bitmap(BITMAP_BLUE_ICONS_HOME_32_ID), touchgfx::Bitmap(BITMAP_BLUE_ICONS_HOME_32_ID));
-    go_slide_1.setIconXY(15, 16);
-    go_slide_1.setAction(buttonCallback);
+    button_reset.setXY(299, 202);
+    button_reset.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
+    button_reset.setLabelText(touchgfx::TypedText(T_SINGLEUSEID22));
+    button_reset.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_reset.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_reset.setAction(buttonCallback);
 
-    go_slide_4.setXY(415, 14);
-    go_slide_4.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_PRESSED_ID), touchgfx::Bitmap(BITMAP_BLUE_ICONS_NEXT_ARROW_32_ID), touchgfx::Bitmap(BITMAP_BLUE_ICONS_NEXT_ARROW_32_ID));
-    go_slide_4.setIconXY(22, 15);
-    go_slide_4.setAction(buttonCallback);
+    imageProgress1_1.setXY(61, 78);
+    imageProgress1_1.setProgressIndicatorPosition(2, 2, 16, 180);
+    imageProgress1_1.setRange(0, 100);
+    imageProgress1_1.setDirection(touchgfx::AbstractDirectionProgress::DOWN);
+    imageProgress1_1.setBackground(touchgfx::Bitmap(BITMAP_DARK_PROGRESSINDICATORS_BG_MEDIUM_PROGRESS_INDICATOR_BG_SQUARE_90_DEGREES_ID));
+    imageProgress1_1.setBitmap(BITMAP_DARK_PROGRESSINDICATORS_FILL_TILING_PROGRESS_INDICATOR_FILL_STRIPED_NORMAL_VERTICAL_ID);
+    imageProgress1_1.setValue(60);
+    imageProgress1_1.setAnchorAtZero(false);
 
-    go_slide_2.setXY(295, 14);
-    go_slide_2.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_ICON_BUTTON_PRESSED_ID), touchgfx::Bitmap(BITMAP_BLUE_ICONS_BACK_ARROW_32_ID), touchgfx::Bitmap(BITMAP_BLUE_ICONS_BACK_ARROW_32_ID));
-    go_slide_2.setIconXY(22, 15);
-    go_slide_2.setAction(buttonCallback);
+    Are_you_sure_window.setBackground(touchgfx::BitmapId(BITMAP_DARK_BACKGROUNDS_MAIN_BG_320X240PX_ID), 80, 16);
+    Are_you_sure_window.setShadeColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    Are_you_sure_window.setShadeAlpha(152);
+    Are_you_sure_window.hide();
 
-    SWButtonHWLED.setBitmaps(Bitmap(BITMAP_BLUE_BUTTONS_ROUND_EDGE_ICON_BUTTON_ID), Bitmap(BITMAP_BLUE_BUTTONS_ROUND_EDGE_ICON_BUTTON_PRESSED_ID));
-    SWButtonHWLED.setBitmapXY(0, 0);
-    SWButtonHWLED.setText(TypedText(T_SINGLEUSEID2));
-    SWButtonHWLED.setTextPosition(0, 16, 60, 60);
-    SWButtonHWLED.setTextColors(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255), touchgfx::Color::getColorFrom24BitRGB(10, 10, 10));
-    SWButtonHWLED.setPosition(39, 96, 60, 60);
-    SWButtonHWLED.setAction(flexButtonCallback);
+    button_yes_reset.setXY(68, 156);
+    button_yes_reset.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_PRESSED_ID));
+    button_yes_reset.setLabelText(touchgfx::TypedText(T_SINGLEUSEID23));
+    button_yes_reset.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_yes_reset.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_yes_reset.setAction(buttonCallback);
+    Are_you_sure_window.add(button_yes_reset);
 
-    SWButtonSWLED.setBitmaps(Bitmap(BITMAP_BLUE_BUTTONS_ROUND_EDGE_ICON_BUTTON_ID), Bitmap(BITMAP_BLUE_BUTTONS_ROUND_EDGE_ICON_BUTTON_PRESSED_ID));
-    SWButtonSWLED.setBitmapXY(0, 0);
-    SWButtonSWLED.setText(TypedText(T_SINGLEUSEID3));
-    SWButtonSWLED.setTextPosition(0, 16, 60, 60);
-    SWButtonSWLED.setTextColors(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255), touchgfx::Color::getColorFrom24BitRGB(10, 10, 10));
-    SWButtonSWLED.setPosition(39, 165, 60, 60);
-    SWButtonSWLED.setAction(flexButtonCallback);
+    textArea1.setXY(48, 38);
+    textArea1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea1.setLinespacing(0);
+    textArea1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID24));
+    Are_you_sure_window.add(textArea1);
 
-    SwLedOn.setXY(381, 139);
-    SwLedOn.setBitmap(touchgfx::Bitmap(BITMAP_BLUE_RADIO_BUTTONS_RADIO_BUTTON_ACTIVE_ID));
-
-    SwLedOff.setXY(381, 139);
-    SwLedOff.setBitmap(touchgfx::Bitmap(BITMAP_BLUE_RADIO_BUTTONS_RADIO_BUTTON_INACTIVE_ID));
-
-    textPhysLED.setXY(122, 114);
-    textPhysLED.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
-    textPhysLED.setLinespacing(0);
-    textPhysLED.setTypedText(touchgfx::TypedText(T_SINGLEUSEID4));
-
-    textLogLED.setXY(122, 183);
-    textLogLED.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
-    textLogLED.setLinespacing(0);
-    textLogLED.setTypedText(touchgfx::TypedText(T_SINGLEUSEID5));
+    button_no_reset.setXY(192, 156);
+    button_no_reset.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_PRESSED_ID));
+    button_no_reset.setLabelText(touchgfx::TypedText(T_SINGLEUSEID25));
+    button_no_reset.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_no_reset.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    button_no_reset.setAction(buttonCallback);
+    Are_you_sure_window.add(button_no_reset);
 
     add(box1);
-    add(image1);
-    add(go_slide_1);
-    add(go_slide_4);
-    add(go_slide_2);
-    add(SWButtonHWLED);
-    add(SWButtonSWLED);
-    add(SwLedOn);
-    add(SwLedOff);
-    add(textPhysLED);
-    add(textLogLED);
+    add(imageProgress1);
+    add(button_reset);
+    add(imageProgress1_1);
+    add(Are_you_sure_window);
 }
 
 void Screen3ViewBase::setupScreen()
@@ -84,43 +79,27 @@ void Screen3ViewBase::setupScreen()
 
 void Screen3ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
 {
-    if (&src == &go_slide_1)
+    if (&src == &button_reset)
     {
-        //go_slide_1
-        //When go_slide_1 clicked change screen to Screen1
-        //Go to Screen1 with screen transition towards West
-        application().gotoScreen1ScreenCoverTransitionWest();
+        //Are_you_sure_window
+        //When button_reset clicked show Are_you_sure_window
+        //Show Are_you_sure_window
+        Are_you_sure_window.setVisible(true);
+        Are_you_sure_window.invalidate();
     }
-    else if (&src == &go_slide_4)
+    else if (&src == &button_yes_reset)
     {
-        //go_slide_4
-        //When go_slide_4 clicked change screen to Screen4
-        //Go to Screen4 with screen transition towards East
-        application().gotoScreen4ScreenCoverTransitionEast();
+        //Reset
+        //When button_yes_reset clicked change screen to Screen2
+        //Go to Screen2 with screen transition towards East
+        application().gotoScreen2ScreenCoverTransitionEast();
     }
-    else if (&src == &go_slide_2)
+    else if (&src == &button_no_reset)
     {
-        //go_slide_2
-        //When go_slide_2 clicked change screen to Screen2
-        //Go to Screen2 with screen transition towards West
-        application().gotoScreen2ScreenCoverTransitionWest();
-    }
-}
-
-void Screen3ViewBase::flexButtonCallbackHandler(const touchgfx::AbstractButtonContainer& src)
-{
-    if (&src == &SWButtonHWLED)
-    {
-        //SWButtonHWLED
-        //When SWButtonHWLED clicked execute C++ code
-        //Execute C++ code
-        presenter->swButtonHwLedToggle();
-    }
-    else if (&src == &SWButtonSWLED)
-    {
-        //SWButtonSWLED
-        //When SWButtonSWLED clicked execute C++ code
-        //Execute C++ code
-        presenter->swButtonSwLedToggle();
+        //Dont_reset
+        //When button_no_reset clicked hide Are_you_sure_window
+        //Hide Are_you_sure_window
+        Are_you_sure_window.setVisible(false);
+        Are_you_sure_window.invalidate();
     }
 }

@@ -11,25 +11,23 @@ Screen1ViewBase::Screen1ViewBase() :
 {
 
     box1.setPosition(0, 0, 480, 272);
-    box1.setColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    box1.setColor(touchgfx::Color::getColorFrom24BitRGB(144, 185, 219));
 
-    image1.setXY(0, 0);
-    image1.setBitmap(touchgfx::Bitmap(BITMAP_BACKGROUND1_ID));
-
-    image2.setXY(190, 100);
-    image2.setBitmap(touchgfx::Bitmap(BITMAP_STLOGO1_ID));
-
-    go_slide_2.setXY(155, 187);
+    go_slide_2.setXY(155, 136);
     go_slide_2.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_SMALL_PRESSED_ID));
     go_slide_2.setLabelText(touchgfx::TypedText(T_SINGLEUSEID1));
     go_slide_2.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     go_slide_2.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     go_slide_2.setAction(buttonCallback);
 
+    textArea1.setXY(47, 28);
+    textArea1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea1.setLinespacing(0);
+    textArea1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID7));
+
     add(box1);
-    add(image1);
-    add(image2);
     add(go_slide_2);
+    add(textArea1);
 }
 
 void Screen1ViewBase::setupScreen()
