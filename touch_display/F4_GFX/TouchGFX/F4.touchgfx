@@ -451,6 +451,81 @@
             "Moveable": false
           },
           {
+            "Color": {
+              "Red": 115,
+              "Green": 183,
+              "Blue": 212
+            },
+            "BorderColor": {
+              "Red": 115,
+              "Green": 183,
+              "Blue": 212
+            },
+            "BorderSize": 5,
+            "Alpha": 255,
+            "Name": "pojemnosc_box",
+            "X": 166,
+            "Y": 192,
+            "Width": 104,
+            "Height": 55,
+            "Type": "BoxWithBorder",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Color": {
+              "Red": 115,
+              "Green": 183,
+              "Blue": 212
+            },
+            "BorderColor": {
+              "Red": 115,
+              "Green": 183,
+              "Blue": 212
+            },
+            "BorderSize": 5,
+            "Alpha": 255,
+            "Name": "wzrost_box",
+            "X": 174,
+            "Y": 125,
+            "Width": 104,
+            "Height": 55,
+            "Type": "BoxWithBorder",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Color": {
+              "Red": 115,
+              "Green": 183,
+              "Blue": 212
+            },
+            "BorderColor": {
+              "Red": 115,
+              "Green": 183,
+              "Blue": 212
+            },
+            "BorderSize": 5,
+            "Alpha": 255,
+            "Name": "waga_box",
+            "X": 174,
+            "Y": 57,
+            "Width": 104,
+            "Height": 55,
+            "Type": "BoxWithBorder",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
             "TextId": "SingleUseId27",
             "TextRotation": "0",
             "Color": {
@@ -467,7 +542,7 @@
               "BufferSize": 10
             },
             "Name": "value_waga",
-            "X": 187,
+            "X": 184,
             "Y": 70,
             "Width": 13,
             "Height": 25,
@@ -491,13 +566,13 @@
             "LineSpacing": 0,
             "Wildcard1": {
               "TextId": "SingleUseId31",
-              "UseBuffer": false,
-              "BufferSize": 0
+              "UseBuffer": true,
+              "BufferSize": 10
             },
             "Name": "value_wzrost",
             "X": 184,
             "Y": 140,
-            "Width": 50,
+            "Width": 13,
             "Height": 25,
             "Type": "TextArea",
             "Visible": true,
@@ -519,13 +594,13 @@
             "LineSpacing": 0,
             "Wildcard1": {
               "TextId": "SingleUseId34",
-              "UseBuffer": false,
-              "BufferSize": 0
+              "UseBuffer": true,
+              "BufferSize": 10
             },
             "Name": "value_pojemnosc",
-            "X": 194,
+            "X": 184,
             "Y": 207,
-            "Width": 25,
+            "Width": 13,
             "Height": 25,
             "Type": "TextArea",
             "Visible": true,
@@ -636,6 +711,52 @@
             "X": 242,
             "Y": 69,
             "Width": 24,
+            "Height": 25,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId41",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea2_1",
+            "X": 240,
+            "Y": 140,
+            "Width": 30,
+            "Height": 25,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId42",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea2_1_1",
+            "X": 240,
+            "Y": 207,
+            "Width": 5,
             "Height": 25,
             "Type": "TextArea",
             "Visible": true,
@@ -779,6 +900,42 @@
               "Code": "presenter->NumberButtonClicked(0);",
               "Type": "ActionExecuteCode"
             }
+          },
+          {
+            "InteractionName": "waga_button",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "Button_waga",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "Code": "presenter->DestinationButtonClicked(0);\r\n",
+              "Type": "ActionExecuteCode"
+            }
+          },
+          {
+            "InteractionName": "wzrost_button",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "Button_wzrost",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "Code": "presenter->DestinationButtonClicked(1);",
+              "Type": "ActionExecuteCode"
+            }
+          },
+          {
+            "InteractionName": "pojemnosc_button",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "Button_pojemnosc",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "Code": "presenter->DestinationButtonClicked(2);",
+              "Type": "ActionExecuteCode"
+            }
           }
         ],
         "Name": "Screen2",
@@ -891,6 +1048,33 @@
             "Moveable": false
           },
           {
+            "TextId": "SingleUseId39",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "UseBuffer": true,
+              "BufferSize": 10
+            },
+            "Name": "Ilosc_wody",
+            "X": 441,
+            "Y": 22,
+            "Width": 13,
+            "Height": 25,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
             "Components": [
               {
                 "Pressed": "__designer\\Dark_Buttons_Round_Edge_icon_button_pressed.png",
@@ -992,6 +1176,29 @@
             "Height": 272,
             "Type": "ModalWindow",
             "Visible": false,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId40",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea2",
+            "X": 13,
+            "Y": 22,
+            "Width": 410,
+            "Height": 25,
+            "Type": "TextArea",
+            "Visible": true,
             "Draggable": false,
             "Clickable": false,
             "Fadeable": false,
@@ -1177,6 +1384,22 @@
       },
       {
         "TextEntryId": "SingleUseId38",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId39",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId40",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId41",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId42",
         "IsResource": false
       }
     ],

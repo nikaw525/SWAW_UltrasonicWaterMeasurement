@@ -16,4 +16,9 @@ void Screen3Presenter::deactivate()
 {
 
 }
-
+/*
+void Screen3Presenter::ComputeWater(void)
+{
+	view.updateWaterTxt(model->waga_value*30);
+}
+*/

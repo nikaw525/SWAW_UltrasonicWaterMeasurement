@@ -29,7 +29,14 @@ public:
 
 
     void NumberButtonClicked(int);
+    void TypeButtonClicked(int);
+    void DestinationButtonClicked(int);
     void updateTxt(int);
+    int waga_value;
+    int wzrost_value;
+    int pojemnosc_value;
+    int data_destination[3];
+
 
 private:
     Screen2Presenter();

@@ -38,6 +38,14 @@ Screen3ViewBase::Screen3ViewBase() :
     imageProgress1_1.setValue(60);
     imageProgress1_1.setAnchorAtZero(false);
 
+    Ilosc_wody.setXY(441, 22);
+    Ilosc_wody.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    Ilosc_wody.setLinespacing(0);
+    Ilosc_wodyBuffer[0] = 0;
+    Ilosc_wody.setWildcard(Ilosc_wodyBuffer);
+    Ilosc_wody.resizeToCurrentText();
+    Ilosc_wody.setTypedText(touchgfx::TypedText(T_SINGLEUSEID39));
+
     Are_you_sure_window.setBackground(touchgfx::BitmapId(BITMAP_DARK_BACKGROUNDS_MAIN_BG_320X240PX_ID), 80, 16);
     Are_you_sure_window.setShadeColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     Are_you_sure_window.setShadeAlpha(152);
@@ -65,11 +73,18 @@ Screen3ViewBase::Screen3ViewBase() :
     button_no_reset.setAction(buttonCallback);
     Are_you_sure_window.add(button_no_reset);
 
+    textArea2.setXY(13, 22);
+    textArea2.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea2.setLinespacing(0);
+    textArea2.setTypedText(touchgfx::TypedText(T_SINGLEUSEID40));
+
     add(box1);
     add(imageProgress1);
     add(button_reset);
     add(imageProgress1_1);
+    add(Ilosc_wody);
     add(Are_you_sure_window);
+    add(textArea2);
 }
 
 void Screen3ViewBase::setupScreen()

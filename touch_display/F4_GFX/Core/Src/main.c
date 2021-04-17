@@ -651,22 +651,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	}
 }
 
-/*
-uint32_t TEMP_SENSOR_GetValue(void)
-{
-	#define TEMP30_CAL_VALUE   ((uint16_t*)((uint32_t) 0x1FFF7A2C))
-	#define TEMP110_CAL_VALUE    ((uint16_t*)((uint32_t) 0x1FFF7A2E))
-
-	if (HAL_ADC_Start(&hadc1) == HAL_OK)
-	{
-	if (HAL_ADC_PollForConversion(&hadc1, 1000) == HAL_OK)
-		{
-		return (int32_t)(80/((*TEMP110_CAL_VALUE) - (*TEMP30_CAL_VALUE)) * (HAL_ADC_GetValue(&hadc1) - (*TEMP30_CAL_VALUE))+30);
-		}
-	}
-	return  0xFFFFFFFF;
-}
-*/
 
 /* USER CODE END 4 */
 

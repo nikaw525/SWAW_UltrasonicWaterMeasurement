@@ -95,7 +95,22 @@ Screen2ViewBase::Screen2ViewBase() :
     button_0.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     button_0.setAction(buttonCallback);
 
-    value_waga.setXY(187, 70);
+    pojemnosc_box.setPosition(166, 192, 104, 55);
+    pojemnosc_box.setColor(touchgfx::Color::getColorFrom24BitRGB(115, 183, 212));
+    pojemnosc_box.setBorderColor(touchgfx::Color::getColorFrom24BitRGB(115, 183, 212));
+    pojemnosc_box.setBorderSize(5);
+
+    wzrost_box.setPosition(174, 125, 104, 55);
+    wzrost_box.setColor(touchgfx::Color::getColorFrom24BitRGB(115, 183, 212));
+    wzrost_box.setBorderColor(touchgfx::Color::getColorFrom24BitRGB(115, 183, 212));
+    wzrost_box.setBorderSize(5);
+
+    waga_box.setPosition(174, 57, 104, 55);
+    waga_box.setColor(touchgfx::Color::getColorFrom24BitRGB(115, 183, 212));
+    waga_box.setBorderColor(touchgfx::Color::getColorFrom24BitRGB(115, 183, 212));
+    waga_box.setBorderSize(5);
+
+    value_waga.setXY(184, 70);
     value_waga.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     value_waga.setLinespacing(0);
     Unicode::snprintf(value_wagaBuffer, VALUE_WAGA_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID28).getText());
@@ -106,14 +121,16 @@ Screen2ViewBase::Screen2ViewBase() :
     value_wzrost.setXY(184, 140);
     value_wzrost.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     value_wzrost.setLinespacing(0);
-    value_wzrost.setWildcard(touchgfx::TypedText(T_SINGLEUSEID31).getText());
+    Unicode::snprintf(value_wzrostBuffer, VALUE_WZROST_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID31).getText());
+    value_wzrost.setWildcard(value_wzrostBuffer);
     value_wzrost.resizeToCurrentText();
     value_wzrost.setTypedText(touchgfx::TypedText(T_SINGLEUSEID30));
 
-    value_pojemnosc.setXY(194, 207);
+    value_pojemnosc.setXY(184, 207);
     value_pojemnosc.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     value_pojemnosc.setLinespacing(0);
-    value_pojemnosc.setWildcard(touchgfx::TypedText(T_SINGLEUSEID34).getText());
+    Unicode::snprintf(value_pojemnoscBuffer, VALUE_POJEMNOSC_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID34).getText());
+    value_pojemnosc.setWildcard(value_pojemnoscBuffer);
     value_pojemnosc.resizeToCurrentText();
     value_pojemnosc.setTypedText(touchgfx::TypedText(T_SINGLEUSEID33));
 
@@ -122,23 +139,36 @@ Screen2ViewBase::Screen2ViewBase() :
     Button_waga.setLabelText(touchgfx::TypedText(T_SINGLEUSEID35));
     Button_waga.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     Button_waga.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    Button_waga.setAction(buttonCallback);
 
     Button_wzrost.setXY(4, 122);
     Button_wzrost.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
     Button_wzrost.setLabelText(touchgfx::TypedText(T_SINGLEUSEID36));
     Button_wzrost.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     Button_wzrost.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    Button_wzrost.setAction(buttonCallback);
 
     Button_pojemnosc.setXY(4, 189);
     Button_pojemnosc.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
     Button_pojemnosc.setLabelText(touchgfx::TypedText(T_SINGLEUSEID37));
     Button_pojemnosc.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     Button_pojemnosc.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    Button_pojemnosc.setAction(buttonCallback);
 
     textArea2.setXY(242, 69);
     textArea2.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     textArea2.setLinespacing(0);
     textArea2.setTypedText(touchgfx::TypedText(T_SINGLEUSEID38));
+
+    textArea2_1.setXY(240, 140);
+    textArea2_1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea2_1.setLinespacing(0);
+    textArea2_1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID41));
+
+    textArea2_1_1.setXY(240, 207);
+    textArea2_1_1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea2_1_1.setLinespacing(0);
+    textArea2_1_1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID42));
 
     add(box1);
     add(textArea1);
@@ -153,6 +183,9 @@ Screen2ViewBase::Screen2ViewBase() :
     add(button_8);
     add(button_9);
     add(button_0);
+    add(pojemnosc_box);
+    add(wzrost_box);
+    add(waga_box);
     add(value_waga);
     add(value_wzrost);
     add(value_pojemnosc);
@@ -160,6 +193,8 @@ Screen2ViewBase::Screen2ViewBase() :
     add(Button_wzrost);
     add(Button_pojemnosc);
     add(textArea2);
+    add(textArea2_1);
+    add(textArea2_1_1);
 }
 
 void Screen2ViewBase::setupScreen()
@@ -245,5 +280,26 @@ void Screen2ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
         //When button_0 clicked execute C++ code
         //Execute C++ code
         presenter->NumberButtonClicked(0);
+    }
+    else if (&src == &Button_waga)
+    {
+        //waga_button
+        //When Button_waga clicked execute C++ code
+        //Execute C++ code
+        presenter->DestinationButtonClicked(0);
+    }
+    else if (&src == &Button_wzrost)
+    {
+        //wzrost_button
+        //When Button_wzrost clicked execute C++ code
+        //Execute C++ code
+        presenter->DestinationButtonClicked(1);
+    }
+    else if (&src == &Button_pojemnosc)
+    {
+        //pojemnosc_button
+        //When Button_pojemnosc clicked execute C++ code
+        //Execute C++ code
+        presenter->DestinationButtonClicked(2);
     }
 }

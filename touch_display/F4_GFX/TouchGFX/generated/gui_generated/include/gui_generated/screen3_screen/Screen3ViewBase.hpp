@@ -10,6 +10,7 @@
 #include <touchgfx/widgets/Box.hpp>
 #include <touchgfx/containers/progress_indicators/ImageProgress.hpp>
 #include <touchgfx/widgets/ButtonWithLabel.hpp>
+#include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <touchgfx/containers/ModalWindow.hpp>
 #include <touchgfx/Color.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
@@ -33,10 +34,18 @@ protected:
     touchgfx::ImageProgress imageProgress1;
     touchgfx::ButtonWithLabel button_reset;
     touchgfx::ImageProgress imageProgress1_1;
+    touchgfx::TextAreaWithOneWildcard Ilosc_wody;
     touchgfx::ModalWindow Are_you_sure_window;
     touchgfx::ButtonWithLabel button_yes_reset;
     touchgfx::TextArea textArea1;
     touchgfx::ButtonWithLabel button_no_reset;
+    touchgfx::TextArea textArea2;
+
+    /*
+     * Wildcard Buffers
+     */
+    static const uint16_t ILOSC_WODY_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar Ilosc_wodyBuffer[ILOSC_WODY_SIZE];
 
 private:
 

@@ -27,6 +27,8 @@ public:
 
     virtual ~Screen3Presenter() {};
 
+    void ComputeWater(void);
+
 
 private:
     Screen3Presenter();
