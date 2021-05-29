@@ -6,12 +6,8 @@
  */
 
 #include "hcsr04.h"
-
-Prefault_distance_T Prefault_distance={
-		.invalid_msg = false,
-		.debounce_counter = 0,
-		.distance = 0
-};
+#include "PowerMgr.h"
+#include <math.h>
 
 dist kalman_filter(const dist u)
 {
@@ -29,6 +25,21 @@ dist kalman_filter(const dist u)
 	P = (1 - K * H) * P + Q; // update error covariance
 
 	return U_pri;
+}
+
+static float Calculate_MCU_Temperature(const uint16_t adc_read)
+{
+	float Vsense;
+	Vsense = (SUPPLAY_VOLTAGE * adc_read)/ADC_RESOLUTION;
+
+	return (((V25 - Vsense)/AVG_SLOPE) + 25.0f);
+}
+
+
+float Calculate_SoundSpeed(const uint16_t adc_read)
+{
+	float temperature = Calculate_MCU_Temperature(adc_read);
+	return (V_IN_AIR_AT_0 * sqrt(1+(temperature/273.0f)));
 }
 
 void reset_counter(Prefault_distance_T *self)

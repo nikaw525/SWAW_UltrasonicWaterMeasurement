@@ -35,6 +35,13 @@ extern ADC_HandleTypeDef hadc1;
 
 /* USER CODE BEGIN Private defines */
 
+enum
+{
+	ADC_VBAT,
+	ADC_TEMP,
+	ADC_CHANNELS
+};
+
 /* USER CODE END Private defines */
 
 void MX_ADC1_Init(void);

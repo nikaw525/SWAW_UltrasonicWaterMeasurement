@@ -22,14 +22,15 @@
 #include "adc.h"
 #include "dma.h"
 #include "tim.h"
-#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
 #include "hcsr04.h"
+#include "PowerMgr.h"
 #include <stdio.h>
+#include <string.h>
 
 /* USER CODE END Includes */
 
@@ -48,28 +49,23 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-#define V_REF 9.0f
 
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-typedef enum
-{
-  OFF = -1,
-  INIT = 0,
-  FULL_OPERATIONAL,
-  SLEEP_MODE,
-  ERROR_MODE = 255
-} PowerMode;
 
-extern Prefault_distance_T Prefault_distance;
-uint8_t data[30];
-volatile PowerMode PowerMode_flag = OFF;
-uint32_t clock_tick;
-uint16_t adc_read;
-float Vbat;
+static Prefault_distance_T Prefault_distance={
+		.invalid_msg = false,
+		.debounce_counter = 0,
+		.distance = 0
+};
+
+static volatile PowerMode PowerMode_flag = OFF;
+static volatile uint16_t adc_read[ADC_CHANNELS]; /* Channel 1 : Vbat measurement Channel 2: MCU temp */
+static float Vbat;
+static float Sound_speed;
 
 /* USER CODE END PV */
 
@@ -114,7 +110,6 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_TIM3_Init();
-  MX_USART2_UART_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
 
@@ -122,12 +117,10 @@ int main(void)
   HAL_TIM_PWM_Start(&htim3, HCSR04_PWM_CHANNEL);
   HAL_TIM_IC_Start(&htim3, HCSR04_START_CHANNEL);
   HAL_TIM_IC_Start_IT(&htim3, HCSR04_STOP_CHANNEL);
-  HAL_ADC_Start_DMA(&hadc1, &adc_read, sizeof(uint16_t));
 
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc_read, ADC_CHANNELS);
+  HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
 
-#ifdef TESTING
-  clock_tick = HAL_GetTick();
-#endif
   PowerMode_flag = FULL_OPERATIONAL;
   /* USER CODE END 2 */
 
@@ -135,10 +128,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
-	  Vbat = (adc_read *3.3f/ 4095) * 3;
-
-
 	  if((Prefault_distance.debounce_counter < DEBOUNCE_CYCLES)
 		 && (false == Prefault_distance.invalid_msg))
 	  {
@@ -150,17 +139,6 @@ int main(void)
 		  Prefault_distance.debounce_counter = 0;
 	  }
 
-
-#ifdef TESTING
-    //A test section that allow to display the data using the serial port
-    if (((HAL_GetTick() - clock_tick) > 100000)
-    	&& (true == Prefault_distance.invalid_msg))
-    {
-      size_t size = sprintf(data, "%f", Prefault_distance.distance); // @suppress("Float formatting support")
-      HAL_UART_Transmit_DMA(&huart2, data, size + 2);
-      clock_tick = HAL_GetTick();
-    }
-#endif
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -205,8 +183,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART2|RCC_PERIPHCLK_TIM34;
-  PeriphClkInit.Usart2ClockSelection = RCC_USART2CLKSOURCE_PCLK1;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_TIM34;
   PeriphClkInit.Tim34ClockSelection = RCC_TIM34CLK_HCLK;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
@@ -221,7 +198,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
   {
     uint16_t time =
         (uint16_t)((uint16_t)__HAL_TIM_GetCompare(&htim3, HCSR04_STOP_CHANNEL) - (uint16_t)__HAL_TIM_GetCompare(&htim3, HCSR04_START_CHANNEL));
-    Prefault_distance.distance = kalman_filter((float)time / 2.0 * 0.0343);
+    Prefault_distance.distance = kalman_filter((float)time /(2.0 * Sound_speed));
     reset_counter(&Prefault_distance);
     HAL_TIM_IC_Start_IT(&htim3, HCSR04_STOP_CHANNEL);
   }
@@ -231,28 +208,19 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   if (GPIO_Pin == SWITCH_Pin)
   {
-    if (FULL_OPERATIONAL == PowerMode_flag)
-    {
-      PowerMode_flag = SLEEP_MODE;
-      HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
-      HAL_SuspendTick();
-      HAL_PWR_EnableSleepOnExit();
-      HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
-    }
-    else if (SLEEP_MODE == PowerMode_flag)
-    {
-      HAL_ResumeTick();
-      HAL_PWR_DisableSleepOnExit();
-      HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-      PowerMode_flag = FULL_OPERATIONAL;
-    }
-    else
-    {
-      /* Do nothing */
-    }
+	  Switch_PowerMode(&PowerMode_flag);
   }
 }
 
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+{
+  if(hadc->Instance == ADC1)
+  {
+     Vbat = Calculate_BatteryVoltage(adc_read[ADC_VBAT]);
+     Sound_speed = Calculate_SoundSpeed(adc_read[ADC_TEMP]);
+     BatteryVoltageMonitor(Vbat, &PowerMode_flag);
+  }
+}
 
 /* USER CODE END 4 */
 

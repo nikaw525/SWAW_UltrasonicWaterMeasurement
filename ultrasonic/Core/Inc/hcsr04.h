@@ -11,7 +11,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define DEBOUNCE_CYCLES UINT16_MAX
+#define DEBOUNCE_CYCLES 		UINT16_MAX
+
+#define V_IN_AIR_AT_0			33.1f  /* [cm/ms] */
 
 typedef float dist;
 
@@ -28,6 +30,7 @@ typedef struct Prefault
 
 dist kalman_filter(const dist u);
 
+float Calculate_SoundSpeed(const uint16_t adc_read);
 void reset_counter(Prefault_distance_T *self);
 
 
