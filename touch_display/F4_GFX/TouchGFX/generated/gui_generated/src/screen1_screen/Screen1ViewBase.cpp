@@ -11,7 +11,7 @@ Screen1ViewBase::Screen1ViewBase() :
 {
 
     box1.setPosition(0, 0, 480, 272);
-    box1.setColor(touchgfx::Color::getColorFrom24BitRGB(144, 185, 219));
+    box1.setColor(touchgfx::Color::getColorFrom24BitRGB(134, 165, 201));
 
     go_slide_2.setXY(155, 136);
     go_slide_2.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_SMALL_PRESSED_ID));

@@ -11,7 +11,7 @@ Screen3ViewBase::Screen3ViewBase() :
 {
 
     box1.setPosition(0, 0, 480, 272);
-    box1.setColor(touchgfx::Color::getColorFrom24BitRGB(141, 178, 224));
+    box1.setColor(touchgfx::Color::getColorFrom24BitRGB(162, 180, 201));
 
     button_reset.setXY(299, 202);
     button_reset.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
@@ -20,7 +20,7 @@ Screen3ViewBase::Screen3ViewBase() :
     button_reset.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     button_reset.setAction(buttonCallback);
 
-    Ilosc_wody.setXY(240, 66);
+    Ilosc_wody.setXY(120, 85);
     Ilosc_wody.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     Ilosc_wody.setLinespacing(0);
     Ilosc_wodyBuffer[0] = 0;
@@ -28,30 +28,49 @@ Screen3ViewBase::Screen3ViewBase() :
     Ilosc_wody.resizeToCurrentText();
     Ilosc_wody.setTypedText(touchgfx::TypedText(T_SINGLEUSEID39));
 
-    textArea2.setXY(35, 21);
+    textArea2.setXY(16, 16);
     textArea2.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     textArea2.setLinespacing(0);
     textArea2.setTypedText(touchgfx::TypedText(T_SINGLEUSEID40));
 
-    bottle_1.setXY(34, 129);
-    bottle_1.setProgressIndicatorPosition(-63, 56, 172, 79);
+    bottle_1.setXY(16, 151);
+    bottle_1.setProgressIndicatorPosition(-61, 31, 172, 79);
     bottle_1.setRange(0, 100);
     bottle_1.setDirection(touchgfx::AbstractDirectionProgress::UP);
     bottle_1.setBackground(touchgfx::Bitmap(BITMAP_BOTTLE_ID));
     bottle_1.setBitmap(BITMAP_BLUE_PROGRESSINDICATORS_FILL_TILING_PROGRESS_INDICATOR_FILL_GRADIENT_THIN_HORIZONTAL_ID);
-    bottle_1.setValue(0);
+    bottle_1.setValue(100);
     bottle_1.setAnchorAtZero(false);
 
-    wynik_txt.setXY(91, 232);
+    wynik_txt.setXY(69, 220);
     wynik_txt.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     wynik_txt.setLinespacing(0);
-    wynik_txtBuffer[0] = 0;
+    Unicode::snprintf(wynik_txtBuffer, WYNIK_TXT_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID48).getText());
     wynik_txt.setWildcard(wynik_txtBuffer);
     wynik_txt.resizeToCurrentText();
     wynik_txt.setTypedText(touchgfx::TypedText(T_SINGLEUSEID43));
 
-    Are_you_sure_window.setBackground(touchgfx::BitmapId(BITMAP_DARK_BACKGROUNDS_MAIN_BG_320X240PX_ID), 80, 16);
-    Are_you_sure_window.setShadeColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    battery_percent.setXY(384, 16);
+    battery_percent.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    battery_percent.setLinespacing(0);
+    Unicode::snprintf(battery_percentBuffer, BATTERY_PERCENT_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID46).getText());
+    battery_percent.setWildcard(battery_percentBuffer);
+    battery_percent.resizeToCurrentText();
+    battery_percent.setTypedText(touchgfx::TypedText(T_SINGLEUSEID44));
+
+    battery_voltage.setXY(384, 41);
+    battery_voltage.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    battery_voltage.setLinespacing(0);
+    Unicode::snprintf(battery_voltageBuffer, BATTERY_VOLTAGE_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID47).getText());
+    battery_voltage.setWildcard(battery_voltageBuffer);
+    battery_voltage.resizeToCurrentText();
+    battery_voltage.setTypedText(touchgfx::TypedText(T_SINGLEUSEID45));
+
+    image1.setXY(341, 16);
+    image1.setBitmap(touchgfx::Bitmap(BITMAP_BATTERY_ID));
+
+    Are_you_sure_window.setBackground(touchgfx::BitmapId(BITMAP_DARK_BACKGROUNDS_MAIN_BG_TEXTURE_320X240PX_ID), 80, 16);
+    Are_you_sure_window.setShadeColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     Are_you_sure_window.setShadeAlpha(152);
     Are_you_sure_window.hide();
 
@@ -83,6 +102,9 @@ Screen3ViewBase::Screen3ViewBase() :
     add(textArea2);
     add(bottle_1);
     add(wynik_txt);
+    add(battery_percent);
+    add(battery_voltage);
+    add(image1);
     add(Are_you_sure_window);
 }
 

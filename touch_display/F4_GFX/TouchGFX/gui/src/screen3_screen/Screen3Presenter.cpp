@@ -16,6 +16,7 @@ void Screen3Presenter::OkButtonClicked()
 {
 	view.updateWaterTxt();
 	view.updateBottle();
+	view.updateBattery();
 }
 
 void Screen3Presenter::deactivate()

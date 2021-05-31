@@ -14,10 +14,14 @@ public:
 
     virtual void updateWaterTxt(void);
     virtual void updateBottle(void);
+    virtual void updateBattery(void);
 protected:
     int woda;
     int pojemnosc;
     float wynik;
+    float perc;
+    float volt;
+    int percent;
 
 };
 

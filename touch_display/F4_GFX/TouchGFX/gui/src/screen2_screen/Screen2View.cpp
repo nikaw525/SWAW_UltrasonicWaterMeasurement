@@ -53,7 +53,6 @@ void Screen2View::updateTxt(int newValue)
 	{
 		if(1 == presenter->data_destination[0])
 		{
-
 			idx = find(value_wagaBuffer, 10, '\0');
 
 			presenter->waga_value = (presenter->waga_value / 10 );

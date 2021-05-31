@@ -22,7 +22,6 @@ void Screen3View::updateWaterTxt(void)
 
 void Screen3View::updateBottle(void)
 {
-	int percent = 0;
 	wynik = (float)woda/pojemnosc;
 	if (wynik > 1)
 	{
@@ -33,13 +32,28 @@ void Screen3View::updateBottle(void)
 		percent = wynik * 100;
 	}
 
-	Unicode::snprintf(wynik_txtBuffer, 20, "%d.%d", woda/pojemnosc, woda%pojemnosc);
+	Unicode::snprintf(wynik_txtBuffer, 20, "%d", percent);
 	wynik_txt.setWildcard(wynik_txtBuffer);
 	wynik_txt.resizeToCurrentText();
 	wynik_txt.invalidate();
 
 	bottle_1.setValue(percent);
+}
 
+void Screen3View::updateBattery(void)
+{
+	volt = 7.6;
+	perc = (volt * 100 ) / 9;
+
+	Unicode::snprintfFloat(battery_percentBuffer, 10, "%.2f", perc);
+	battery_percent.setWildcard(battery_percentBuffer);
+	battery_percent.resizeToCurrentText();
+	battery_percent.invalidate();
+
+	Unicode::snprintfFloat(battery_voltageBuffer, 10, "%.2f", volt);
+	battery_voltage.setWildcard(battery_voltageBuffer);
+	battery_voltage.resizeToCurrentText();
+	battery_voltage.invalidate();
 }
 
 void Screen3View::tearDownScreen()

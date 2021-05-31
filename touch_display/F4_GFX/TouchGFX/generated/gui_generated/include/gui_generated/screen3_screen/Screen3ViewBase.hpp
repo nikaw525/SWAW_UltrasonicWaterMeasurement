@@ -12,6 +12,7 @@
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
 #include <touchgfx/widgets/TextArea.hpp>
 #include <touchgfx/containers/progress_indicators/ImageProgress.hpp>
+#include <touchgfx/widgets/Image.hpp>
 #include <touchgfx/containers/ModalWindow.hpp>
 #include <touchgfx/Color.hpp>
 
@@ -37,6 +38,9 @@ protected:
     touchgfx::TextArea textArea2;
     touchgfx::ImageProgress bottle_1;
     touchgfx::TextAreaWithOneWildcard wynik_txt;
+    touchgfx::TextAreaWithOneWildcard battery_percent;
+    touchgfx::TextAreaWithOneWildcard battery_voltage;
+    touchgfx::Image image1;
     touchgfx::ModalWindow Are_you_sure_window;
     touchgfx::ButtonWithLabel button_yes_reset;
     touchgfx::TextArea textArea1;
@@ -49,6 +53,10 @@ protected:
     touchgfx::Unicode::UnicodeChar Ilosc_wodyBuffer[ILOSC_WODY_SIZE];
     static const uint16_t WYNIK_TXT_SIZE = 20;
     touchgfx::Unicode::UnicodeChar wynik_txtBuffer[WYNIK_TXT_SIZE];
+    static const uint16_t BATTERY_PERCENT_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar battery_percentBuffer[BATTERY_PERCENT_SIZE];
+    static const uint16_t BATTERY_VOLTAGE_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar battery_voltageBuffer[BATTERY_VOLTAGE_SIZE];
 
 private:
 

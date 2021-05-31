@@ -11,7 +11,7 @@ Screen2ViewBase::Screen2ViewBase() :
 {
 
     box1.setPosition(0, 0, 480, 272);
-    box1.setColor(touchgfx::Color::getColorFrom24BitRGB(115, 183, 212));
+    box1.setColor(touchgfx::Color::getColorFrom24BitRGB(162, 180, 201));
 
     textArea1.setXY(47, 9);
     textArea1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
@@ -96,13 +96,13 @@ Screen2ViewBase::Screen2ViewBase() :
     button_0.setAction(buttonCallback);
 
     pojemnosc_box.setPosition(174, 162, 104, 55);
-    pojemnosc_box.setColor(touchgfx::Color::getColorFrom24BitRGB(115, 183, 212));
-    pojemnosc_box.setBorderColor(touchgfx::Color::getColorFrom24BitRGB(115, 183, 212));
+    pojemnosc_box.setColor(touchgfx::Color::getColorFrom24BitRGB(162, 180, 201));
+    pojemnosc_box.setBorderColor(touchgfx::Color::getColorFrom24BitRGB(162, 180, 201));
     pojemnosc_box.setBorderSize(5);
 
     waga_box.setPosition(174, 57, 104, 55);
-    waga_box.setColor(touchgfx::Color::getColorFrom24BitRGB(115, 183, 212));
-    waga_box.setBorderColor(touchgfx::Color::getColorFrom24BitRGB(115, 183, 212));
+    waga_box.setColor(touchgfx::Color::getColorFrom24BitRGB(162, 180, 201));
+    waga_box.setBorderColor(touchgfx::Color::getColorFrom24BitRGB(162, 180, 201));
     waga_box.setBorderSize(5);
 
     value_waga.setXY(184, 70);
