@@ -464,33 +464,8 @@
             "BorderSize": 5,
             "Alpha": 255,
             "Name": "pojemnosc_box",
-            "X": 166,
-            "Y": 192,
-            "Width": 104,
-            "Height": 55,
-            "Type": "BoxWithBorder",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "Color": {
-              "Red": 115,
-              "Green": 183,
-              "Blue": 212
-            },
-            "BorderColor": {
-              "Red": 115,
-              "Green": 183,
-              "Blue": 212
-            },
-            "BorderSize": 5,
-            "Alpha": 255,
-            "Name": "wzrost_box",
             "X": 174,
-            "Y": 125,
+            "Y": 162,
             "Width": 104,
             "Height": 55,
             "Type": "BoxWithBorder",
@@ -554,34 +529,6 @@
             "Moveable": false
           },
           {
-            "TextId": "SingleUseId30",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 0,
-              "Green": 0,
-              "Blue": 0
-            },
-            "Alpha": 255,
-            "AutoSize": true,
-            "LineSpacing": 0,
-            "Wildcard1": {
-              "TextId": "SingleUseId31",
-              "UseBuffer": true,
-              "BufferSize": 10
-            },
-            "Name": "value_wzrost",
-            "X": 184,
-            "Y": 140,
-            "Width": 13,
-            "Height": 25,
-            "Type": "TextArea",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
             "TextId": "SingleUseId33",
             "TextRotation": "0",
             "Color": {
@@ -599,7 +546,7 @@
             },
             "Name": "value_pojemnosc",
             "X": 184,
-            "Y": 207,
+            "Y": 177,
             "Width": 13,
             "Height": 25,
             "Type": "TextArea",
@@ -642,35 +589,6 @@
             "Pressed": "__designer\\Dark_Buttons_Round_Edge_small_pressed.png",
             "Released": "__designer\\Dark_Buttons_Round_Edge_small.png",
             "Alpha": 255,
-            "TextId": "SingleUseId36",
-            "ReleasedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "PressedColor": {
-              "Red": 255,
-              "Green": 255,
-              "Blue": 255
-            },
-            "TextRotation": "0",
-            "Style": "Style4",
-            "Name": "Button_wzrost",
-            "X": 4,
-            "Y": 122,
-            "Width": 170,
-            "Height": 60,
-            "Type": "ButtonWithLabel",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "Pressed": "__designer\\Dark_Buttons_Round_Edge_small_pressed.png",
-            "Released": "__designer\\Dark_Buttons_Round_Edge_small.png",
-            "Alpha": 255,
             "TextId": "SingleUseId37",
             "ReleasedColor": {
               "Red": 255,
@@ -686,7 +604,7 @@
             "Style": "Style4",
             "Name": "Button_pojemnosc",
             "X": 4,
-            "Y": 189,
+            "Y": 159,
             "Width": 170,
             "Height": 60,
             "Type": "ButtonWithLabel",
@@ -720,29 +638,6 @@
             "Moveable": false
           },
           {
-            "TextId": "SingleUseId41",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 0,
-              "Green": 0,
-              "Blue": 0
-            },
-            "Alpha": 255,
-            "AutoSize": true,
-            "LineSpacing": 0,
-            "Name": "textArea2_1",
-            "X": 240,
-            "Y": 140,
-            "Width": 30,
-            "Height": 25,
-            "Type": "TextArea",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
             "TextId": "SingleUseId42",
             "TextRotation": "0",
             "Color": {
@@ -754,11 +649,33 @@
             "AutoSize": true,
             "LineSpacing": 0,
             "Name": "textArea2_1_1",
-            "X": 240,
-            "Y": 207,
-            "Width": 5,
+            "X": 241,
+            "Y": 177,
+            "Width": 25,
             "Height": 25,
             "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Pressed": "__designer\\Dark_Buttons_Round_Edge_icon_button_pressed.png",
+            "Released": "__designer\\Dark_Buttons_Round_Edge_icon_button.png",
+            "Alpha": 255,
+            "IconPressed": "__designer\\Dark_Icons_Back_arrow_32.png",
+            "IconReleased": "__designer\\Dark_Icons_Back_arrow_32.png",
+            "IconX": 21,
+            "IconY": 14,
+            "IconHeight": 32,
+            "IconWidth": 19,
+            "Name": "button_clear",
+            "X": 405,
+            "Y": 189,
+            "Width": 60,
+            "Height": 60,
+            "Type": "ButtonWithIcon",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -781,7 +698,7 @@
           },
           {
             "InteractionName": "Go_to_Screen_3",
-            "HasCompletedTrigger": false,
+            "HasCompletedTrigger": true,
             "Trigger": {
               "TriggerComponent": "button_ok",
               "Type": "TriggerClicked"
@@ -914,18 +831,6 @@
             }
           },
           {
-            "InteractionName": "wzrost_button",
-            "HasCompletedTrigger": false,
-            "Trigger": {
-              "TriggerComponent": "Button_wzrost",
-              "Type": "TriggerClicked"
-            },
-            "Action": {
-              "Code": "presenter->DestinationButtonClicked(1);",
-              "Type": "ActionExecuteCode"
-            }
-          },
-          {
             "InteractionName": "pojemnosc_button",
             "HasCompletedTrigger": false,
             "Trigger": {
@@ -934,6 +839,30 @@
             },
             "Action": {
               "Code": "presenter->DestinationButtonClicked(2);",
+              "Type": "ActionExecuteCode"
+            }
+          },
+          {
+            "InteractionName": "Button_ok_cpp_code",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "button_ok",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "Code": "presenter->saveWaga();\r\npresenter->savePojemnosc();",
+              "Type": "ActionExecuteCode"
+            }
+          },
+          {
+            "InteractionName": "button_clear",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "button_clear",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "Code": "presenter->NumberButtonClicked(-1);",
               "Type": "ActionExecuteCode"
             }
           }
@@ -957,34 +886,6 @@
             "Width": 480,
             "Height": 272,
             "Type": "Box",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
-            "FileNameProgress": "__designer\\Dark_ProgressIndicators_fill_tiling_progress_indicator_fill_striped_normal_vertical.png",
-            "AnchorAtZero": false,
-            "Direction": "Down",
-            "Alpha": 255,
-            "Style": "Style4",
-            "FileNameBackground": "__designer\\Dark_ProgressIndicators_bg_medium_progress_indicator_bg_square_90_degrees.png",
-            "IndicatorPositionX": 2,
-            "IndicatorPositionY": 2,
-            "IndicatorPositionWidth": 16,
-            "IndicatorPositionHeight": 180,
-            "ProgressRangeMin": 0,
-            "ProgressRangeMax": 100,
-            "ProgressRangeSteps": 0,
-            "ProgressRangeStepsMin": 0,
-            "ProgressInitialValue": 60,
-            "Name": "imageProgress1",
-            "X": 23,
-            "Y": 78,
-            "Width": 20,
-            "Height": 184,
-            "Type": "ImageProgress",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -1020,34 +921,6 @@
             "Moveable": false
           },
           {
-            "FileNameProgress": "__designer\\Dark_ProgressIndicators_fill_tiling_progress_indicator_fill_striped_normal_vertical.png",
-            "AnchorAtZero": false,
-            "Direction": "Down",
-            "Alpha": 255,
-            "Style": "Style4",
-            "FileNameBackground": "__designer\\Dark_ProgressIndicators_bg_medium_progress_indicator_bg_square_90_degrees.png",
-            "IndicatorPositionX": 2,
-            "IndicatorPositionY": 2,
-            "IndicatorPositionWidth": 16,
-            "IndicatorPositionHeight": 180,
-            "ProgressRangeMin": 0,
-            "ProgressRangeMax": 100,
-            "ProgressRangeSteps": 0,
-            "ProgressRangeStepsMin": 0,
-            "ProgressInitialValue": 60,
-            "Name": "imageProgress1_1",
-            "X": 61,
-            "Y": 78,
-            "Width": 20,
-            "Height": 184,
-            "Type": "ImageProgress",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
-          },
-          {
             "TextId": "SingleUseId39",
             "TextRotation": "0",
             "Color": {
@@ -1063,9 +936,86 @@
               "BufferSize": 10
             },
             "Name": "Ilosc_wody",
-            "X": 441,
-            "Y": 22,
-            "Width": 13,
+            "X": 240,
+            "Y": 66,
+            "Width": 32,
+            "Height": 25,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId40",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea2",
+            "X": 35,
+            "Y": 21,
+            "Width": 410,
+            "Height": 25,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "FileNameProgress": "__designer\\Blue_ProgressIndicators_fill_tiling_progress_indicator_fill_gradient_thin_horizontal.png",
+            "AnchorAtZero": false,
+            "Direction": "Up",
+            "Alpha": 255,
+            "FileNameBackground": "bottle.png",
+            "IndicatorPositionX": -63,
+            "IndicatorPositionY": 56,
+            "IndicatorPositionWidth": 172,
+            "IndicatorPositionHeight": 79,
+            "ProgressRangeMin": 0,
+            "ProgressRangeMax": 100,
+            "ProgressRangeSteps": 0,
+            "ProgressRangeStepsMin": 0,
+            "ProgressInitialValue": 0,
+            "Name": "bottle_1",
+            "X": 34,
+            "Y": 129,
+            "Width": 36,
+            "Height": 136,
+            "Type": "ImageProgress",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId43",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "UseBuffer": true,
+              "BufferSize": 20
+            },
+            "Name": "wynik_txt",
+            "X": 91,
+            "Y": 232,
+            "Width": 19,
             "Height": 25,
             "Type": "TextArea",
             "Visible": true,
@@ -1180,29 +1130,6 @@
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
-          },
-          {
-            "TextId": "SingleUseId40",
-            "TextRotation": "0",
-            "Color": {
-              "Red": 0,
-              "Green": 0,
-              "Blue": 0
-            },
-            "Alpha": 255,
-            "AutoSize": true,
-            "LineSpacing": 0,
-            "Name": "textArea2",
-            "X": 13,
-            "Y": 22,
-            "Width": 410,
-            "Height": 25,
-            "Type": "TextArea",
-            "Visible": true,
-            "Draggable": false,
-            "Clickable": false,
-            "Fadeable": false,
-            "Moveable": false
           }
         ],
         "Interactions": [
@@ -1264,6 +1191,17 @@
             "Action": {
               "ActionComponent": "Are_you_sure_window",
               "Type": "ActionHide"
+            }
+          },
+          {
+            "InteractionName": "Enter_screen",
+            "HasCompletedTrigger": true,
+            "Trigger": {
+              "Type": "TriggerScreenEntered"
+            },
+            "Action": {
+              "Code": "presenter->OkButtonClicked();",
+              "Type": "ActionExecuteCode"
             }
           }
         ],
@@ -1355,14 +1293,6 @@
         "IsResource": false
       },
       {
-        "TextEntryId": "SingleUseId30",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId31",
-        "IsResource": false
-      },
-      {
         "TextEntryId": "SingleUseId33",
         "IsResource": false
       },
@@ -1372,10 +1302,6 @@
       },
       {
         "TextEntryId": "SingleUseId35",
-        "IsResource": false
-      },
-      {
-        "TextEntryId": "SingleUseId36",
         "IsResource": false
       },
       {
@@ -1395,11 +1321,11 @@
         "IsResource": false
       },
       {
-        "TextEntryId": "SingleUseId41",
+        "TextEntryId": "SingleUseId42",
         "IsResource": false
       },
       {
-        "TextEntryId": "SingleUseId42",
+        "TextEntryId": "SingleUseId43",
         "IsResource": false
       }
     ],

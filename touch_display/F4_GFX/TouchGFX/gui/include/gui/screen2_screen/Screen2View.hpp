@@ -17,6 +17,7 @@ public:
 
 
 protected:
+    int find(touchgfx::Unicode::UnicodeChar[], int, touchgfx::Unicode::UnicodeChar);
 };
 
 #endif // SCREEN2VIEW_HPP

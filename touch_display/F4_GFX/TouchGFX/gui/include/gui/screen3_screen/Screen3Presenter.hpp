@@ -26,14 +26,22 @@ public:
     virtual void deactivate();
 
     virtual ~Screen3Presenter() {};
-
     void ComputeWater(void);
-
-
+    void OkButtonClicked(void);
+    int getWaga(void)
+    {
+    	return model->getWaga();
+    }
+    int getPojemnosc(void)
+    {
+    	return model->getPojemnosc();
+    }
 private:
     Screen3Presenter();
 
     Screen3View& view;
+
+
 };
 
 #endif // SCREEN3PRESENTER_HPP

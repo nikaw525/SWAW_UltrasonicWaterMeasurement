@@ -12,8 +12,13 @@ public:
     virtual void setupScreen();
     virtual void tearDownScreen();
 
-    virtual void updateWaterTxt(int newValue);
+    virtual void updateWaterTxt(void);
+    virtual void updateBottle(void);
 protected:
+    int woda;
+    int pojemnosc;
+    float wynik;
+
 };
 
 #endif // SCREEN3VIEW_HPP

@@ -12,6 +12,7 @@
 #include <touchgfx/widgets/ButtonWithLabel.hpp>
 #include <touchgfx/widgets/BoxWithBorder.hpp>
 #include <touchgfx/widgets/TextAreaWithWildcard.hpp>
+#include <touchgfx/widgets/ButtonWithIcon.hpp>
 
 class Screen2ViewBase : public touchgfx::View<Screen2Presenter>
 {
@@ -42,25 +43,20 @@ protected:
     touchgfx::ButtonWithLabel button_9;
     touchgfx::ButtonWithLabel button_0;
     touchgfx::BoxWithBorder pojemnosc_box;
-    touchgfx::BoxWithBorder wzrost_box;
     touchgfx::BoxWithBorder waga_box;
     touchgfx::TextAreaWithOneWildcard value_waga;
-    touchgfx::TextAreaWithOneWildcard value_wzrost;
     touchgfx::TextAreaWithOneWildcard value_pojemnosc;
     touchgfx::ButtonWithLabel Button_waga;
-    touchgfx::ButtonWithLabel Button_wzrost;
     touchgfx::ButtonWithLabel Button_pojemnosc;
     touchgfx::TextArea textArea2;
-    touchgfx::TextArea textArea2_1;
     touchgfx::TextArea textArea2_1_1;
+    touchgfx::ButtonWithIcon button_clear;
 
     /*
      * Wildcard Buffers
      */
     static const uint16_t VALUE_WAGA_SIZE = 10;
     touchgfx::Unicode::UnicodeChar value_wagaBuffer[VALUE_WAGA_SIZE];
-    static const uint16_t VALUE_WZROST_SIZE = 10;
-    touchgfx::Unicode::UnicodeChar value_wzrostBuffer[VALUE_WZROST_SIZE];
     static const uint16_t VALUE_POJEMNOSC_SIZE = 10;
     touchgfx::Unicode::UnicodeChar value_pojemnoscBuffer[VALUE_POJEMNOSC_SIZE];
 

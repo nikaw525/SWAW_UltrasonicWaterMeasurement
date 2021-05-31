@@ -32,16 +32,26 @@ public:
     void TypeButtonClicked(int);
     void DestinationButtonClicked(int);
     void updateTxt(int);
+
     int waga_value;
-    int wzrost_value;
-    int pojemnosc_value;
-    int data_destination[3];
+	int wzrost_value;
+	int pojemnosc_value;
+	int data_destination[3];
 
+    void saveWaga(void)
+    {
+    	model->saveWaga(waga_value);
+    }
 
+    void savePojemnosc(void)
+	{
+		model->savePojemnosc(pojemnosc_value);
+	}
 private:
     Screen2Presenter();
 
     Screen2View& view;
+
 };
 
 #endif // SCREEN2PRESENTER_HPP

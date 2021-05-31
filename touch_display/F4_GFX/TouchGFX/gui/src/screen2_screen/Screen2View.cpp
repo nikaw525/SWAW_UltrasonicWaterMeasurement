@@ -12,35 +12,79 @@ void Screen2View::setupScreen()
     Screen2ViewBase::setupScreen();
 }
 
+int Screen2View::find(touchgfx::Unicode::UnicodeChar buffer[], int size, touchgfx::Unicode::UnicodeChar object)
+{
+	int idx;
+	for(idx = 0; idx < size; idx++)
+	{
+		if(object == buffer[idx]){
+			return idx;
+		}
+	}
+	return -1;
+}
+
 void Screen2View::updateTxt(int newValue)
 {
+	int idx;
 
-	if(1 == presenter->data_destination[0])
+	if(newValue >= 0)
 	{
-		presenter->waga_value = (presenter->waga_value * 10) + newValue;
-		Unicode::snprintf(value_wagaBuffer, 10, "%d", presenter->waga_value);
-		value_waga.setWildcard(value_wagaBuffer);
-		value_waga.resizeToCurrentText();
-		value_waga.invalidate();
+		if(1 == presenter->data_destination[0])
+		{
+			presenter->waga_value = (presenter->waga_value * 10) + newValue;
+			Unicode::snprintf(value_wagaBuffer, 10, "%d", presenter->waga_value);
+			value_waga.setWildcard(value_wagaBuffer);
+			value_waga.resizeToCurrentText();
+			value_waga.invalidate();
+		}
+
+		if(1 == presenter->data_destination[2])
+		{
+			presenter->pojemnosc_value = (presenter->pojemnosc_value * 10) + newValue;
+			Unicode::snprintf(value_pojemnoscBuffer, 10, "%d", presenter->pojemnosc_value);
+			value_pojemnosc.setWildcard(value_pojemnoscBuffer);
+			value_pojemnosc.resizeToCurrentText();
+			value_pojemnosc.invalidate();
+		}
 	}
 
-	if(1 == presenter->data_destination[1])
+	else
 	{
-		presenter->wzrost_value = (presenter->wzrost_value * 10) + newValue;
-		Unicode::snprintf(value_wzrostBuffer, 10, "%d", presenter->wzrost_value);
-		value_wzrost.setWildcard(value_wzrostBuffer);
-		value_wzrost.resizeToCurrentText();
-		value_wzrost.invalidate();
+		if(1 == presenter->data_destination[0])
+		{
+
+			idx = find(value_wagaBuffer, 10, '\0');
+
+			presenter->waga_value = (presenter->waga_value / 10 );
+			value_wagaBuffer[idx - 1] = ' ';
+			value_wagaBuffer[idx] = ' ';
+
+			value_waga.setWildcard(value_wagaBuffer);
+			value_waga.resizeToCurrentText();
+			value_waga.invalidate();
+
+			value_wagaBuffer[idx - 1] = '\0';
+			value_wagaBuffer[idx] = '\0';
+		}
+
+		if(1 == presenter->data_destination[2])
+		{
+			idx = find(value_pojemnoscBuffer, 10, '\0');
+
+			presenter->pojemnosc_value = (presenter->pojemnosc_value / 10 );
+			value_pojemnoscBuffer[idx - 1] = ' ';
+			value_pojemnoscBuffer[idx] = ' ';
+
+			value_pojemnosc.setWildcard(value_pojemnoscBuffer);
+			value_pojemnosc.resizeToCurrentText();
+			value_pojemnosc.invalidate();
+
+			value_pojemnoscBuffer[idx - 1] = '\0';
+			value_pojemnoscBuffer[idx] = '\0';
+		}
 	}
 
-	if(1 == presenter->data_destination[2])
-	{
-		presenter->pojemnosc_value = (presenter->pojemnosc_value * 10) + newValue;
-		Unicode::snprintf(value_pojemnoscBuffer, 10, "%d", presenter->pojemnosc_value);
-		value_pojemnosc.setWildcard(value_pojemnoscBuffer);
-		value_pojemnosc.resizeToCurrentText();
-		value_pojemnosc.invalidate();
-	}
 }
 
 void Screen2View::tearDownScreen()

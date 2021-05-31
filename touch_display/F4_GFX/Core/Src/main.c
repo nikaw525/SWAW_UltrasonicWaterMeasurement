@@ -637,20 +637,6 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-void TOGGLE_LED1()
-{
-	HAL_GPIO_TogglePin(GPIOE, USER_LED_Pin);
-}
-volatile uint32_t userButtonPressed = 0;
-
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-	if (GPIO_Pin == GPIO_PIN_12)
-	{
-		userButtonPressed = 1;
-	}
-}
-
 
 /* USER CODE END 4 */
 

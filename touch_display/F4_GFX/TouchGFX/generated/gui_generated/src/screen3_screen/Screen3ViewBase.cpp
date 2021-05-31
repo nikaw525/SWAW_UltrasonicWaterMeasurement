@@ -13,15 +13,6 @@ Screen3ViewBase::Screen3ViewBase() :
     box1.setPosition(0, 0, 480, 272);
     box1.setColor(touchgfx::Color::getColorFrom24BitRGB(141, 178, 224));
 
-    imageProgress1.setXY(23, 78);
-    imageProgress1.setProgressIndicatorPosition(2, 2, 16, 180);
-    imageProgress1.setRange(0, 100);
-    imageProgress1.setDirection(touchgfx::AbstractDirectionProgress::DOWN);
-    imageProgress1.setBackground(touchgfx::Bitmap(BITMAP_DARK_PROGRESSINDICATORS_BG_MEDIUM_PROGRESS_INDICATOR_BG_SQUARE_90_DEGREES_ID));
-    imageProgress1.setBitmap(BITMAP_DARK_PROGRESSINDICATORS_FILL_TILING_PROGRESS_INDICATOR_FILL_STRIPED_NORMAL_VERTICAL_ID);
-    imageProgress1.setValue(60);
-    imageProgress1.setAnchorAtZero(false);
-
     button_reset.setXY(299, 202);
     button_reset.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
     button_reset.setLabelText(touchgfx::TypedText(T_SINGLEUSEID22));
@@ -29,22 +20,35 @@ Screen3ViewBase::Screen3ViewBase() :
     button_reset.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     button_reset.setAction(buttonCallback);
 
-    imageProgress1_1.setXY(61, 78);
-    imageProgress1_1.setProgressIndicatorPosition(2, 2, 16, 180);
-    imageProgress1_1.setRange(0, 100);
-    imageProgress1_1.setDirection(touchgfx::AbstractDirectionProgress::DOWN);
-    imageProgress1_1.setBackground(touchgfx::Bitmap(BITMAP_DARK_PROGRESSINDICATORS_BG_MEDIUM_PROGRESS_INDICATOR_BG_SQUARE_90_DEGREES_ID));
-    imageProgress1_1.setBitmap(BITMAP_DARK_PROGRESSINDICATORS_FILL_TILING_PROGRESS_INDICATOR_FILL_STRIPED_NORMAL_VERTICAL_ID);
-    imageProgress1_1.setValue(60);
-    imageProgress1_1.setAnchorAtZero(false);
-
-    Ilosc_wody.setXY(441, 22);
+    Ilosc_wody.setXY(240, 66);
     Ilosc_wody.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     Ilosc_wody.setLinespacing(0);
     Ilosc_wodyBuffer[0] = 0;
     Ilosc_wody.setWildcard(Ilosc_wodyBuffer);
     Ilosc_wody.resizeToCurrentText();
     Ilosc_wody.setTypedText(touchgfx::TypedText(T_SINGLEUSEID39));
+
+    textArea2.setXY(35, 21);
+    textArea2.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea2.setLinespacing(0);
+    textArea2.setTypedText(touchgfx::TypedText(T_SINGLEUSEID40));
+
+    bottle_1.setXY(34, 129);
+    bottle_1.setProgressIndicatorPosition(-63, 56, 172, 79);
+    bottle_1.setRange(0, 100);
+    bottle_1.setDirection(touchgfx::AbstractDirectionProgress::UP);
+    bottle_1.setBackground(touchgfx::Bitmap(BITMAP_BOTTLE_ID));
+    bottle_1.setBitmap(BITMAP_BLUE_PROGRESSINDICATORS_FILL_TILING_PROGRESS_INDICATOR_FILL_GRADIENT_THIN_HORIZONTAL_ID);
+    bottle_1.setValue(0);
+    bottle_1.setAnchorAtZero(false);
+
+    wynik_txt.setXY(91, 232);
+    wynik_txt.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    wynik_txt.setLinespacing(0);
+    wynik_txtBuffer[0] = 0;
+    wynik_txt.setWildcard(wynik_txtBuffer);
+    wynik_txt.resizeToCurrentText();
+    wynik_txt.setTypedText(touchgfx::TypedText(T_SINGLEUSEID43));
 
     Are_you_sure_window.setBackground(touchgfx::BitmapId(BITMAP_DARK_BACKGROUNDS_MAIN_BG_320X240PX_ID), 80, 16);
     Are_you_sure_window.setShadeColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
@@ -73,23 +77,27 @@ Screen3ViewBase::Screen3ViewBase() :
     button_no_reset.setAction(buttonCallback);
     Are_you_sure_window.add(button_no_reset);
 
-    textArea2.setXY(13, 22);
-    textArea2.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
-    textArea2.setLinespacing(0);
-    textArea2.setTypedText(touchgfx::TypedText(T_SINGLEUSEID40));
-
     add(box1);
-    add(imageProgress1);
     add(button_reset);
-    add(imageProgress1_1);
     add(Ilosc_wody);
-    add(Are_you_sure_window);
     add(textArea2);
+    add(bottle_1);
+    add(wynik_txt);
+    add(Are_you_sure_window);
 }
 
 void Screen3ViewBase::setupScreen()
 {
 
+}
+
+//Called when the screen is done with transition/load
+void Screen3ViewBase::afterTransition()
+{
+    //Enter_screen
+    //When screen is entered execute C++ code
+    //Execute C++ code
+    presenter->OkButtonClicked();
 }
 
 void Screen3ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)

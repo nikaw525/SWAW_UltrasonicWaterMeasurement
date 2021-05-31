@@ -13,15 +13,23 @@ public:
         modelListener = listener;
     }
 
-    void tick();
+    void saveWaga(int saveWaga)
+    {
+    	waga = saveWaga;
+    }
 
-    void toggleHwLed();
+    void savePojemnosc(int savePojemnosc)
+	{
+		pojemnosc = savePojemnosc;
+	}
+    int getWaga();
+    int getPojemnosc();
 
 protected:
     ModelListener* modelListener;
 
-    int tickCounter;
-    bool scanJunctionTemp;
+    int waga;
+    int pojemnosc;
 };
 
 #endif // MODEL_HPP

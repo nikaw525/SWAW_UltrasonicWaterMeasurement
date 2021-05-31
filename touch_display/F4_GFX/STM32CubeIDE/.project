@@ -419,6 +419,16 @@
 			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/TouchGFX/generated/images/src/BitmapDatabase.cpp</locationURI>
 		</link>
 		<link>
+			<name>Application/User/generated/image_bottle.cpp</name>
+			<type>1</type>
+			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/TouchGFX/generated/images/src/image_bottle.cpp</locationURI>
+		</link>
+		<link>
+			<name>Application/User/generated/image_Blue_ProgressIndicators_fill_tiling_progress_indicator_fill_gradient_thin_horizontal.cpp</name>
+			<type>1</type>
+			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/TouchGFX/generated/images/src/__designer/image_Blue_ProgressIndicators_fill_tiling_progress_indicator_fill_gradient_thin_horizontal.cpp</locationURI>
+		</link>
+		<link>
 			<name>Application/User/generated/image_Dark_Backgrounds_Main_bg_320x240px.cpp</name>
 			<type>1</type>
 			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/TouchGFX/generated/images/src/__designer/image_Dark_Backgrounds_Main_bg_320x240px.cpp</locationURI>
@@ -454,14 +464,9 @@
 			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/TouchGFX/generated/images/src/__designer/image_Dark_Buttons_Round_small_pressed.cpp</locationURI>
 		</link>
 		<link>
-			<name>Application/User/generated/image_Dark_ProgressIndicators_bg_medium_progress_indicator_bg_square_90_degrees.cpp</name>
+			<name>Application/User/generated/image_Dark_Icons_Back_arrow_32.cpp</name>
 			<type>1</type>
-			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/TouchGFX/generated/images/src/__designer/image_Dark_ProgressIndicators_bg_medium_progress_indicator_bg_square_90_degrees.cpp</locationURI>
-		</link>
-		<link>
-			<name>Application/User/generated/image_Dark_ProgressIndicators_fill_tiling_progress_indicator_fill_striped_normal_vertical.cpp</name>
-			<type>1</type>
-			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/TouchGFX/generated/images/src/__designer/image_Dark_ProgressIndicators_fill_tiling_progress_indicator_fill_striped_normal_vertical.cpp</locationURI>
+			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/TouchGFX/generated/images/src/__designer/image_Dark_Icons_Back_arrow_32.cpp</locationURI>
 		</link>
 		<link>
 			<name>Application/User/generated/LanguageGb.cpp</name>

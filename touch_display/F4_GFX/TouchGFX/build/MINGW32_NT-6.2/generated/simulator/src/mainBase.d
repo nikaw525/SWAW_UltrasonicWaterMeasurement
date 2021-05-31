@@ -84,6 +84,7 @@ build/MINGW32_NT-6.2/generated/simulator/src/mainBase.o: \
  generated/gui_generated/include/gui_generated/screen2_screen/Screen2ViewBase.hpp \
  gui/include/gui/screen2_screen/Screen2Presenter.hpp \
  ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/BoxWithBorder.hpp \
+ ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithIcon.hpp \
  gui/include/gui/screen3_screen/Screen3View.hpp \
  generated/gui_generated/include/gui_generated/screen3_screen/Screen3ViewBase.hpp \
  gui/include/gui/screen3_screen/Screen3Presenter.hpp \
@@ -263,6 +264,8 @@ generated/gui_generated/include/gui_generated/screen2_screen/Screen2ViewBase.hpp
 gui/include/gui/screen2_screen/Screen2Presenter.hpp:
 
 ../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/BoxWithBorder.hpp:
+
+../Middlewares/ST/touchgfx/framework/include/touchgfx/widgets/ButtonWithIcon.hpp:
 
 gui/include/gui/screen3_screen/Screen3View.hpp:
 

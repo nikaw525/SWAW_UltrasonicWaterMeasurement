@@ -15,7 +15,6 @@ public:
 
     virtual void handleTickEvent()
     {
-        model.tick();
         FrontendApplicationBase::handleTickEvent();
     }
 private:

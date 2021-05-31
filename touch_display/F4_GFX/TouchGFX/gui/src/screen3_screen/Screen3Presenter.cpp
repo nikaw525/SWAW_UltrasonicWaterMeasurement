@@ -12,13 +12,14 @@ void Screen3Presenter::activate()
 
 }
 
+void Screen3Presenter::OkButtonClicked()
+{
+	view.updateWaterTxt();
+	view.updateBottle();
+}
+
 void Screen3Presenter::deactivate()
 {
 
 }
-/*
-void Screen3Presenter::ComputeWater(void)
-{
-	view.updateWaterTxt(model->waga_value*30);
-}
-*/
+
