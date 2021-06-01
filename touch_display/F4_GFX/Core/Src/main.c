@@ -71,6 +71,7 @@ LTDC_HandleTypeDef hltdc;
 SDRAM_HandleTypeDef hsdram1;
 
 osThreadId defaultTaskHandle;
+osThreadId ComunicationTasHandle;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -85,6 +86,7 @@ static void MX_FMC_Init(void);
 static void MX_I2C3_Init(void);
 static void MX_ADC1_Init(void);
 void StartDefaultTask(void const * argument);
+void StartComunicationTask(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -154,6 +156,10 @@ int main(void)
   /* definition and creation of defaultTask */
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 4096);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+
+  /* definition and creation of ComunicationTas */
+  osThreadDef(ComunicationTas, StartComunicationTask, osPriorityNormal, 0, 128);
+  ComunicationTasHandle = osThreadCreate(osThread(ComunicationTas), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -657,6 +663,27 @@ void StartDefaultTask(void const * argument)
     osDelay(1);
   }
   /* USER CODE END 5 */
+}
+
+/* USER CODE BEGIN Header_StartComunicationTask */
+/**
+* @brief Function implementing the ComunicationTas thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartComunicationTask */
+void StartComunicationTask(void const * argument)
+{
+  /* USER CODE BEGIN StartComunicationTask */
+	uint32_t tick;
+	tick = xTaskGetTickCount();
+  /* Infinite loop */
+  for(;;)
+  {
+	HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
+	vTaskDelayUntil(&tick, (1000*configTICK_RATE_HZ)/1000);
+  }
+  /* USER CODE END StartComunicationTask */
 }
 
 /**
