@@ -16,6 +16,8 @@ static uint8_t addr_p0_backup[NRF24_ADDR_SIZE];
 
 extern volatile uint8_t nrf24_rx_flag, nrf24_tx_flag, nrf24_mr_flag;
 
+Message_R rf_msg;
+
 //
 // BASIC READ/WRITE FUNCTIONS
 //
@@ -459,4 +461,20 @@ void nRF24_Init(SPI_HandleTypeDef *hspi)
 	nRF24_Delay(20);
 
 	nRF24_ClearInterrupts();
+}
+
+void nRF24_get_data_by_radio(Message_R rf_msg)
+{
+	static uint8_t idx = 0;
+
+	if(idx%2)
+	{
+		nRF24_ReadRXPaylaod((uint8_t *)&msg_distance);
+	}
+	else
+	{
+		nRF24_ReadRXPaylaod((uint8_t *)&msg_vbat);
+	}
+
+	idx++;
 }

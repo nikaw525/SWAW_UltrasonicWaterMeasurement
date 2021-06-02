@@ -12,6 +12,15 @@
 
 void nRF24_Init(SPI_HandleTypeDef *hspi);
 
+typedef struct
+{
+	float vbat;
+	float distance;
+}Message_R;
+
+float msg_vbat;
+float msg_distance;
+
 //
 // READ/WRITE REGISTERS
 //
@@ -56,6 +65,8 @@ void nRF24_EnableMaxRetransmitIRQ(uint8_t onoff);
 void nRF24_WriteTXPayload(uint8_t* data);
 void nRF24_WaitTX();
 void nRF24_ReadRXPaylaod(uint8_t* data);
+
+void nRF24_get_data_by_radio(Message_R rf_msg);
 
 //
 // TRANSMITTING DATA

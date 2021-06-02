@@ -54,11 +54,8 @@ uint8_t Nrf24_Message[NRF24_PAYLOAD_SIZE];
 uint8_t Message[32];
 uint8_t MessageLength;
 
-struct
-{
-	float vbat;
-	float distance;
-}rf_msg;
+extern Message_R rf_msg;
+
 
 
 /* USER CODE END PV */
@@ -123,18 +120,7 @@ int main(void)
   {
 	  if(nRF24_RXAvailible())
 	  {
-		  nRF24_ReadRXPaylaod(Nrf24_Message);
-
-		  if(Nrf24_Message[0] < 53)
-		  {
-			  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
-			  HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, GPIO_PIN_RESET);
-		  }
-		  else
-		  {
-			  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-			  HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, GPIO_PIN_SET);
-		  }
+		  nRF24_get_data_by_radio(rf_msg);
 	  }
     /* USER CODE END WHILE */
 
