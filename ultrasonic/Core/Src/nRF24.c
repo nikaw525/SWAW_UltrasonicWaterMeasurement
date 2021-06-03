@@ -30,7 +30,7 @@ extern volatile uint8_t nrf24_rx_flag, nrf24_tx_flag, nrf24_mr_flag;
 
 static void nRF24_Delay(uint8_t Time)
 {
-	HAL_Delay(time);
+	HAL_Delay(Time);
 }
 
 static void nRF24_SendSpi(uint8_t *Data, uint8_t Length)
