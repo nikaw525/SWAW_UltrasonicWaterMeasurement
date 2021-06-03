@@ -32,7 +32,7 @@ Message_R rf_msg;
 
 static void nRF24_Delay(uint8_t Time)
 {
-	HAL_Delay(1);
+	HAL_Delay(Time);
 }
 
 static void nRF24_SendSpi(uint8_t *Data, uint8_t Length)
