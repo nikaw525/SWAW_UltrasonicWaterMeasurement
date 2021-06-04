@@ -14,38 +14,45 @@ void Screen3View::updateWaterTxt(void)
 {
 	pojemnosc = presenter->getPojemnosc();
 	woda = 30*presenter->getWaga();
-	Unicode::snprintf(Ilosc_wodyBuffer, 10, "%d", woda);
+	Unicode::snprintfFloat(Ilosc_wodyBuffer, 10, "%.2f", woda);
 	Ilosc_wody.setWildcard(Ilosc_wodyBuffer);
 	Ilosc_wody.resizeToCurrentText();
 	Ilosc_wody.invalidate();
 }
 
-void Screen3View::updateBottle(void)
+void Screen3View::updateBottle(float wysokosc_odczyt)
 {
-	wynik = (float)woda/pojemnosc;
-	if (wynik > 1)
+	wysokosc_max = presenter->getWysokosc();
+	water_percent = ((wysokosc_max - wysokosc_odczyt)/wysokosc_max) * 100;
+	wynik = ((wysokosc_max - wysokosc_odczyt)/wysokosc_max)*pojemnosc;
+
+
+	Unicode::snprintfFloat(wynik_mlBuffer, 20, "%.2f", wynik);
+	wynik_ml.setWildcard(wynik_mlBuffer);
+	wynik_ml.resizeToCurrentText();
+	wynik_ml.invalidate();
+
+	Unicode::snprintfFloat(wynik_percBuffer, 20, "%.2f", water_percent);
+	wynik_perc.setWildcard(wynik_percBuffer);
+	wynik_perc.resizeToCurrentText();
+	wynik_perc.invalidate();
+
+	bottle_1.setValue(water_percent);
+}
+
+void Screen3View::updateBattery(float val)
+{
+	volt = val;
+	if(volt <= 7)
 	{
-		percent = 100;
+		battery_perc = 0;
 	}
 	else
 	{
-		percent = wynik * 100;
+		battery_perc = ((volt - 7) * 100)/2;
 	}
 
-	Unicode::snprintf(wynik_txtBuffer, 20, "%d", percent);
-	wynik_txt.setWildcard(wynik_txtBuffer);
-	wynik_txt.resizeToCurrentText();
-	wynik_txt.invalidate();
-
-	bottle_1.setValue(percent);
-}
-
-void Screen3View::updateBattery(void)
-{
-	volt = 7.6;
-	perc = (volt * 100 ) / 9;
-
-	Unicode::snprintfFloat(battery_percentBuffer, 10, "%.2f", perc);
+	Unicode::snprintfFloat(battery_percentBuffer, 10, "%.2f", battery_perc);
 	battery_percent.setWildcard(battery_percentBuffer);
 	battery_percent.resizeToCurrentText();
 	battery_percent.invalidate();

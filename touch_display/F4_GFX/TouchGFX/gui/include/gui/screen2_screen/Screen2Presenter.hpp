@@ -36,6 +36,7 @@ public:
     int waga_value;
 	int wzrost_value;
 	int pojemnosc_value;
+	int wysokosc_value;
 	int data_destination[3];
 
     void saveWaga(void)
@@ -46,6 +47,10 @@ public:
     void savePojemnosc(void)
 	{
 		model->savePojemnosc(pojemnosc_value);
+	}
+    void saveWysokosc(void)
+	{
+		model->saveWysokosc(wysokosc_value);
 	}
 private:
     Screen2Presenter();

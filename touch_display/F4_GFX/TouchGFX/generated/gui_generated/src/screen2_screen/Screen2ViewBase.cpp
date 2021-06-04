@@ -113,7 +113,7 @@ Screen2ViewBase::Screen2ViewBase() :
     value_waga.resizeToCurrentText();
     value_waga.setTypedText(touchgfx::TypedText(T_SINGLEUSEID27));
 
-    value_pojemnosc.setXY(184, 177);
+    value_pojemnosc.setXY(184, 136);
     value_pojemnosc.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     value_pojemnosc.setLinespacing(0);
     Unicode::snprintf(value_pojemnoscBuffer, VALUE_POJEMNOSC_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID34).getText());
@@ -128,7 +128,7 @@ Screen2ViewBase::Screen2ViewBase() :
     Button_waga.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     Button_waga.setAction(buttonCallback);
 
-    Button_pojemnosc.setXY(4, 159);
+    Button_pojemnosc.setXY(4, 117);
     Button_pojemnosc.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
     Button_pojemnosc.setLabelText(touchgfx::TypedText(T_SINGLEUSEID37));
     Button_pojemnosc.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
@@ -140,7 +140,7 @@ Screen2ViewBase::Screen2ViewBase() :
     textArea2.setLinespacing(0);
     textArea2.setTypedText(touchgfx::TypedText(T_SINGLEUSEID38));
 
-    textArea2_1_1.setXY(241, 177);
+    textArea2_1_1.setXY(240, 137);
     textArea2_1_1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
     textArea2_1_1.setLinespacing(0);
     textArea2_1_1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID42));
@@ -149,6 +149,26 @@ Screen2ViewBase::Screen2ViewBase() :
     button_clear.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_ICON_BUTTON_PRESSED_ID), touchgfx::Bitmap(BITMAP_DARK_ICONS_BACK_ARROW_32_ID), touchgfx::Bitmap(BITMAP_DARK_ICONS_BACK_ARROW_32_ID));
     button_clear.setIconXY(21, 14);
     button_clear.setAction(buttonCallback);
+
+    Button_wysokosc.setXY(4, 189);
+    Button_wysokosc.setBitmaps(touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_ID), touchgfx::Bitmap(BITMAP_DARK_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
+    Button_wysokosc.setLabelText(touchgfx::TypedText(T_SINGLEUSEID49));
+    Button_wysokosc.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    Button_wysokosc.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    Button_wysokosc.setAction(buttonCallback);
+
+    value_wysokosc.setXY(184, 205);
+    value_wysokosc.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    value_wysokosc.setLinespacing(0);
+    Unicode::snprintf(value_wysokoscBuffer, VALUE_WYSOKOSC_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID51).getText());
+    value_wysokosc.setWildcard(value_wysokoscBuffer);
+    value_wysokosc.resizeToCurrentText();
+    value_wysokosc.setTypedText(touchgfx::TypedText(T_SINGLEUSEID50));
+
+    textArea2_1_1_1.setXY(242, 205);
+    textArea2_1_1_1.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    textArea2_1_1_1.setLinespacing(0);
+    textArea2_1_1_1.setTypedText(touchgfx::TypedText(T_SINGLEUSEID52));
 
     add(box1);
     add(textArea1);
@@ -172,6 +192,9 @@ Screen2ViewBase::Screen2ViewBase() :
     add(textArea2);
     add(textArea2_1_1);
     add(button_clear);
+    add(Button_wysokosc);
+    add(value_wysokosc);
+    add(textArea2_1_1_1);
 }
 
 void Screen2ViewBase::setupScreen()
@@ -183,7 +206,7 @@ void Screen2ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
 {
     if (&src == &button_ok)
     {
-        //Go_to_Screen_3
+        //Button_ok
         //When button_ok clicked change screen to Screen3
         //Go to Screen3 with screen transition towards East
         application().gotoScreen3ScreenCoverTransitionEast();
@@ -193,6 +216,7 @@ void Screen2ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
         //Execute C++ code
         presenter->saveWaga();
         presenter->savePojemnosc();
+        presenter->saveWysokosc();
     }
     else if (&src == &button_1)
     {
@@ -284,5 +308,12 @@ void Screen2ViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& src)
         //When button_clear clicked execute C++ code
         //Execute C++ code
         presenter->NumberButtonClicked(-1);
+    }
+    else if (&src == &Button_wysokosc)
+    {
+        //Button_wysokosc
+        //When Button_wysokosc clicked execute C++ code
+        //Execute C++ code
+        presenter->DestinationButtonClicked(1);
     }
 }

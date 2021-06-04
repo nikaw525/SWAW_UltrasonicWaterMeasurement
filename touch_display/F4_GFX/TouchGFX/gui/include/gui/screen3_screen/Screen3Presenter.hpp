@@ -28,14 +28,23 @@ public:
     virtual ~Screen3Presenter() {};
     void ComputeWater(void);
     void OkButtonClicked(void);
+
+    void setNewBatteryValue(unsigned int val);
+
+
     int getWaga(void)
     {
     	return model->getWaga();
     }
+
     int getPojemnosc(void)
     {
     	return model->getPojemnosc();
     }
+    int getWysokosc(void)
+   {
+    	return model->getWysokosc();
+   }
 private:
     Screen3Presenter();
 

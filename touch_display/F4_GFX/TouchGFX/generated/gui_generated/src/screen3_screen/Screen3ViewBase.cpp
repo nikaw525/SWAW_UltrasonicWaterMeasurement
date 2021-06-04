@@ -42,13 +42,13 @@ Screen3ViewBase::Screen3ViewBase() :
     bottle_1.setValue(100);
     bottle_1.setAnchorAtZero(false);
 
-    wynik_txt.setXY(69, 220);
-    wynik_txt.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
-    wynik_txt.setLinespacing(0);
-    Unicode::snprintf(wynik_txtBuffer, WYNIK_TXT_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID48).getText());
-    wynik_txt.setWildcard(wynik_txtBuffer);
-    wynik_txt.resizeToCurrentText();
-    wynik_txt.setTypedText(touchgfx::TypedText(T_SINGLEUSEID43));
+    wynik_perc.setXY(69, 220);
+    wynik_perc.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    wynik_perc.setLinespacing(0);
+    Unicode::snprintf(wynik_percBuffer, WYNIK_PERC_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID48).getText());
+    wynik_perc.setWildcard(wynik_percBuffer);
+    wynik_perc.resizeToCurrentText();
+    wynik_perc.setTypedText(touchgfx::TypedText(T_SINGLEUSEID43));
 
     battery_percent.setXY(384, 16);
     battery_percent.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
@@ -68,6 +68,14 @@ Screen3ViewBase::Screen3ViewBase() :
 
     image1.setXY(341, 16);
     image1.setBitmap(touchgfx::Bitmap(BITMAP_BATTERY_ID));
+
+    wynik_ml.setXY(72, 190);
+    wynik_ml.setColor(touchgfx::Color::getColorFrom24BitRGB(0, 0, 0));
+    wynik_ml.setLinespacing(0);
+    Unicode::snprintf(wynik_mlBuffer, WYNIK_ML_SIZE, "%s", touchgfx::TypedText(T_SINGLEUSEID54).getText());
+    wynik_ml.setWildcard(wynik_mlBuffer);
+    wynik_ml.resizeToCurrentText();
+    wynik_ml.setTypedText(touchgfx::TypedText(T_SINGLEUSEID53));
 
     Are_you_sure_window.setBackground(touchgfx::BitmapId(BITMAP_DARK_BACKGROUNDS_MAIN_BG_TEXTURE_320X240PX_ID), 80, 16);
     Are_you_sure_window.setShadeColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
@@ -101,10 +109,11 @@ Screen3ViewBase::Screen3ViewBase() :
     add(Ilosc_wody);
     add(textArea2);
     add(bottle_1);
-    add(wynik_txt);
+    add(wynik_perc);
     add(battery_percent);
     add(battery_voltage);
     add(image1);
+    add(wynik_ml);
     add(Are_you_sure_window);
 }
 

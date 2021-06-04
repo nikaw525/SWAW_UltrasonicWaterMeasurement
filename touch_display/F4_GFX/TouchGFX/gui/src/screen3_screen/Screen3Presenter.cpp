@@ -15,8 +15,13 @@ void Screen3Presenter::activate()
 void Screen3Presenter::OkButtonClicked()
 {
 	view.updateWaterTxt();
-	view.updateBottle();
-	view.updateBattery();
+	view.updateBottle(10);
+	view.updateBattery(7.99);
+}
+
+void Screen3Presenter::setNewBatteryValue(unsigned int val)
+{
+	//view.updateBattery(val);
 }
 
 void Screen3Presenter::deactivate()

@@ -13,15 +13,16 @@ public:
     virtual void tearDownScreen();
 
     virtual void updateWaterTxt(void);
-    virtual void updateBottle(void);
-    virtual void updateBattery(void);
+    virtual void updateBottle(float);
+    virtual void updateBattery(float);
 protected:
-    int woda;
-    int pojemnosc;
+    float woda;
+    float pojemnosc;
     float wynik;
-    float perc;
+    float battery_perc;
     float volt;
-    int percent;
+    float water_percent;
+    float wysokosc_max;
 
 };
 

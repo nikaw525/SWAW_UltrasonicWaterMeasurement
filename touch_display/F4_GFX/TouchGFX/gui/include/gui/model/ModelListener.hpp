@@ -14,7 +14,7 @@ public:
     {
         model = m;
     }
-
+    virtual void setNewBatteryValue(unsigned int) {}
 
 
 protected:

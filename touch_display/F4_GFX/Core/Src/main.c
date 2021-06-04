@@ -24,7 +24,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "FreeRTOS.h"
+#include "queue.h"
+#include "task.h"
+#include "nRF24.h"
+#include "nRF24_Defs.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -68,12 +72,17 @@ I2C_HandleTypeDef hi2c3;
 
 LTDC_HandleTypeDef hltdc;
 
+SPI_HandleTypeDef hspi5;
+
 SDRAM_HandleTypeDef hsdram1;
 
 osThreadId defaultTaskHandle;
 osThreadId ComunicationTasHandle;
 /* USER CODE BEGIN PV */
-
+volatile uint8_t nrf24_rx_flag, nrf24_tx_flag, nrf24_mr_flag;
+uint8_t Nrf24_Message[NRF24_PAYLOAD_SIZE];
+uint8_t Message[32];
+uint8_t MessageLength;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -85,6 +94,7 @@ static void MX_DMA2D_Init(void);
 static void MX_FMC_Init(void);
 static void MX_I2C3_Init(void);
 static void MX_ADC1_Init(void);
+static void MX_SPI5_Init(void);
 void StartDefaultTask(void const * argument);
 void StartComunicationTask(void const * argument);
 
@@ -130,10 +140,15 @@ int main(void)
   MX_DMA2D_Init();
   MX_FMC_Init();
   MX_I2C3_Init();
-  MX_ADC1_Init();
   MX_TouchGFX_Init();
+  MX_ADC1_Init();
+  MX_SPI5_Init();
+  //MX_TouchGFX_Init();
   /* USER CODE BEGIN 2 */
-
+  //nRF24_Init(&hspi5);
+  //nRF24_SetRXAddress(0, "TX");
+  //nRF24_SetTXAddress("RX");
+  //nRF24_RX_Mode();
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -197,13 +212,12 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLM = 8;
-  RCC_OscInitStruct.PLL.PLLN = 180;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLM = 15;
+  RCC_OscInitStruct.PLL.PLLN = 216;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 4;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -231,7 +245,7 @@ void SystemClock_Config(void)
   }
   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
   PeriphClkInitStruct.PLLSAI.PLLSAIN = 60;
-  PeriphClkInitStruct.PLLSAI.PLLSAIR = 5;
+  PeriphClkInitStruct.PLLSAI.PLLSAIR = 2;
   PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_2;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
   {
@@ -479,6 +493,44 @@ static void MX_LTDC_Init(void)
 
 }
 
+/**
+  * @brief SPI5 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_SPI5_Init(void)
+{
+
+  /* USER CODE BEGIN SPI5_Init 0 */
+
+  /* USER CODE END SPI5_Init 0 */
+
+  /* USER CODE BEGIN SPI5_Init 1 */
+
+  /* USER CODE END SPI5_Init 1 */
+  /* SPI5 parameter configuration*/
+  hspi5.Instance = SPI5;
+  hspi5.Init.Mode = SPI_MODE_MASTER;
+  hspi5.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi5.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi5.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi5.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi5.Init.NSS = SPI_NSS_SOFT;
+  hspi5.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
+  hspi5.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi5.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi5.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi5.Init.CRCPolynomial = 10;
+  if (HAL_SPI_Init(&hspi5) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN SPI5_Init 2 */
+
+  /* USER CODE END SPI5_Init 2 */
+
+}
+
 /* FMC initialization function */
 static void MX_FMC_Init(void)
 {
@@ -588,6 +640,7 @@ static void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOF_CLK_ENABLE();
+  __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
@@ -595,17 +648,23 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(USER_LED_GPIO_Port, USER_LED_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOE, USER_LED_Pin|CSN_Pin|CE_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(CTP_XRESET_GPIO_Port, CTP_XRESET_Pin, GPIO_PIN_SET);
 
-  /*Configure GPIO pin : USER_LED_Pin */
-  GPIO_InitStruct.Pin = USER_LED_Pin;
+  /*Configure GPIO pins : USER_LED_Pin CSN_Pin CE_Pin */
+  GPIO_InitStruct.Pin = USER_LED_Pin|CSN_Pin|CE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(USER_LED_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : IRQ_Pin */
+  GPIO_InitStruct.Pin = IRQ_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(IRQ_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : USER_BTN_Pin */
   GPIO_InitStruct.Pin = USER_BTN_Pin;
@@ -675,17 +734,28 @@ void StartDefaultTask(void const * argument)
 void StartComunicationTask(void const * argument)
 {
   /* USER CODE BEGIN StartComunicationTask */
-	uint32_t tick;
-	tick = xTaskGetTickCount();
+
   /* Infinite loop */
   for(;;)
   {
-	HAL_GPIO_TogglePin(USER_LED_GPIO_Port, USER_LED_Pin);
-	vTaskDelayUntil(&tick, (1000*configTICK_RATE_HZ)/1000);
+
   }
   /* USER CODE END StartComunicationTask */
 }
 
+extern xQueueHandle messageQ;
+unsigned int val = 0;
+
+void secondTask(void const * argument)
+{
+
+	for(;;)
+	{
+		xQueueSend(messageQ, &val,0);
+		osDelay(1000);
+		val++;
+	}
+}
 /**
   * @brief  Period elapsed callback in non blocking mode
   * @note   This function is called  when TIM6 interrupt took place, inside

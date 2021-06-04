@@ -546,7 +546,7 @@
             },
             "Name": "value_pojemnosc",
             "X": 184,
-            "Y": 177,
+            "Y": 136,
             "Width": 13,
             "Height": 25,
             "Type": "TextArea",
@@ -604,7 +604,7 @@
             "Style": "Style4",
             "Name": "Button_pojemnosc",
             "X": 4,
-            "Y": 159,
+            "Y": 117,
             "Width": 170,
             "Height": 60,
             "Type": "ButtonWithLabel",
@@ -649,8 +649,8 @@
             "AutoSize": true,
             "LineSpacing": 0,
             "Name": "textArea2_1_1",
-            "X": 241,
-            "Y": 177,
+            "X": 240,
+            "Y": 137,
             "Width": 25,
             "Height": 25,
             "Type": "TextArea",
@@ -681,6 +681,86 @@
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
+          },
+          {
+            "Pressed": "__designer\\Dark_Buttons_Round_Edge_small_pressed.png",
+            "Released": "__designer\\Dark_Buttons_Round_Edge_small.png",
+            "Alpha": 255,
+            "TextId": "SingleUseId49",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Style": "Style4",
+            "Name": "Button_wysokosc",
+            "X": 4,
+            "Y": 189,
+            "Width": 170,
+            "Height": 60,
+            "Type": "ButtonWithLabel",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId50",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId51",
+              "UseBuffer": true,
+              "BufferSize": 10
+            },
+            "Name": "value_wysokosc",
+            "X": 184,
+            "Y": 205,
+            "Width": 13,
+            "Height": 25,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId52",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Name": "textArea2_1_1_1",
+            "X": 242,
+            "Y": 205,
+            "Width": 30,
+            "Height": 25,
+            "Type": "TextArea",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
           }
         ],
         "Interactions": [
@@ -697,7 +777,7 @@
             }
           },
           {
-            "InteractionName": "Go_to_Screen_3",
+            "InteractionName": "Button_ok",
             "HasCompletedTrigger": true,
             "Trigger": {
               "TriggerComponent": "button_ok",
@@ -850,7 +930,7 @@
               "Type": "TriggerClicked"
             },
             "Action": {
-              "Code": "presenter->saveWaga();\r\npresenter->savePojemnosc();",
+              "Code": "presenter->saveWaga();\r\npresenter->savePojemnosc();\r\npresenter->saveWysokosc();",
               "Type": "ActionExecuteCode"
             }
           },
@@ -863,6 +943,18 @@
             },
             "Action": {
               "Code": "presenter->NumberButtonClicked(-1);",
+              "Type": "ActionExecuteCode"
+            }
+          },
+          {
+            "InteractionName": "Button_wysokosc",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "Button_wysokosc",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "Code": "presenter->DestinationButtonClicked(1);",
               "Type": "ActionExecuteCode"
             }
           }
@@ -1013,10 +1105,10 @@
               "UseBuffer": true,
               "BufferSize": 20
             },
-            "Name": "wynik_txt",
+            "Name": "wynik_perc",
             "X": 69,
             "Y": 220,
-            "Width": 67,
+            "Width": 74,
             "Height": 25,
             "Type": "TextArea",
             "Visible": true,
@@ -1072,7 +1164,7 @@
             "Name": "battery_voltage",
             "X": 384,
             "Y": 41,
-            "Width": 66,
+            "Width": 59,
             "Height": 25,
             "Type": "TextArea",
             "Visible": true,
@@ -1090,6 +1182,34 @@
             "Width": 31,
             "Height": 50,
             "Type": "Image",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "TextId": "SingleUseId53",
+            "TextRotation": "0",
+            "Color": {
+              "Red": 0,
+              "Green": 0,
+              "Blue": 0
+            },
+            "Alpha": 255,
+            "AutoSize": true,
+            "LineSpacing": 0,
+            "Wildcard1": {
+              "TextId": "SingleUseId54",
+              "UseBuffer": true,
+              "BufferSize": 20
+            },
+            "Name": "wynik_ml",
+            "X": 72,
+            "Y": 190,
+            "Width": 77,
+            "Height": 25,
+            "Type": "TextArea",
             "Visible": true,
             "Draggable": false,
             "Clickable": false,
@@ -1418,6 +1538,30 @@
       },
       {
         "TextEntryId": "SingleUseId48",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId49",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId50",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId51",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId52",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId53",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId54",
         "IsResource": false
       }
     ],

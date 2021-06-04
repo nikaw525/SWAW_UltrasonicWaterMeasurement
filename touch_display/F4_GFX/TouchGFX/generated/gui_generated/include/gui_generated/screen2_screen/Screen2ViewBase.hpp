@@ -51,6 +51,9 @@ protected:
     touchgfx::TextArea textArea2;
     touchgfx::TextArea textArea2_1_1;
     touchgfx::ButtonWithIcon button_clear;
+    touchgfx::ButtonWithLabel Button_wysokosc;
+    touchgfx::TextAreaWithOneWildcard value_wysokosc;
+    touchgfx::TextArea textArea2_1_1_1;
 
     /*
      * Wildcard Buffers
@@ -59,6 +62,8 @@ protected:
     touchgfx::Unicode::UnicodeChar value_wagaBuffer[VALUE_WAGA_SIZE];
     static const uint16_t VALUE_POJEMNOSC_SIZE = 10;
     touchgfx::Unicode::UnicodeChar value_pojemnoscBuffer[VALUE_POJEMNOSC_SIZE];
+    static const uint16_t VALUE_WYSOKOSC_SIZE = 10;
+    touchgfx::Unicode::UnicodeChar value_wysokoscBuffer[VALUE_WYSOKOSC_SIZE];
 
 private:
 

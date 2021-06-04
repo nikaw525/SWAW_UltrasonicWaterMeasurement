@@ -24,10 +24,9 @@ void Screen2Presenter::deactivate()
 
 void Screen2Presenter::NumberButtonClicked(int number)
 {
-
 	view.updateTxt(number);
-
 }
+
 void Screen2Presenter::DestinationButtonClicked(int number)
 {
 	if(1 == data_destination[number])

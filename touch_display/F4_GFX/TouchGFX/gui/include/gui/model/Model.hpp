@@ -7,7 +7,7 @@ class Model
 {
 public:
     Model();
-
+    void tick();
     void bind(ModelListener* listener)
     {
         modelListener = listener;
@@ -22,14 +22,20 @@ public:
 	{
 		pojemnosc = savePojemnosc;
 	}
+    void saveWysokosc(int saveWysokosc)
+	{
+		wysokosc = saveWysokosc;
+	}
     int getWaga();
     int getPojemnosc();
+    int getWysokosc();
 
 protected:
     ModelListener* modelListener;
 
     int waga;
     int pojemnosc;
+    int wysokosc;
 };
 
 #endif // MODEL_HPP
