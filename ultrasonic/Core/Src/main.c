@@ -21,6 +21,7 @@
 #include "main.h"
 #include "adc.h"
 #include "dma.h"
+#include "spi.h"
 #include "tim.h"
 #include "gpio.h"
 
@@ -29,6 +30,10 @@
 
 #include "hcsr04.h"
 #include "PowerMgr.h"
+#include "nRF24_Defs.h"
+#include "nRF24.h"
+
+/* Standard library */
 #include <stdio.h>
 #include <string.h>
 
@@ -67,6 +72,8 @@ static volatile uint16_t adc_read[ADC_CHANNELS]; /* Channel 1 : Vbat measurement
 static float Vbat;
 static float Sound_speed;
 
+static Message_T msg;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -93,7 +100,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+   HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -111,6 +118,7 @@ int main(void)
   MX_DMA_Init();
   MX_TIM3_Init();
   MX_ADC1_Init();
+  MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 
   HAL_TIM_Base_Start(&htim3);
@@ -120,6 +128,11 @@ int main(void)
 
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc_read, ADC_CHANNELS);
   HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
+
+  nRF24_Init(&hspi1);
+  nRF24_SetRXAddress(0, "RX");
+  nRF24_SetTXAddress("TX");
+  nRF24_TX_Mode();
 
   PowerMode_flag = FULL_OPERATIONAL;
   /* USER CODE END 2 */
@@ -138,6 +151,15 @@ int main(void)
 		  Prefault_distance.invalid_msg = true;
 		  Prefault_distance.debounce_counter = 0;
 	  }
+
+	  msg.msg_dist = Prefault_distance.distance;
+	  msg.msg_vbat = Vbat;
+
+	  if(true != Prefault_distance.invalid_msg)
+	  {
+		  nRF24_send_data_by_radio(msg);
+	  }
+
 
     /* USER CODE END WHILE */
 

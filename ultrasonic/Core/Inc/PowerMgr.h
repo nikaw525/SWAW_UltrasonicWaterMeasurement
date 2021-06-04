@@ -16,7 +16,7 @@
 #define AVG_SLOPE				4.3f
 #define V25						1.43f
 
-#define VOLTAGE_THRESHOLD		7.1f
+#define VOLTAGE_THRESHOLD		6.9f
 
 
 typedef enum
