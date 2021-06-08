@@ -220,7 +220,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
   {
     uint16_t time =
         (uint16_t)((uint16_t)__HAL_TIM_GetCompare(&htim3, HCSR04_STOP_CHANNEL) - (uint16_t)__HAL_TIM_GetCompare(&htim3, HCSR04_START_CHANNEL));
-    Prefault_distance.distance = kalman_filter((float)time /(2.0 * Sound_speed));
+    Prefault_distance.distance = moving_average((dist)time /(2.0 * Sound_speed));
     reset_counter(&Prefault_distance);
     HAL_TIM_IC_Start_IT(&htim3, HCSR04_STOP_CHANNEL);
   }

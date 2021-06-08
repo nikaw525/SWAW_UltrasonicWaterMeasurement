@@ -29,6 +29,7 @@ typedef struct Prefault
 #define HCSR04_STOP_CHANNEL TIM_CHANNEL_2
 
 dist kalman_filter(const dist u);
+dist moving_average(const dist distance);
 
 float Calculate_SoundSpeed(const uint16_t adc_read);
 void reset_counter(Prefault_distance_T *self);
